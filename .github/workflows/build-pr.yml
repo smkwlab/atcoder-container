@@ -17,6 +17,3 @@ jobs:
         uses: ./.github/actions/build/
         with:
           platforms: linux/amd64
-          load: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/atcoder-container:latest
