@@ -133,31 +133,30 @@ RUN . ${HOME}/.asdf/asdf.sh && \
 RUN . ${HOME}/.asdf/asdf.sh && \
     apt-get update && \
     apt-get install -y \
-             libgmp-dev libmpfr-dev libmpc-dev && \
-    python3.11 -m pip install \
-               numpy==1.24.1 \
-               scipy==1.10.1 \
-               networkx==3.0 \
-               sympy==1.11.1 \
-               sortedcontainers==2.4.0 \
-               more-itertools==9.0.0 \
-               shapely==2.0.0 \
-               bitarray==2.6.2 \
-               PuLP==2.7.0 \
-               mpmath==1.2.1 \
-               pandas==1.5.2 \
-               z3-solver==4.12.1.0 \
-               scikit-learn==1.2.0 \
-               ortools==9.5.2237 \
-               torch \
-               polars==0.15.15 \
-               lightgbm==3.3.1 \
-               gmpy2==2.1.5 \
-               numba==0.57.0 \
-               git+https://github.com/not522/ac-library-python && \
-#    python3.11 -m pip install -U setuptools==66.0.0 && \
+             libgmp-dev libmpfr-dev libmpc-dev
+RUN python3.11 -m pip install                numpy==1.24.1
+RUN python3.11 -m pip install                scipy==1.10.1
+RUN python3.11 -m pip install                networkx==3.0
+RUN python3.11 -m pip install                sympy==1.11.1
+RUN python3.11 -m pip install                sortedcontainers==2.4.0
+RUN python3.11 -m pip install                more-itertools==9.0.0
+RUN python3.11 -m pip install                shapely==2.0.0
+RUN python3.11 -m pip install                bitarray==2.6.2
+RUN python3.11 -m pip install                PuLP==2.7.0
+RUN python3.11 -m pip install                mpmath==1.2.1
+RUN python3.11 -m pip install                pandas==1.5.2
+RUN python3.11 -m pip install                z3-solver==4.12.1.0
+RUN python3.11 -m pip install                scikit-learn==1.2.0
+RUN python3.11 -m pip install                ortools==9.5.2237
+RUN python3.11 -m pip install                torch
+RUN python3.11 -m pip install                polars==0.15.15
+RUN python3.11 -m pip install                lightgbm==3.3.1
+RUN python3.11 -m pip install                gmpy2==2.1.5
+RUN python3.11 -m pip install                numba==0.57.0
+RUN python3.11 -m pip install                git+https://github.com/not522/ac-library-python
+RUN python3.11 -m pip install -U setuptools==66.0.0
 #    python3.11 -m pip install cppyy==2.4.1 && \
-    apt-get clean && \
+RUN  apt-get clean && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
 
