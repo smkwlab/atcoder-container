@@ -156,7 +156,7 @@ RUN . ${HOME}/.asdf/asdf.sh && \
                numba==0.57.0 \
                git+https://github.com/not522/ac-library-python && \
     python3.11 -m pip install -U setuptools==66.0.0 && \
-#    python3.11 -m pip install cppyy==2.4.1 && \
+    python3.11 -m pip install cppyy==2.4.1 && \
     apt-get clean && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
