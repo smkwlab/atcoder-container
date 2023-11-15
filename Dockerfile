@@ -106,28 +106,28 @@ RUN . ${HOME}/.asdf/asdf.sh && \
     gem install polars-df
 
 # # erlang
-RUN . ${HOME}/.asdf/asdf.sh && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-            libncurses5-dev libwxgtk3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev \
-            libpng-dev libssh-dev \
-            unixodbc-dev xsltproc fop libxml2-utils libncurses-dev \
-            openjdk-11-jdk libwxgtk-webview3.0-gtk3-dev \
-            erlang-dev erlang-xmerl erlang-parsetools erlang-os-mon inotify-tools && \
-    asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git && \
-    asdf install erlang 26.0.2 && \
-    asdf global erlang 26.0.2 && \
-    apt-get clean && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
+# RUN . ${HOME}/.asdf/asdf.sh && \
+#     apt-get update && \
+#     apt-get install -y --no-install-recommends \
+#             libncurses5-dev libwxgtk3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev \
+#             libpng-dev libssh-dev \
+#             unixodbc-dev xsltproc fop libxml2-utils libncurses-dev \
+#             openjdk-11-jdk libwxgtk-webview3.0-gtk3-dev \
+#             erlang-dev erlang-xmerl erlang-parsetools erlang-os-mon inotify-tools && \
+#     asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git && \
+#     asdf install erlang 26.0.2 && \
+#     asdf global erlang 26.0.2 && \
+#     apt-get clean && \
+#     apt-get autoremove -y && \
+#     rm -rf /var/lib/apt/lists/*
 
 # # elixir
-RUN . ${HOME}/.asdf/asdf.sh && \
-    asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git && \
-    asdf install elixir 1.15.2-otp-26 && \
-    asdf global elixir 1.15.2-otp-26 && \
-    mix local.hex --force && \
-    mix local.rebar --force
+# RUN . ${HOME}/.asdf/asdf.sh && \
+#     asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git && \
+#     asdf install elixir 1.15.2-otp-26 && \
+#     asdf global elixir 1.15.2-otp-26 && \
+#     mix local.hex --force && \
+#     mix local.rebar --force
 
 # Python
 RUN . ${HOME}/.asdf/asdf.sh && \
