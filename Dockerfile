@@ -124,8 +124,8 @@ RUN . ${HOME}/.asdf/asdf.sh && \
 # # elixir
 RUN . ${HOME}/.asdf/asdf.sh && \
     asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git && \
-    asdf install elixir 1.15.2 && \
-    asdf global elixir 1.15.2 && \
+    asdf install elixir 1.15.2-otp-26 && \
+    asdf global elixir 1.15.2-otp-26 && \
     mix local.hex --force && \
     mix local.rebar --force
 
