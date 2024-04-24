@@ -175,6 +175,17 @@ RUN . ${asdf_init} && \
 #     apt-get autoremove -y && \
 #     rm -rf /var/lib/apt/lists/*
 
+# Rust
+RUN . ${asdf_init} && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends unzip && \
+    asdf plugin-add rust https://github.com/code-lever/asdf-rust.git && \
+    asdf install rust 1.70.0 && \
+    asdf global rust 1.70.0 && \
+    apt-get clean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
 ## # AHC用のRustのinstall
 #RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 #ENV PATH $PATH:/home/root/.cargo/bin
