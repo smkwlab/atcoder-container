@@ -178,3 +178,6 @@ RUN . ${asdf_init} && \
 ## # AHC用のRustのinstall
 #RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 #ENV PATH $PATH:/home/root/.cargo/bin
+
+# C, C++ のバージョン指定
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 90 --slave /usr/bin/g++ g++ /usr/bin/g++-12
