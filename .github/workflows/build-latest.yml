@@ -11,6 +11,11 @@ jobs:
       contents: read
       packages: write
     steps:
+      - uses: FranzDiebold/github-env-vars-action@v2
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=today::$(date +'%Y%m%d')"
+
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Login to GitHub Container Registry
@@ -25,5 +30,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/${{ github.repository_owner }}/atcoder-container:latest
-            ghcr.io/${{ github.repository_owner }}/atcoder-container:all
+            ghcr.io/${{ github.repository_owner }}/${{ env.CI_REPOSITORY_NAME }}:${{ steps.date.outputs.today }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.CI_REPOSITORY_NAME }}:latest
+            ghcr.io/${{ github.repository_owner }}/${{ env.CI_REPOSITORY_NAME }}:all
