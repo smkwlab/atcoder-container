@@ -1,0 +1,285 @@
+FROM ubuntu:24.04
+
+# コンテナ構築用にホームディレクトリ代入
+ARG HOME=/home/runner
+ARG PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+ARG asdf_init=${HOME}/.asdf/asdf.sh
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBCONF_NONINTERACTIVE_SEEN=true
+ENV TZ=Asia/Tokyo \
+    PATH=$HOME/bin:$PATH
+
+# base system
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+            curl \
+            git \
+            ca-certificates \
+            locales \
+            time \
+            tzdata \
+            xdg-utils \
+            g++-12 \
+            build-essential \
+            wget \
+            unzip \
+            && \
+    localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && \
+    apt-get clean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+ENV LANG="ja_JP.UTF-8" \
+    LANGUAGE="ja_JP:ja" \
+    LC_ALL="ja_JP.UTF-8" \
+    ATCODER=1
+
+# asdf 
+SHELL ["/bin/bash", "-lc"]
+RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.2 && \
+    echo ". ${asdf_init}" >> ${HOME}/.bashrc && \
+    echo ". ${HOME}/.asdf/completions/asdf.bash" >> ${HOME}/.bashrc
+
+# Python, oj
+ARG AC_CPYTHON_VERSION=3.13.5
+
+# Install build dependencies
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget gnupg software-properties-common && \
+    DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
+   apt-get install -y \
+   build-essential \
+   gdb \
+   lcov \
+   pkg-config \
+   libbz2-dev \
+   libffi-dev \
+   libgdbm-dev \
+   libgdbm-compat-dev \
+   liblzma-dev \
+   libncurses5-dev \
+   libreadline6-dev \
+   libsqlite3-dev \
+   libssl-dev \
+   lzma \
+   lzma-dev \
+   tk-dev \
+   uuid-dev \
+   zlib1g-dev \
+   libgmp-dev \
+   libmpfr-dev \
+   libmpc-dev \
+   $(if [ "$(uname -m)" = "x86_64" ]; then echo "llvm-18"; fi) \
+   git \
+   && rm -rf /var/lib/apt/lists/*
+
+# Build and install Python
+WORKDIR /tmp
+RUN wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
+   tar xf Python-${AC_CPYTHON_VERSION}.tar.xz && \
+   cd Python-${AC_CPYTHON_VERSION} && \
+   if [ "$(uname -m)" = "x86_64" ]; then \
+       ln -s /usr/lib/llvm-18/lib/libbolt_rt_instr.a /usr/lib/libbolt_rt_instr.a && \
+       BOLT_FLAGS="--enable-bolt"; \
+   else \
+       BOLT_FLAGS=""; \
+   fi && \
+   ./configure --enable-optimizations --with-lto=full --with-strict-overflow ${BOLT_FLAGS} && \
+   make -j1 && \
+   make altinstall && \
+   cd .. && \
+   rm -rf Python-${AC_CPYTHON_VERSION} Python-${AC_CPYTHON_VERSION}.tar.xz
+
+# Install essential Python packages (lightweight for competitive programming)
+RUN python3.13 -m pip install setuptools==75.8.0
+
+# Lightweight competitive programming packages only
+RUN python3.13 -m pip install \
+    "git+https://github.com/not522/ac-library-python@27fdbb71cd0d566bdeb12746db59c9d908c6b5d5" \
+    bitarray==3.4.2 \
+    more-itertools==10.7.0 \
+    sortedcontainers==2.4.0 \
+    networkx==3.5 \
+    mpmath==1.3.0 \
+    six==1.17.0 \
+    python-dateutil==2.9.0.post0 \
+    pytz==2025.1 \
+    typing_extensions==4.12.2
+
+# Clean up
+RUN python3.13 -m pip cache purge
+
+# Install online-judge-tools
+RUN python3.13 -m pip install online-judge-tools==11.5.1
+
+# nodejs, atcoder-cli
+ARG NODE_VERSION=22.16.0
+RUN case "$(uname -m)" in \
+        x86_64) \
+            wget -q -O /tmp/node.tar.xz https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz \
+            ;; \
+        aarch64) \
+            wget -q -O /tmp/node.tar.xz https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-arm64.tar.xz \
+            ;; \
+        *) \
+            echo "Unsupported architecture: $(uname -m)" \
+            exit 1 \
+            ;; \
+    esac && \
+    tar -C /usr/local --strip-components=1 -xf /tmp/node.tar.xz --wildcards '*/bin' '*/share' '*/lib' '*/include' && \
+    ln -s /usr/local/lib/node_modules /node_modules && \
+    npm install -g \
+      ac-library-js@0.1.1 \
+      data-structure-typed@2.0.4 \
+      lodash@4.17.21 \
+      mathjs@14.5.2 \
+      tstl@3.0.0 \
+      atcoder-cli@2.2.0
+
+# Java
+# OpenJDKのダウンロードとインストール
+RUN case "$(uname -m)" in \
+        x86_64) \
+            curl -L https://download.java.net/java/GA/jdk23.0.1/c28985cbf10d4e648e4004050f8781aa/11/GPL/openjdk-23.0.1_linux-x64_bin.tar.gz | \
+            tar zx -C /usr/local --strip-components 1 \
+            ;; \
+        aarch64) \
+            curl -L https://download.java.net/java/GA/jdk23.0.1/c28985cbf10d4e648e4004050f8781aa/11/GPL/openjdk-23.0.1_linux-aarch64_bin.tar.gz | \
+            tar zx -C /usr/local --strip-components 1 \
+            ;; \
+        *) \
+            echo "Unsupported architecture: $(uname -m)" \
+            exit 1 \
+            ;; \
+    esac
+
+# AC Libraryのダウンロード
+RUN wget -q https://github.com/ocha98/ac-library-java/releases/download/v2.0.0/ac_library23.jar && \
+    mv ac_library23.jar ac_library.jar
+
+# 実行スクリプトの作成
+COPY java/java.sh /judge/java.sh
+RUN chmod +x /judge/java.sh
+
+# Ruby (without LibTorch and torch-rb)
+# Install dependencies
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get install -y \
+   autoconf \
+   bison \
+   patch \
+   build-essential \
+   rustc \
+   libssl-dev \
+   libyaml-dev \
+   libreadline6-dev \
+   zlib1g-dev \
+   libgmp-dev \
+   libncurses5-dev \
+   libffi-dev \
+   libgdbm6 \
+   libgdbm-dev \
+   libdb-dev \
+   uuid-dev \
+   libz3-dev \
+   libgeos-dev \
+   curl \
+   wget \
+   unzip \
+   && rm -rf /var/lib/apt/lists/*
+
+# Install ruby-build and Ruby with GC patch
+RUN curl -s https://api.github.com/repos/rbenv/ruby-build/releases/latest | \
+   grep -o 'https://[^"]*tarball[^"]*' | \
+   xargs curl -o ruby-build.tarball -L && \
+   tar -xf ruby-build.tarball && \
+   PREFIX=/usr/local ./*ruby-build-*/install.sh && \
+   wget -q -O gc.patch https://patch-diff.githubusercontent.com/raw/ruby/ruby/pull/12667.patch && \
+   sed -i 's@[ab]/@@g' gc.patch && \
+   ruby-build --patch 3.4.4 /root/.rubies/ruby < gc.patch && \
+   rm -rf *ruby-build* ruby-build.tarball gc.patch
+
+# Set Ruby PATH
+ENV PATH=/root/.rubies/ruby/bin:$PATH
+
+# Install lightweight Ruby gems (competitive programming essentials only)
+RUN gem install -N \
+    ac-library-rb:1.2.0 \
+    bit_utils:0.1.2 \
+    bitarray:1.3.1 \
+    fast_trie:0.5.1 \
+    faster_prime:1.0.1 \
+    immutable-ruby:0.2.0 \
+    rbtree:0.4.6 \
+    rgl:0.6.6 \
+    sorted_containers:1.1.0 \
+    sorted_set:1.0.3
+
+# or-tools (x86_64 only, lightweight)
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+    apt-get update && \
+    apt-get install -y cmake && \
+    git clone https://github.com/google/or-tools.git && \
+    cd or-tools && \
+    cmake -S . -B build -DBUILD_DEPS=ON && \
+    cmake --build build --target install && \
+    gem install or-tools -v 0.15.0; \
+    fi
+
+# erlang
+ARG AC_OTP_VERSION=28.0
+RUN apt-get update && \
+    apt-get install -y \
+        libssl-dev \
+        unixodbc-dev \
+        libblas-dev \
+        liblapack-dev \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /tmp
+RUN wget -q -O erlang.tar.gz https://github.com/erlang/otp/releases/download/OTP-${AC_OTP_VERSION}/otp_src_${AC_OTP_VERSION}.tar.gz && \
+    mkdir erlang && \
+    tar -C erlang --strip-components=1 -xf erlang.tar.gz && \
+    cd erlang && \
+    ./configure --without-termcap && \
+    make -j4 && \
+    make install && \
+    cd .. && \
+    rm -rf erlang erlang.tar.gz
+
+# elixir (without machine learning packages)
+# Install Elixir
+# Elixir v1.18.4 precompiled for OTP 27 is binary compatible with OTP 28
+RUN AC_OTP_MAJOR_VERSION=27 && \
+    wget -q https://github.com/elixir-lang/elixir/releases/download/v1.18.4/elixir-otp-${AC_OTP_MAJOR_VERSION}.zip && \
+    unzip elixir-otp-${AC_OTP_MAJOR_VERSION}.zip 'bin/*' 'lib/*' -d /usr/local && \
+    rm elixir-otp-${AC_OTP_MAJOR_VERSION}.zip
+
+# Create basic Elixir project (without EXLA/Nx)
+WORKDIR /judge
+RUN mix local.hex --force && \
+    mix local.rebar --force && \
+    mix new main && \
+    cd main
+
+# Create basic Elixir config without heavy dependencies
+COPY elixir/mix-lite.exs /judge/main/mix.exs
+
+WORKDIR /judge/main
+RUN MIX_ENV=prod mix deps.get && \
+    MIX_ENV=prod mix compile
+
+# Rust
+RUN . ${asdf_init} && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends unzip && \
+    asdf plugin-add rust https://github.com/code-lever/asdf-rust.git && \
+    asdf install rust 1.70.0 && \
+    asdf global rust 1.70.0 && \
+    apt-get clean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
+# C, C++ のバージョン指定
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 90 --slave /usr/bin/g++ g++ /usr/bin/g++-12
+
+WORKDIR /root
