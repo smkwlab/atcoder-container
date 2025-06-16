@@ -1,0 +1,219 @@
+# SPDX-License-Identifier: CC0-1.0
+
+language = 'Elixir'
+display = 'Elixir (Elixir 1.18.4 (OTP 28.0))'
+license = [
+    { name = 'Apache-2.0', url = 'https://github.com/elixir-lang/elixir/blob/main/LICENSE' },
+]
+
+library.aja = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/aja' },
+] }
+library.arrays = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/arrays' },
+] }
+library.bitset = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/bitset' },
+] }
+library.collections = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/collections' },
+] }
+library.decimal = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/decimal' },
+] }
+library.exla = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/exla' },
+] }
+library.flow = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/flow' },
+] }
+library.libgraph = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/libgraph' },
+] }
+library.matrex = { license = [
+    { name = 'BSD-3-Clause', url = 'https://hex.pm/packages/matrex' },
+] }
+library.math = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/math' },
+] }
+library.nx = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/nx' },
+] }
+library.picosat_elixir = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/picosat_elixir' },
+] }
+library.prime = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/prime' },
+] }
+library.ratio = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/ratio' },
+] }
+library.segment_tree = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/segment_tree' },
+] }
+library.splay_tree = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/splay_tree' },
+] }
+library.trie = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/trie' },
+] }
+library.benchfella = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/benchfella' },
+], indirect = true }
+library.castore = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/castore' },
+], indirect = true }
+library.coerce = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/coerce' },
+], indirect = true }
+library.complex = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/complex' },
+], indirect = true }
+library.elixir_make = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/elixir_make' },
+], indirect = true }
+library.extractable = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/extractable' },
+], indirect = true }
+library.gen_stage = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/gen_stage' },
+], indirect = true }
+library.insertable = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/insertable' },
+], indirect = true }
+library.nimble_pool = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/nimble_pool' },
+], indirect = true }
+library.numbers = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/numbers' },
+], indirect = true }
+library.telemetry = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/telemetry' },
+], indirect = true }
+library.type_check = { license = [
+    { name = 'MIT', url = 'https://hex.pm/packages/type_check' },
+], indirect = true }
+library.xla = { license = [
+    { name = 'Apache-2.0', url = 'https://hex.pm/packages/xla' },
+], indirect = true }
+
+filename = 'main/lib/main.ex'
+
+install = '''
+AC_OTP_VERSION=28.0
+sudo apt-get update
+sudo apt-get install -y libssl-dev unixodbc-dev libatlas-base-dev ansifilter
+
+pushd /tmp
+# Install Erlang OTP
+wget -q -O erlang.tar.gz https://github.com/erlang/otp/releases/download/OTP-${AC_OTP_VERSION}/otp_src_${AC_OTP_VERSION}.tar.gz
+mkdir erlang
+tar -C erlang --strip-components=1 -xf erlang.tar.gz
+pushd erlang
+./configure --without-termcap
+make -j$(nproc)
+sudo make install
+popd
+
+# AC_OTP_MAJOR_VERSION=$(echo $AC_OTP_VERSION | cut -d '.' -f 1)
+#
+# https://github.com/elixir-lang/elixir/releases/tag/v1.18.4
+# `This release includes initial support for Erlang/OTP 28, for those who
+# want to try it out. In such cases, you may use Elixir v1.18.4 precompiled
+# for Erlang/OTP 27, as it is binary compatible with Erlang/OTP 28.`
+#
+AC_OTP_MAJOR_VERSION=27
+
+# Install Elixir
+wget -q https://github.com/elixir-lang/elixir/releases/download/v1.18.4/elixir-otp-${AC_OTP_MAJOR_VERSION}.zip
+sudo unzip elixir-otp-${AC_OTP_MAJOR_VERSION}.zip 'bin/*' 'lib/*' -d /usr/local
+
+popd
+
+# Setting up Elixir
+
+mix local.hex --force
+mix local.rebar --force
+
+# Generate new project
+
+mix new main
+cd main
+cat << 'EOF' > mix.exs
+defmodule Main.MixProject do
+  use Mix.Project
+
+  def project do
+    [
+      app: :main,
+      version: "0.1.0",
+      elixir: ">= 0.0.0",
+      start_permanent: Mix.env() == :prod,
+      deps: deps()
+    ]
+  end
+
+  def application do
+    [
+      extra_applications: [:logger, :mnesia]
+    ]
+  end
+
+  defp deps do
+    [
+      {:aja, ">= 0.0.0"},
+      {:arrays, ">= 0.0.0"},
+      {:bitset, ">= 0.0.0"},
+      {:collections, ">= 0.0.0"},
+      {:decimal, ">= 0.0.0"},
+      {:exla, ">= 0.0.0"},
+      {:flow, ">= 0.0.0"},
+      {:libgraph, ">= 0.0.0"},
+      {:matrex, ">= 0.0.0"},
+      {:math, ">= 0.0.0"},
+      {:nx, ">= 0.0.0"},
+      {:picosat_elixir, ">= 0.0.0"},
+      {:prime, ">= 0.0.0"},
+      {:ratio, ">= 0.0.0"},
+      {:segment_tree, ">= 0.0.0"},
+      {:splay_tree, ">= 0.0.0"},
+      {:trie, ">= 0.0.0"},
+    ]
+  end
+end
+EOF
+
+mkdir config
+cat << 'EOF' > config/config.exs
+import Config
+config :nx, :default_backend, EXLA.Backend
+config :logger, level: :error
+EOF
+
+cat << 'EOF' > lib/main.ex
+defmodule Main do
+  def main do
+    {:ok, _} = Application.ensure_all_started(:exla)
+    IO.inspect(Nx.tensor([[1, 2], [3, 4]]))
+    {stdout, _} = System.cmd("cat", ["main/mix.lock"])
+    IO.puts(stdout)
+  end
+end
+EOF
+MIX_ENV=prod mix deps.get
+MIX_ENV=prod mix release
+rm _build/prod/rel/main/bin/main
+'''
+
+compile = '''
+cd main
+MIX_ENV=prod mix release --quiet --overwrite 2> /tmp/err-out || cat /tmp/err-out | ansifilter 1>&2
+'''
+
+object = 'main/_build/prod/rel/main/bin/main'
+
+execution = [
+    'main/_build/prod/rel/main/bin/main',
+    'eval',
+    'Main.main',
+]

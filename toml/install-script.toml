@@ -1,0 +1,1875 @@
+# SPDX-License-Identifier: CC0-1.0
+
+# 言語インストールスクリプト
+#
+# 言語をインストールするためのスクリプトをTOML形式で記述していただきます
+# 各キー/値ごとにコメントで
+#   キー: キー名
+#   型:   そのキーに対する値の型
+#   要否: そのキーが必須であるか任意であるか
+#   説明: そのキーの説明
+#   例:   そのキーの値として指定するものの例
+# が記述してあるので、 必須 の項目については必ず記述してください
+# 直後にそのキー/値の例が記述してあるので参考にしてください
+#
+# 実行環境は以下の通りとなっています
+#
+#   OS:                   Ubuntu 24.04.1
+#   カレントディレクトリ: /judge
+#   環境変数:             HOME=/home/runner
+#                         LANG=C.UTF-8
+#                         PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+#                         ATCODER=1
+#
+# また提出いただくインストールスクリプトは公開される場合があります
+# そのためインストールスクリプトを提出される場合はそのインストールスクリプトについて必ず `CC0-1.0` でライセンスしてください
+# このライセンスに同意いただけない場合はインストールスクリプトを使用することができないため、インストールを拒否させていただきます
+# 具体的なライセンスの明記方法はこのサンプルインストールスクリプトの1行目と同様にSPDX-License-Identifierを記述してください
+# ※このサンプルスクリプト自体もCC0-1.0でライセンスしていますので自由に使ってください
+
+# キー: language
+# 型:   文字列
+# 要否: 必須
+# 説明: プログラミング言語の名前
+#       プログラミング言語としての名前を記述してください
+#       ここで指定された文字列はプログラミング言語として認識されるため、正確に記述してください
+#       ここで指定される文字列は具体的には提出結果画面において、提出検索時の言語として使われます
+#       そのため過去に提出可能だった言語やコンパイラ/インタプリタなどの実装が違うだけの言語、また将来での言語間で同じプログラミング言語を検索するために使われます
+# 例:   'C'
+#       'C++'
+#       'Java'
+#       'Python'
+language = 'Rust'
+
+# キー: display
+# 型:   文字列
+# 要否: 必須
+# 説明: この言語として表示される文字列
+#       このインストールスクリプトでインストールされる言語に関する表示される文字列を記述してください
+#       ここで指定された文字列は提出画面における言語選択で表示される文字列となります
+#       そのためプログラミング言語名や言語のバージョン、コンパイラ/インタプリタ名など、ユーザが提出言語を選ぶときに必要となる情報を記述してください
+#       ただしコンパイルコマンドや実行コマンド、インストールされるライブラリなどは別途ルールページなどで見ることができますので提出画面における言語選択として妥当な文字列を記述してください
+#       具体的には現状の提出画面における表示を参考にしてください
+# 例:   'C++23 (GCC 15.1)'
+#       'C++23 (Clang 18.1.8)'
+#       'Java24 (OpenJDK 24.0.1)'
+#       'Python3 (CPython 3.13.3)'
+display = 'Rust (rustc 1.87.0)'
+# 1.87.0: Released on: 15 May, 2025 https://releases.rs/docs/1.87.0/
+# 1.88.0: Will be stable on: 26 June, 2025 https://releases.rs/docs/1.88.0/
+# 1.89.0: Will be stable on: 7 August, 2025 https://releases.rs/docs/1.89.0/
+
+# キー: license
+# 型:   配列
+#       配列内の各要素はテーブルで、1要素が1つのライセンス
+#       テーブルに記述するキー/値は以下の通り
+#           キー: url
+#           型:   文字列
+#           要否: 必須
+#           説明: ライセンスが確認できるURL
+#           例:   'https://gcc.gnu.org/git/?p=gcc.git;a=blob;f=COPYING3;hb=refs/heads/master'
+#                 'https://github.com/llvm/llvm-project/blob/main/clang/LICENSE.TXT'
+#                 'https://openjdk.org/legal/gplv2+ce.html'
+#
+#           キー: name
+#           型:   文字列
+#           要否: 必須
+#           説明: ライセンス名
+#                 https://spdx.org/licenses/ にある Identifier で記述してください
+#                 ライセンスを記述するうえで例外規定を含む場合は後述の `exception` に分けて記述してください
+#                 つまりこの項目では `WITH` を使った書き方はしないでください
+#                 上記リストにないライセンスの場合は問い合わせをしてください
+#           例:   'GPL-3.0-and-later'
+#                 'Apache-2.0'
+#                 'GPL-2.0-only'
+#
+#           キー: exception
+#           型:   文字列
+#           要否: 任意
+#           説明: ライセンスの例外規定名
+#                 ライセンスにおける例外規定を https://spdx.org/licenses/exceptions-index.html にある Identifier で記述してください
+#                 この項目は任意項目となっていますがライセンスに例外規定がある場合は必須です
+#                 任意となっているのは例外規定がない場合に書く内容がないためであり、例外規定を書かなくていいという意味ではありません
+#                 上記リストにないライセンスの場合は問い合わせをしてください
+#           例:   'GCC-exception-3.1'
+#                 'LLVM-exception'
+#                 'Classpath-exception-2.0'
+# 要否: 必須
+# 説明: コンパイラ/インタプリタのライセンス
+#       コンパイラ、インタプリタの実装のライセンスを記述してください
+#       デュアルライセンスなど、ライセンスが複数ある場合はすべて記述してください
+license = [
+    { name = 'Apache-2.0', url = 'https://github.com/rust-lang/rust/blob/1.87.0/COPYRIGHT' },
+    { name = 'MIT', url = 'https://github.com/rust-lang/rust/blob/1.87.0/COPYRIGHT' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://github.com/rust-lang/rust/blob/1.87.0/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://github.com/rust-lang/rust/blob/1.87.0/LICENSE-APACHE' },
+    { name = 'MIT', url = 'https://github.com/rust-lang/rust/blob/1.87.0/LICENSE-MIT' },
+]
+
+# キー: library
+# 型:   テーブル
+#       テーブル内の各キー/値はライブラリ1つを表し、キーにはライブラリ名を、値はテーブル型でライブラリの詳細を記述
+#       ライブラリの詳細として記述できるキー/値は以下の通り
+#           キー: license
+#           型:   テーブルの配列
+#                 ここに記述する型/値は上記 `license` と同様なのでそちらを参照
+#           要否: 必須
+#           説明: ライブラリのライセンス
+#
+#           キー: indirect
+#           型:   ブール値
+#           要否: 任意
+#           説明: 間接的にインストールされるライブラリかどうか
+#                 他ライブラリから依存されてインストールされるライブラリである場合にこのキーの値に `true` を指定してください
+#                 このキー/値が設定されなかった場合のデフォルト値は `false` で、直接的にインストールするライブラリであることを表します
+#                 このキーが存在する理由は、直接インストールされるライブラリが依存しているライブラリのライセンスを明示するためにあります
+#                 つまり使用したいライブラリが依存しているライブラリもライセンス的に使用できることを明示するために存在し、これが `true` にされたライブラリはインストールされたライブラリ一覧としては表示されません
+#
+#           キー: version
+#           型:   文字列
+#           要否: 任意
+#           説明: ライブラリのバージョン番号
+#
+#       `indirect` のとおり、間接的に使用されるライブラリのライセンスもできるだけ記述してください
+#       バージョンに関してはコンパイラ/インタプリタと違い任意であるが、ユーザが確認できなくなるためどうしてもわからない場合などを除き記述すること
+# 要否: 任意
+# 説明: 追加でインストールされるライブラリ一覧
+#       ここに記述されたものは言語一覧などの表示に使用されるものでありインストールなどには影響しません
+#       そのためインストールスクリプトで記述されるものと一致するようにしてください
+# 例:   boost = { license = [ { name = 'Boost Software License', url = 'https://www.boost.org/LICENSE_1_0.txt' } ], version = '1.86.0' }
+
+# license clarified config, see: https://github.com/rust-lang-ja/atcoder-proposal/tree/8d2b334b45b438b0e18c4f5b82f3cf1e27da9497/clarify.toml
+library.ac-library-rs-0-2-0-alpha-1 = { license = [
+# Cargo.toml (package.license) [CC0-1.0]
+    { name = 'CC0-1.0', url = 'https://github.com/rust-lang-ja/ac-library-rs/blob/89356739594fa35cb744f374bfb68a2eb27a64ae/Cargo.toml' },
+# LICENSE [CC0-1.0 (confidence 0.9595)] hash = 0x107d15b2
+    { name = 'CC0-1.0', url = 'https://github.com/rust-lang-ja/ac-library-rs/blob/89356739594fa35cb744f374bfb68a2eb27a64ae/LICENSE' },
+], indirect = true, version = '0.2.0-alpha.1' }
+library.aho-corasick-1-1-3 = { license = [
+# Cargo.toml (package.license) [Unlicense OR MIT]
+# clarifyed [Unlicense OR MIT]
+    { name = 'Unlicense', url = 'https://docs.rs/crate/aho-corasick/1.1.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/aho-corasick/1.1.3/source/Cargo.toml' },
+# UNLICENSE [Unlicense (confidence 1.0000)] hash = 0x87b84020
+# clarifyed: UNLICENSE [Unlicense] hash = 0x87b84020
+    { name = 'Unlicense', url = 'https://docs.rs/crate/aho-corasick/1.1.3/source/UNLICENSE' },
+# COPYING [unknown] hash = 0x969f37d8
+# clarifyed: COPYING [Unlicense OR MIT] hash = 0x969f37d8
+    { name = 'Unlicense', url = 'https://docs.rs/crate/aho-corasick/1.1.3/source/COPYING' },
+    { name = 'MIT', url = 'https://docs.rs/crate/aho-corasick/1.1.3/source/COPYING' },
+# LICENSE-MIT [MIT (confidence 0.9878)] hash = 0x616d8a83
+# clarifyed: LICENSE-MIT [MIT] hash = 0x616d8a83
+    { name = 'MIT', url = 'https://docs.rs/crate/aho-corasick/1.1.3/source/LICENSE-MIT' },
+], indirect = true, version = '1.1.3' }
+library.alga-0-9-3 = { license = [
+# Cargo.toml (package.license) [Apache-2.0]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/alga/0.9.3/source/Cargo.toml' },
+# LICENSE [Apache-2.0 (confidence 1.0000)] hash = 0x18785531
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/alga/0.9.3/source/LICENSE' },
+], indirect = false, version = '0.9.3' }
+library.allocator-api2-0-2-21 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/allocator-api2/0.2.21/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/allocator-api2/0.2.21/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x133434ee
+    { name = 'MIT', url = 'https://docs.rs/crate/allocator-api2/0.2.21/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0x48975bb6
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/allocator-api2/0.2.21/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.21' }
+library.amplify-4-9-0 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/amplify/4.9.0/source/Cargo.toml' },
+# LICENSE [MIT (confidence 1.0000)] hash = 0x5e017cf2
+    { name = 'MIT', url = 'https://docs.rs/crate/amplify/4.9.0/source/LICENSE' },
+], indirect = false, version = '4.9.0' }
+library.amplify_derive-4-0-1 = { license = [
+# Cargo.toml (package.license) [Apache-2.0]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/amplify_derive/4.0.1/source/Cargo.toml' },
+# LICENSE [Apache-2.0 (confidence 1.0000)] hash = 0x02ef2b20
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/amplify_derive/4.0.1/source/LICENSE' },
+], indirect = false, version = '4.0.1' }
+library.amplify_num-0-5-3 = { license = [
+# Cargo.toml (package.license) [Apache-2.0]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/amplify_num/0.5.3/source/Cargo.toml' },
+], indirect = false, version = '0.5.3' }
+library.amplify_syn-2-0-1 = { license = [
+# Cargo.toml (package.license) [Apache-2.0]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/amplify_syn/2.0.1/source/Cargo.toml' },
+], indirect = true, version = '2.0.1' }
+library.anyhow-1-0-98 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/anyhow/1.0.98/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/anyhow/1.0.98/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/anyhow/1.0.98/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/anyhow/1.0.98/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.98' }
+library.approx-0-3-2 = { license = [
+# Cargo.toml (package.license) [Apache-2.0]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/approx/0.3.2/source/Cargo.toml' },
+# LICENSE [Apache-2.0 (confidence 1.0000)] hash = 0x18785531
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/approx/0.3.2/source/LICENSE' },
+], indirect = true, version = '0.3.2' }
+library.approx-0-5-1 = { license = [
+# Cargo.toml (package.license) [Apache-2.0]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/approx/0.5.1/source/Cargo.toml' },
+# LICENSE [Apache-2.0 (confidence 1.0000)] hash = 0x994f3f05
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/approx/0.5.1/source/LICENSE' },
+], indirect = true, version = '0.5.1' }
+library.arbitrary-1-4-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/arbitrary/1.4.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/arbitrary/1.4.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xe8b2451d
+    { name = 'MIT', url = 'https://docs.rs/crate/arbitrary/1.4.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/arbitrary/1.4.1/source/LICENSE-APACHE' },
+], indirect = true, version = '1.4.1' }
+library.archery-1-2-1 = { license = [
+# Cargo.toml (package.license) [MPL-2.0]
+    { name = 'MPL-2.0', url = 'https://docs.rs/crate/archery/1.2.1/source/Cargo.toml' },
+# LICENSE.md [MPL-2.0 (confidence 1.0000)] hash = 0xae3e97cb
+    { name = 'MPL-2.0', url = 'https://docs.rs/crate/archery/1.2.1/source/LICENSE.md' },
+], indirect = true, version = '1.2.1' }
+library.argio-0-2-0 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/argio/0.2.0/source/Cargo.toml' },
+], indirect = false, version = '0.2.0' }
+library.argio-macro-0-2-0 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/argio-macro/0.2.0/source/Cargo.toml' },
+], indirect = true, version = '0.2.0' }
+library.ascii-1-1-0 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ascii/1.1.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/ascii/1.1.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x4cd65d01
+    { name = 'MIT', url = 'https://docs.rs/crate/ascii/1.1.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x8b4fd0e5
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ascii/1.1.0/source/LICENSE-APACHE' },
+], indirect = false, version = '1.1.0' }
+library.autocfg-1-4-0 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/autocfg/1.4.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/autocfg/1.4.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xcc51c221
+    { name = 'MIT', url = 'https://docs.rs/crate/autocfg/1.4.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/autocfg/1.4.0/source/LICENSE-APACHE' },
+], indirect = true, version = '1.4.0' }
+library.az-1-2-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/az/1.2.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/az/1.2.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb6687f7f
+    { name = 'MIT', url = 'https://docs.rs/crate/az/1.2.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/az/1.2.1/source/LICENSE-APACHE' },
+], indirect = false, version = '1.2.1' }
+library.bitflags-2-9-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/bitflags/2.9.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bitflags/2.9.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/bitflags/2.9.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bitflags/2.9.1/source/LICENSE-APACHE' },
+], indirect = true, version = '2.9.1' }
+library.bitmaps-2-1-0 = { license = [
+# Cargo.toml (package.license) [MPL-2.0+]
+    { name = 'MPL-2.0', url = 'https://docs.rs/crate/bitmaps/2.1.0/source/Cargo.toml' },
+], indirect = true, version = '2.1.0' }
+library.bitset-fixed-0-1-0 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/bitset-fixed/0.1.0/source/Cargo.toml' },
+], indirect = false, version = '0.1.0' }
+library.bitvec-1-0-1 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/bitvec/1.0.1/source/Cargo.toml' },
+# LICENSE.txt [MIT (confidence 1.0000)] hash = 0x73149b5e
+    { name = 'MIT', url = 'https://docs.rs/crate/bitvec/1.0.1/source/LICENSE.txt' },
+], indirect = false, version = '1.0.1' }
+library.bstr-1-12-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/bstr/1.12.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bstr/1.12.0/source/Cargo.toml' },
+# COPYING [unknown] hash = 0x278afbcf
+# clarifyed: COPYING [MIT OR Apache-2.0] hash = 0x278afbcf
+    { name = 'MIT', url = 'https://docs.rs/crate/bstr/1.12.0/source/COPYING' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bstr/1.12.0/source/COPYING' },
+# LICENSE-MIT [MIT (confidence 0.9878)] hash = 0x462dee44
+# clarifyed: LICENSE-MIT [MIT] hash = 0x462dee44
+    { name = 'MIT', url = 'https://docs.rs/crate/bstr/1.12.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bstr/1.12.0/source/LICENSE-APACHE' },
+], indirect = false, version = '1.12.0' }
+library.btreemultimap-0-1-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/btreemultimap/0.1.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/btreemultimap/0.1.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x667749ca
+    { name = 'MIT', url = 'https://docs.rs/crate/btreemultimap/0.1.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/btreemultimap/0.1.1/source/LICENSE-APACHE' },
+], indirect = false, version = '0.1.1' }
+library.bumpalo-3-17-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/bumpalo/3.17.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bumpalo/3.17.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x43a95400
+    { name = 'MIT', url = 'https://docs.rs/crate/bumpalo/3.17.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bumpalo/3.17.0/source/LICENSE-APACHE' },
+], indirect = true, version = '3.17.0' }
+library.bytemuck-1-23-0 = { license = [
+# Cargo.toml (package.license) [Zlib OR Apache-2.0 OR MIT]
+    { name = 'Zlib', url = 'https://docs.rs/crate/bytemuck/1.23.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bytemuck/1.23.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/bytemuck/1.23.0/source/Cargo.toml' },
+# LICENSE-ZLIB [Zlib (confidence 1.0000)] hash = 0xf29baf4d
+    { name = 'Zlib', url = 'https://docs.rs/crate/bytemuck/1.23.0/source/LICENSE-ZLIB' },
+# LICENSE-MIT [MIT (confidence 0.9817)] hash = 0xfe820d09
+    { name = 'MIT', url = 'https://docs.rs/crate/bytemuck/1.23.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x81b6471d
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bytemuck/1.23.0/source/LICENSE-APACHE' },
+], indirect = true, version = '1.23.0' }
+library.cfg-if-1-0-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/cfg-if/1.0.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/cfg-if/1.0.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x9374b940
+    { name = 'MIT', url = 'https://docs.rs/crate/cfg-if/1.0.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/cfg-if/1.0.0/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.0' }
+library.counter-0-6-0 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/counter/0.6.0/source/Cargo.toml' },
+], indirect = false, version = '0.6.0' }
+library.deprecate-until-0-1-1 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/deprecate-until/0.1.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/deprecate-until/0.1.1/source/Cargo.toml' },
+], indirect = true, version = '0.1.1' }
+library.easy-ext-1-0-2 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/easy-ext/1.0.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/easy-ext/1.0.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/easy-ext/1.0.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0x7b466be4
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/easy-ext/1.0.2/source/LICENSE-APACHE' },
+], indirect = false, version = '1.0.2' }
+library.either-1-15-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/either/1.15.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/either/1.15.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xc97e30bd
+    { name = 'MIT', url = 'https://docs.rs/crate/either/1.15.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/either/1.15.0/source/LICENSE-APACHE' },
+], indirect = false, version = '1.15.0' }
+library.equivalent-1-0-2 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/equivalent/1.0.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/equivalent/1.0.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xa81fefe6
+    { name = 'MIT', url = 'https://docs.rs/crate/equivalent/1.0.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/equivalent/1.0.2/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.2' }
+library.fixedbitset-0-5-7 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/fixedbitset/0.5.7/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/fixedbitset/0.5.7/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xfbfff0b1
+    { name = 'MIT', url = 'https://docs.rs/crate/fixedbitset/0.5.7/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/fixedbitset/0.5.7/source/LICENSE-APACHE' },
+], indirect = false, version = '0.5.7' }
+library.foldhash-0-1-5 = { license = [
+# Cargo.toml (package.license) [Zlib]
+    { name = 'Zlib', url = 'https://docs.rs/crate/foldhash/0.1.5/source/Cargo.toml' },
+# LICENSE [Zlib (confidence 1.0000)] hash = 0xec5f8f53
+    { name = 'Zlib', url = 'https://docs.rs/crate/foldhash/0.1.5/source/LICENSE' },
+], indirect = true, version = '0.1.5' }
+library.funty-2-0-0 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/funty/2.0.0/source/Cargo.toml' },
+# LICENSE.txt [MIT (confidence 1.0000)] hash = 0x4f2f8d36
+    { name = 'MIT', url = 'https://docs.rs/crate/funty/2.0.0/source/LICENSE.txt' },
+], indirect = true, version = '2.0.0' }
+library.getrandom-0-2-16 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/getrandom/0.2.16/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/getrandom/0.2.16/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x7891d426
+    { name = 'MIT', url = 'https://docs.rs/crate/getrandom/0.2.16/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x701e2ab8
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/getrandom/0.2.16/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.16' }
+library.getrandom-0-3-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/getrandom/0.3.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/getrandom/0.3.3/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xbb0082f2
+    { name = 'MIT', url = 'https://docs.rs/crate/getrandom/0.3.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x701e2ab8
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/getrandom/0.3.3/source/LICENSE-APACHE' },
+], indirect = false, version = '0.3.3' }
+library.glidesort-0-1-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/glidesort/0.1.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/glidesort/0.1.2/source/Cargo.toml' },
+], indirect = false, version = '0.1.2' }
+library.hamming-0-1-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/hamming/0.1.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hamming/0.1.3/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x41f2dd54
+    { name = 'MIT', url = 'https://docs.rs/crate/hamming/0.1.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hamming/0.1.3/source/LICENSE-APACHE' },
+], indirect = true, version = '0.1.3' }
+library.hashbag-0-1-12 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/hashbag/0.1.12/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hashbag/0.1.12/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x2c0c9026
+    { name = 'MIT', url = 'https://docs.rs/crate/hashbag/0.1.12/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0xb4971972
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hashbag/0.1.12/source/LICENSE-APACHE' },
+], indirect = false, version = '0.1.12' }
+library.hashbrown-0-15-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/hashbrown/0.15.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hashbrown/0.15.3/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xabeb873c
+    { name = 'MIT', url = 'https://docs.rs/crate/hashbrown/0.15.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hashbrown/0.15.3/source/LICENSE-APACHE' },
+], indirect = true, version = '0.15.3' }
+library.im-rc-15-1-0 = { license = [
+# Cargo.toml (package.license) [MPL-2.0+]
+    { name = 'MPL-2.0', url = 'https://docs.rs/crate/im-rc/15.1.0/source/Cargo.toml' },
+], indirect = false, version = '15.1.0' }
+library.indexing-0-4-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/indexing/0.4.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indexing/0.4.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xc97e30bd
+    { name = 'MIT', url = 'https://docs.rs/crate/indexing/0.4.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indexing/0.4.1/source/LICENSE-APACHE' },
+], indirect = false, version = '0.4.1' }
+library.indexmap-2-9-0 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indexmap/2.9.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/indexmap/2.9.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x5d602899
+    { name = 'MIT', url = 'https://docs.rs/crate/indexmap/2.9.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indexmap/2.9.0/source/LICENSE-APACHE' },
+], indirect = false, version = '2.9.0' }
+library.integer-sqrt-0-1-5 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/integer-sqrt/0.1.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/integer-sqrt/0.1.5/source/Cargo.toml' },
+], indirect = true, version = '0.1.5' }
+library.itertools-0-14-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/itertools/0.14.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itertools/0.14.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xc97e30bd
+    { name = 'MIT', url = 'https://docs.rs/crate/itertools/0.14.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itertools/0.14.0/source/LICENSE-APACHE' },
+], indirect = false, version = '0.14.0' }
+library.itertools-num-0-1-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/itertools-num/0.1.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itertools-num/0.1.3/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xfd2756b3
+    { name = 'MIT', url = 'https://docs.rs/crate/itertools-num/0.1.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itertools-num/0.1.3/source/LICENSE-APACHE' },
+], indirect = false, version = '0.1.3' }
+library.itoa-0-4-8 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/itoa/0.4.8/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itoa/0.4.8/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/itoa/0.4.8/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itoa/0.4.8/source/LICENSE-APACHE' },
+], indirect = true, version = '0.4.8' }
+library.js-sys-0-3-77 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/js-sys/0.3.77/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/js-sys/0.3.77/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x9374b940
+    { name = 'MIT', url = 'https://docs.rs/crate/js-sys/0.3.77/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/js-sys/0.3.77/source/LICENSE-APACHE' },
+], indirect = true, version = '0.3.77' }
+library.lazy_static-1-5-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/lazy_static/1.5.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/lazy_static/1.5.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xcf98dbb2
+    { name = 'MIT', url = 'https://docs.rs/crate/lazy_static/1.5.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/lazy_static/1.5.0/source/LICENSE-APACHE' },
+], indirect = false, version = '1.5.0' }
+library.leb128-0-2-5 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/leb128/0.2.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/leb128/0.2.5/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x86e6d3b9
+    { name = 'MIT', url = 'https://docs.rs/crate/leb128/0.2.5/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/leb128/0.2.5/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.5' }
+library.libc-0-2-172 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/libc/0.2.172/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/libc/0.2.172/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x5390b533
+    { name = 'MIT', url = 'https://docs.rs/crate/libc/0.2.172/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/libc/0.2.172/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.172' }
+library.libm-0-2-15 = { license = [
+# Cargo.toml (package.license) [MIT]
+# clarifyed [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/libm/0.2.15/source/Cargo.toml' },
+# LICENSE.txt [Apache-2.0 (confidence 0.9150)] hash = 0x2d75fe33
+# clarifyed: LICENSE.txt [MIT] hash = 0x2d75fe33
+    { name = 'MIT', url = 'https://docs.rs/crate/libm/0.2.15/source/LICENSE.txt' },
+], indirect = false, version = '0.2.15' }
+library.log-0-4-27 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/log/0.4.27/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/log/0.4.27/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/log/0.4.27/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/log/0.4.27/source/LICENSE-APACHE' },
+], indirect = true, version = '0.4.27' }
+library.maplit-1-0-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/maplit/1.0.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/maplit/1.0.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xc97e30bd
+    { name = 'MIT', url = 'https://docs.rs/crate/maplit/1.0.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/maplit/1.0.2/source/LICENSE-APACHE' },
+], indirect = false, version = '1.0.2' }
+library.matrixmultiply-0-3-10 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/matrixmultiply/0.3.10/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/matrixmultiply/0.3.10/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 0.9818)] hash = 0xf506e1e2
+    { name = 'MIT', url = 'https://docs.rs/crate/matrixmultiply/0.3.10/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/matrixmultiply/0.3.10/source/LICENSE-APACHE' },
+], indirect = true, version = '0.3.10' }
+library.memchr-2-7-4 = { license = [
+# Cargo.toml (package.license) [Unlicense OR MIT]
+# clarifyed [Unlicense OR MIT]
+    { name = 'Unlicense', url = 'https://docs.rs/crate/memchr/2.7.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/memchr/2.7.4/source/Cargo.toml' },
+# UNLICENSE [Unlicense (confidence 1.0000)] hash = 0x87b84020
+# clarifyed: UNLICENSE [Unlicense] hash = 0x87b84020
+    { name = 'Unlicense', url = 'https://docs.rs/crate/memchr/2.7.4/source/UNLICENSE' },
+# COPYING [unknown] hash = 0x969f37d8
+# clarifyed: COPYING [Unlicense OR MIT] hash = 0x969f37d8
+    { name = 'Unlicense', url = 'https://docs.rs/crate/memchr/2.7.4/source/COPYING' },
+    { name = 'MIT', url = 'https://docs.rs/crate/memchr/2.7.4/source/COPYING' },
+# LICENSE-MIT [MIT (confidence 0.9878)] hash = 0x616d8a83
+# clarifyed: LICENSE-MIT [MIT] hash = 0x616d8a83
+    { name = 'MIT', url = 'https://docs.rs/crate/memchr/2.7.4/source/LICENSE-MIT' },
+], indirect = true, version = '2.7.4' }
+library.memoise-0-3-2 = { license = [
+# Cargo.toml (package.license) [BSD-3-Clause]
+    { name = 'BSD-3-Clause', url = 'https://docs.rs/crate/memoise/0.3.2/source/Cargo.toml' },
+# LICENSE [BSD-3-Clause (confidence 0.9931)] hash = 0x7dc82040
+    { name = 'BSD-3-Clause', url = 'https://docs.rs/crate/memoise/0.3.2/source/LICENSE' },
+], indirect = false, version = '0.3.2' }
+library.multimap-0-10-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/multimap/0.10.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/multimap/0.10.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x667749ca
+    { name = 'MIT', url = 'https://docs.rs/crate/multimap/0.10.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/multimap/0.10.1/source/LICENSE-APACHE' },
+], indirect = false, version = '0.10.1' }
+library.multiversion-0-8-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/multiversion/0.8.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/multiversion/0.8.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x5391cc4f
+    { name = 'MIT', url = 'https://docs.rs/crate/multiversion/0.8.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x18785531
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/multiversion/0.8.0/source/LICENSE-APACHE' },
+], indirect = false, version = '0.8.0' }
+library.multiversion-macros-0-8-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/multiversion-macros/0.8.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/multiversion-macros/0.8.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x5391cc4f
+    { name = 'MIT', url = 'https://docs.rs/crate/multiversion-macros/0.8.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x18785531
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/multiversion-macros/0.8.0/source/LICENSE-APACHE' },
+], indirect = true, version = '0.8.0' }
+library.nalgebra-0-33-2 = { license = [
+# Cargo.toml (package.license) [Apache-2.0]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/nalgebra/0.33.2/source/Cargo.toml' },
+# LICENSE [Apache-2.0 (confidence 1.0000)] hash = 0x2088d773
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/nalgebra/0.33.2/source/LICENSE' },
+], indirect = false, version = '0.33.2' }
+library.nalgebra-macros-0-2-2 = { license = [
+# Cargo.toml (package.license) [Apache-2.0]
+# clarifyed [Apache-2.0]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/nalgebra-macros/0.2.2/source/Cargo.toml' },
+# LICENSE [unknown] hash = 0xe2278313
+# clarifyed: LICENSE [Apache-2.0] hash = 0xe2278313
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/nalgebra-macros/0.2.2/source/LICENSE' },
+], indirect = true, version = '0.2.2' }
+library.ndarray-0-16-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/ndarray/0.16.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ndarray/0.16.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 0.9848)] hash = 0x9cde5070
+    { name = 'MIT', url = 'https://docs.rs/crate/ndarray/0.16.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ndarray/0.16.1/source/LICENSE-APACHE' },
+], indirect = false, version = '0.16.1' }
+library.num-0-4-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/num/0.4.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num/0.4.3/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/num/0.4.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num/0.4.3/source/LICENSE-APACHE' },
+], indirect = false, version = '0.4.3' }
+library.num-bigint-0-4-6 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/num-bigint/0.4.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-bigint/0.4.6/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/num-bigint/0.4.6/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-bigint/0.4.6/source/LICENSE-APACHE' },
+], indirect = false, version = '0.4.6' }
+library.num-complex-0-2-4 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/num-complex/0.2.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-complex/0.2.4/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/num-complex/0.2.4/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-complex/0.2.4/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.4' }
+library.num-complex-0-4-6 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/num-complex/0.4.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-complex/0.4.6/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/num-complex/0.4.6/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-complex/0.4.6/source/LICENSE-APACHE' },
+], indirect = false, version = '0.4.6' }
+library.num-derive-0-4-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/num-derive/0.4.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-derive/0.4.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/num-derive/0.4.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-derive/0.4.2/source/LICENSE-APACHE' },
+], indirect = false, version = '0.4.2' }
+library.num-integer-0-1-46 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/num-integer/0.1.46/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-integer/0.1.46/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/num-integer/0.1.46/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-integer/0.1.46/source/LICENSE-APACHE' },
+], indirect = false, version = '0.1.46' }
+library.num-iter-0-1-45 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/num-iter/0.1.45/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-iter/0.1.45/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/num-iter/0.1.45/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-iter/0.1.45/source/LICENSE-APACHE' },
+], indirect = false, version = '0.1.45' }
+library.num-rational-0-4-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/num-rational/0.4.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-rational/0.4.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/num-rational/0.4.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-rational/0.4.2/source/LICENSE-APACHE' },
+], indirect = false, version = '0.4.2' }
+library.num-traits-0-2-19 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/num-traits/0.2.19/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-traits/0.2.19/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/num-traits/0.2.19/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-traits/0.2.19/source/LICENSE-APACHE' },
+], indirect = false, version = '0.2.19' }
+library.omniswap-0-1-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/omniswap/0.1.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/omniswap/0.1.0/source/Cargo.toml' },
+# LICENSE-Apache-2.0 [Apache-2.0 (confidence 1.0000)] hash = 0x0ab61326
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/omniswap/0.1.0/source/LICENSE-Apache-2.0' },
+# LICENSE [MIT (confidence 1.0000)] hash = 0xdd68d834
+    { name = 'MIT', url = 'https://docs.rs/crate/omniswap/0.1.0/source/LICENSE' },
+], indirect = false, version = '0.1.0' }
+library.once_cell-1-21-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/once_cell/1.21.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/once_cell/1.21.3/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/once_cell/1.21.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/once_cell/1.21.3/source/LICENSE-APACHE' },
+], indirect = false, version = '1.21.3' }
+library.ordered-float-2-10-1 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/ordered-float/2.10.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xd4d1e822
+    { name = 'MIT', url = 'https://docs.rs/crate/ordered-float/2.10.1/source/LICENSE-MIT' },
+], indirect = true, version = '2.10.1' }
+library.ordered-float-5-0-0 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/ordered-float/5.0.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xd4d1e822
+    { name = 'MIT', url = 'https://docs.rs/crate/ordered-float/5.0.0/source/LICENSE-MIT' },
+], indirect = false, version = '5.0.0' }
+library.partial_ref-0-3-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/partial_ref/0.3.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/partial_ref/0.3.3/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x4c56e4a2
+    { name = 'MIT', url = 'https://docs.rs/crate/partial_ref/0.3.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/partial_ref/0.3.3/source/LICENSE-APACHE' },
+], indirect = true, version = '0.3.3' }
+library.partial_ref_derive-0-3-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/partial_ref_derive/0.3.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/partial_ref_derive/0.3.3/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x4c56e4a2
+    { name = 'MIT', url = 'https://docs.rs/crate/partial_ref_derive/0.3.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/partial_ref_derive/0.3.3/source/LICENSE-APACHE' },
+], indirect = true, version = '0.3.3' }
+library.paste-1-0-15 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/paste/1.0.15/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/paste/1.0.15/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/paste/1.0.15/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/paste/1.0.15/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.15' }
+library.pathfinding-4-14-0 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pathfinding/4.14.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/pathfinding/4.14.0/source/Cargo.toml' },
+], indirect = false, version = '4.14.0' }
+library.permutohedron-0-2-4 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/permutohedron/0.2.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/permutohedron/0.2.4/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x5414af5a
+    { name = 'MIT', url = 'https://docs.rs/crate/permutohedron/0.2.4/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/permutohedron/0.2.4/source/LICENSE-APACHE' },
+], indirect = false, version = '0.2.4' }
+library.petgraph-0-8-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [(MIT OR Apache-2.0) AND CC-BY-SA-4.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/petgraph/0.8.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/petgraph/0.8.1/source/Cargo.toml' },
+# assets/LICENSE.md [unknown] hash = 0x7c815b17
+# clarifyed: assets/LICENSE.md [CC-BY-SA-4.0] hash = 0x7c815b17
+    { name = 'CC-BY-SA-4.0', url = 'https://docs.rs/crate/petgraph/0.8.1/source/assets/LICENSE.md' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xc97e30bd
+# clarifyed: LICENSE-MIT [MIT] hash = 0xc97e30bd
+    { name = 'MIT', url = 'https://docs.rs/crate/petgraph/0.8.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/petgraph/0.8.1/source/LICENSE-APACHE' },
+], indirect = false, version = '0.8.1' }
+library.portable-atomic-1-11-0 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/portable-atomic/1.11.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/portable-atomic/1.11.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/portable-atomic/1.11.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0x7b466be4
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/portable-atomic/1.11.0/source/LICENSE-APACHE' },
+], indirect = true, version = '1.11.0' }
+library.portable-atomic-util-0-2-4 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/portable-atomic-util/0.2.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/portable-atomic-util/0.2.4/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/portable-atomic-util/0.2.4/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0x7b466be4
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/portable-atomic-util/0.2.4/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.4' }
+library.ppv-lite86-0-2-21 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/ppv-lite86/0.2.21/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ppv-lite86/0.2.21/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x6f55480b
+    { name = 'MIT', url = 'https://docs.rs/crate/ppv-lite86/0.2.21/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x8a852eb7
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ppv-lite86/0.2.21/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.21' }
+library.primal-0-3-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/primal/0.3.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/primal/0.3.3/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x41f2dd54
+    { name = 'MIT', url = 'https://docs.rs/crate/primal/0.3.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/primal/0.3.3/source/LICENSE-APACHE' },
+], indirect = false, version = '0.3.3' }
+library.primal-bit-0-3-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/primal-bit/0.3.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/primal-bit/0.3.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x41f2dd54
+    { name = 'MIT', url = 'https://docs.rs/crate/primal-bit/0.3.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/primal-bit/0.3.2/source/LICENSE-APACHE' },
+], indirect = true, version = '0.3.2' }
+library.primal-check-0-3-4 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/primal-check/0.3.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/primal-check/0.3.4/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x41f2dd54
+    { name = 'MIT', url = 'https://docs.rs/crate/primal-check/0.3.4/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/primal-check/0.3.4/source/LICENSE-APACHE' },
+], indirect = true, version = '0.3.4' }
+library.primal-estimate-0-3-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/primal-estimate/0.3.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/primal-estimate/0.3.3/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x41f2dd54
+    { name = 'MIT', url = 'https://docs.rs/crate/primal-estimate/0.3.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/primal-estimate/0.3.3/source/LICENSE-APACHE' },
+], indirect = true, version = '0.3.3' }
+library.primal-sieve-0-3-7 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/primal-sieve/0.3.7/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/primal-sieve/0.3.7/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x41f2dd54
+    { name = 'MIT', url = 'https://docs.rs/crate/primal-sieve/0.3.7/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/primal-sieve/0.3.7/source/LICENSE-APACHE' },
+], indirect = true, version = '0.3.7' }
+library.proc-macro2-1-0-95 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/proc-macro2/1.0.95/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/proc-macro2/1.0.95/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/proc-macro2/1.0.95/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/proc-macro2/1.0.95/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.95' }
+library.proconio-0-4-5 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/proconio/0.4.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/proconio/0.4.5/source/Cargo.toml' },
+], indirect = true, version = '0.4.5' }
+library.proconio-0-5-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/proconio/0.5.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/proconio/0.5.0/source/Cargo.toml' },
+], indirect = false, version = '0.5.0' }
+library.proconio-derive-0-2-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/proconio-derive/0.2.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/proconio-derive/0.2.1/source/Cargo.toml' },
+], indirect = true, version = '0.2.1' }
+library.quote-1-0-40 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/quote/1.0.40/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/quote/1.0.40/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/quote/1.0.40/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/quote/1.0.40/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.40' }
+library.r-efi-5-2-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0 OR LGPL-2.1-or-later]
+    { name = 'MIT', url = 'https://docs.rs/crate/r-efi/5.2.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/r-efi/5.2.0/source/Cargo.toml' },
+    { name = 'LGPL-2.1-or-later', url = 'https://docs.rs/crate/r-efi/5.2.0/source/Cargo.toml' },
+], indirect = true, version = '5.2.0' }
+library.radium-0-7-0 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/radium/0.7.0/source/Cargo.toml' },
+# LICENSE.txt [MIT (confidence 1.0000)] hash = 0xbf9ea999
+    { name = 'MIT', url = 'https://docs.rs/crate/radium/0.7.0/source/LICENSE.txt' },
+], indirect = true, version = '0.7.0' }
+library.rand-0-8-5 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand/0.8.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand/0.8.5/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand/0.8.5/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand/0.8.5/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x082cb909
+# clarifyed: LICENSE-MIT [MIT] hash = 0x082cb909
+    { name = 'MIT', url = 'https://docs.rs/crate/rand/0.8.5/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0x9e2a0652
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x9e2a0652
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand/0.8.5/source/LICENSE-APACHE' },
+], indirect = true, version = '0.8.5' }
+library.rand-0-9-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand/0.9.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand/0.9.1/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand/0.9.1/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand/0.9.1/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x082cb909
+# clarifyed: LICENSE-MIT [MIT] hash = 0x082cb909
+    { name = 'MIT', url = 'https://docs.rs/crate/rand/0.9.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0x9e2a0652
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x9e2a0652
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand/0.9.1/source/LICENSE-APACHE' },
+], indirect = false, version = '0.9.1' }
+library.rand_chacha-0-3-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_chacha/0.3.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_chacha/0.3.1/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_chacha/0.3.1/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_chacha/0.3.1/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x082cb909
+# clarifyed: LICENSE-MIT [MIT] hash = 0x082cb909
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_chacha/0.3.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x701e2ab8
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x701e2ab8
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_chacha/0.3.1/source/LICENSE-APACHE' },
+], indirect = true, version = '0.3.1' }
+library.rand_chacha-0-9-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_chacha/0.9.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_chacha/0.9.0/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_chacha/0.9.0/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_chacha/0.9.0/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x082cb909
+# clarifyed: LICENSE-MIT [MIT] hash = 0x082cb909
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_chacha/0.9.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0x9e2a0652
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x9e2a0652
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_chacha/0.9.0/source/LICENSE-APACHE' },
+], indirect = false, version = '0.9.0' }
+library.rand_core-0-6-4 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_core/0.6.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_core/0.6.4/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_core/0.6.4/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_core/0.6.4/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x082cb909
+# clarifyed: LICENSE-MIT [MIT] hash = 0x082cb909
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_core/0.6.4/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 0.9740)] hash = 0x631d6796
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x631d6796
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_core/0.6.4/source/LICENSE-APACHE' },
+], indirect = true, version = '0.6.4' }
+library.rand_core-0-9-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_core/0.9.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_core/0.9.3/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_core/0.9.3/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_core/0.9.3/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x082cb909
+# clarifyed: LICENSE-MIT [MIT] hash = 0x082cb909
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_core/0.9.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 0.9740)] hash = 0x631d6796
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x631d6796
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_core/0.9.3/source/LICENSE-APACHE' },
+], indirect = false, version = '0.9.3' }
+library.rand_distr-0-4-3 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_distr/0.4.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_distr/0.4.3/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_distr/0.4.3/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_distr/0.4.3/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x2e96c189
+# clarifyed: LICENSE-MIT [MIT] hash = 0x2e96c189
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_distr/0.4.3/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 0.9740)] hash = 0x631d6796
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x631d6796
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_distr/0.4.3/source/LICENSE-APACHE' },
+], indirect = true, version = '0.4.3' }
+library.rand_distr-0-5-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_distr/0.5.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_distr/0.5.1/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_distr/0.5.1/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_distr/0.5.1/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x2e96c189
+# clarifyed: LICENSE-MIT [MIT] hash = 0x2e96c189
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_distr/0.5.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 0.9740)] hash = 0x631d6796
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x631d6796
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_distr/0.5.1/source/LICENSE-APACHE' },
+], indirect = false, version = '0.5.1' }
+library.rand_hc-0-4-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_hc/0.4.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_hc/0.4.0/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_hc/0.4.0/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_hc/0.4.0/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x2e96c189
+# clarifyed: LICENSE-MIT [MIT] hash = 0x2e96c189
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_hc/0.4.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0x9e2a0652
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x9e2a0652
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_hc/0.4.0/source/LICENSE-APACHE' },
+], indirect = false, version = '0.4.0' }
+library.rand_pcg-0-9-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_pcg/0.9.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_pcg/0.9.0/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_pcg/0.9.0/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_pcg/0.9.0/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x6a012d70
+# clarifyed: LICENSE-MIT [MIT] hash = 0x6a012d70
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_pcg/0.9.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 0.9740)] hash = 0x631d6796
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x631d6796
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_pcg/0.9.0/source/LICENSE-APACHE' },
+], indirect = false, version = '0.9.0' }
+library.rand_xorshift-0-4-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_xorshift/0.4.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_xorshift/0.4.0/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_xorshift/0.4.0/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_xorshift/0.4.0/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x082cb909
+# clarifyed: LICENSE-MIT [MIT] hash = 0x082cb909
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_xorshift/0.4.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0x9e2a0652
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x9e2a0652
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_xorshift/0.4.0/source/LICENSE-APACHE' },
+], indirect = false, version = '0.4.0' }
+library.rand_xoshiro-0-6-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_xoshiro/0.6.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_xoshiro/0.6.0/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_xoshiro/0.6.0/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_xoshiro/0.6.0/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb1c84bbf
+# clarifyed: LICENSE-MIT [MIT] hash = 0xb1c84bbf
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_xoshiro/0.6.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_xoshiro/0.6.0/source/LICENSE-APACHE' },
+], indirect = true, version = '0.6.0' }
+library.rand_xoshiro-0-7-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_xoshiro/0.7.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_xoshiro/0.7.0/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa8762835
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0xa8762835
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_xoshiro/0.7.0/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_xoshiro/0.7.0/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb1c84bbf
+# clarifyed: LICENSE-MIT [MIT] hash = 0xb1c84bbf
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_xoshiro/0.7.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_xoshiro/0.7.0/source/LICENSE-APACHE' },
+], indirect = false, version = '0.7.0' }
+library.rawpointer-0-2-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rawpointer/0.2.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rawpointer/0.2.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xc97e30bd
+    { name = 'MIT', url = 'https://docs.rs/crate/rawpointer/0.2.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rawpointer/0.2.1/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.1' }
+library.recur-fn-2-2-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/recur-fn/2.2.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/recur-fn/2.2.0/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0x991da501
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0x991da501
+    { name = 'MIT', url = 'https://docs.rs/crate/recur-fn/2.2.0/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/recur-fn/2.2.0/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x2af2bb98
+# clarifyed: LICENSE-MIT [MIT] hash = 0x2af2bb98
+    { name = 'MIT', url = 'https://docs.rs/crate/recur-fn/2.2.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0xee2c88bd
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0xee2c88bd
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/recur-fn/2.2.0/source/LICENSE-APACHE' },
+], indirect = false, version = '2.2.0' }
+library.regex-1-11-1 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/regex/1.11.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/regex/1.11.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/regex/1.11.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/regex/1.11.1/source/LICENSE-APACHE' },
+], indirect = false, version = '1.11.1' }
+library.regex-automata-0-4-9 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/regex-automata/0.4.9/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/regex-automata/0.4.9/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/regex-automata/0.4.9/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/regex-automata/0.4.9/source/LICENSE-APACHE' },
+], indirect = true, version = '0.4.9' }
+library.regex-syntax-0-8-5 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [(MIT OR Apache-2.0) AND Unicode-DFS-2016]
+    { name = 'MIT', url = 'https://docs.rs/crate/regex-syntax/0.8.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/regex-syntax/0.8.5/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xb755395b
+# clarifyed: LICENSE-MIT [MIT] hash = 0xb755395b
+    { name = 'MIT', url = 'https://docs.rs/crate/regex-syntax/0.8.5/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/regex-syntax/0.8.5/source/LICENSE-APACHE' },
+# src/unicode_tables/LICENSE-UNICODE [Unicode-DFS-2016 (confidence 0.9851)] hash = 0xa7f28b93
+# clarifyed: src/unicode_tables/LICENSE-UNICODE [Unicode-DFS-2016] hash = 0xa7f28b93
+    { name = 'Unicode-DFS-2016', url = 'https://docs.rs/crate/regex-syntax/0.8.5/source/src/unicode_tables/LICENSE-UNICODE' },
+], indirect = true, version = '0.8.5' }
+library.rpds-1-1-1 = { license = [
+# Cargo.toml (package.license) [MPL-2.0]
+    { name = 'MPL-2.0', url = 'https://docs.rs/crate/rpds/1.1.1/source/Cargo.toml' },
+# LICENSE.md [MPL-2.0 (confidence 1.0000)] hash = 0xae3e97cb
+    { name = 'MPL-2.0', url = 'https://docs.rs/crate/rpds/1.1.1/source/LICENSE.md' },
+], indirect = false, version = '1.1.1' }
+library.rustc-hash-1-1-0 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustc-hash/1.1.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustc-hash/1.1.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/rustc-hash/1.1.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustc-hash/1.1.0/source/LICENSE-APACHE' },
+], indirect = true, version = '1.1.0' }
+library.rustc-hash-2-1-1 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustc-hash/2.1.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustc-hash/2.1.1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x2af2bb98
+    { name = 'MIT', url = 'https://docs.rs/crate/rustc-hash/2.1.1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0x4df2238e
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustc-hash/2.1.1/source/LICENSE-APACHE' },
+], indirect = false, version = '2.1.1' }
+library.rustversion-1-0-21 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/rustversion/1.0.21/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustversion/1.0.21/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/rustversion/1.0.21/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustversion/1.0.21/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.21' }
+library.safe_arch-0-7-4 = { license = [
+# Cargo.toml (package.license) [Zlib OR Apache-2.0 OR MIT]
+    { name = 'Zlib', url = 'https://docs.rs/crate/safe_arch/0.7.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/safe_arch/0.7.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/safe_arch/0.7.4/source/Cargo.toml' },
+# LICENSE-APACHE.md [Apache-2.0 (confidence 1.0000)] hash = 0x81b6471d
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/safe_arch/0.7.4/source/LICENSE-APACHE.md' },
+# LICENSE-ZLIB.md [Zlib (confidence 1.0000)] hash = 0x213003c2
+    { name = 'Zlib', url = 'https://docs.rs/crate/safe_arch/0.7.4/source/LICENSE-ZLIB.md' },
+# LICENSE-MIT.md [MIT (confidence 0.9817)] hash = 0x876e19c9
+    { name = 'MIT', url = 'https://docs.rs/crate/safe_arch/0.7.4/source/LICENSE-MIT.md' },
+], indirect = true, version = '0.7.4' }
+library.semver-1-0-26 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/semver/1.0.26/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/semver/1.0.26/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/semver/1.0.26/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/semver/1.0.26/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.26' }
+library.serde-1-0-219 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/serde/1.0.219/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde/1.0.219/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/serde/1.0.219/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde/1.0.219/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.219' }
+library.serde_derive-1-0-219 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/serde_derive/1.0.219/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_derive/1.0.219/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/serde_derive/1.0.219/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_derive/1.0.219/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.219' }
+library.simba-0-9-0 = { license = [
+# Cargo.toml (package.license) [Apache-2.0]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/simba/0.9.0/source/Cargo.toml' },
+# LICENSE [Apache-2.0 (confidence 1.0000)] hash = 0x66bc0f19
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/simba/0.9.0/source/LICENSE' },
+], indirect = true, version = '0.9.0' }
+library.sized-chunks-0-6-5 = { license = [
+# Cargo.toml (package.license) [MPL-2.0+]
+    { name = 'MPL-2.0', url = 'https://docs.rs/crate/sized-chunks/0.6.5/source/Cargo.toml' },
+], indirect = true, version = '0.6.5' }
+library.smallvec-1-15-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/smallvec/1.15.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/smallvec/1.15.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x256552c3
+    { name = 'MIT', url = 'https://docs.rs/crate/smallvec/1.15.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/smallvec/1.15.0/source/LICENSE-APACHE' },
+], indirect = false, version = '1.15.0' }
+library.static_assertions-1-1-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/static_assertions/1.1.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/static_assertions/1.1.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x7aef4993
+    { name = 'MIT', url = 'https://docs.rs/crate/static_assertions/1.1.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x18785531
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/static_assertions/1.1.0/source/LICENSE-APACHE' },
+], indirect = false, version = '1.1.0' }
+library.statrs-0-18-0 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/statrs/0.18.0/source/Cargo.toml' },
+# LICENSE.md [MIT (confidence 1.0000)] hash = 0x5a6891e9
+    { name = 'MIT', url = 'https://docs.rs/crate/statrs/0.18.0/source/LICENSE.md' },
+], indirect = false, version = '0.18.0' }
+library.stringly_conversions-0-1-1 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/stringly_conversions/0.1.1/source/Cargo.toml' },
+], indirect = true, version = '0.1.1' }
+library.superslice-1-0-0 = { license = [
+# Cargo.toml (package.license) [Apache-2.0]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/superslice/1.0.0/source/Cargo.toml' },
+], indirect = false, version = '1.0.0' }
+library.syn-1-0-109 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/syn/1.0.109/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/syn/1.0.109/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/syn/1.0.109/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/syn/1.0.109/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.109' }
+library.syn-2-0-101 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/syn/2.0.101/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/syn/2.0.101/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/syn/2.0.101/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/syn/2.0.101/source/LICENSE-APACHE' },
+], indirect = true, version = '2.0.101' }
+library.synstructure-0-12-6 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/synstructure/0.12.6/source/Cargo.toml' },
+# LICENSE [MIT (confidence 1.0000)] hash = 0x050378fb
+    { name = 'MIT', url = 'https://docs.rs/crate/synstructure/0.12.6/source/LICENSE' },
+], indirect = true, version = '0.12.6' }
+library.tap-1-0-1 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/tap/1.0.1/source/Cargo.toml' },
+# LICENSE.txt [MIT (confidence 1.0000)] hash = 0xb68a441b
+    { name = 'MIT', url = 'https://docs.rs/crate/tap/1.0.1/source/LICENSE.txt' },
+], indirect = false, version = '1.0.1' }
+library.target-features-0-1-6 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/target-features/0.1.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/target-features/0.1.6/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x8cbcd3e8
+    { name = 'MIT', url = 'https://docs.rs/crate/target-features/0.1.6/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x18785531
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/target-features/0.1.6/source/LICENSE-APACHE' },
+], indirect = true, version = '0.1.6' }
+library.text_io-0-1-13 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/text_io/0.1.13/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/text_io/0.1.13/source/Cargo.toml' },
+# LICENSE.MIT [MIT (confidence 1.0000)] hash = 0x6c78f826
+    { name = 'MIT', url = 'https://docs.rs/crate/text_io/0.1.13/source/LICENSE.MIT' },
+# LICENSE.Apache-2.0 [Apache-2.0 (confidence 1.0000)] hash = 0xb57843b9
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/text_io/0.1.13/source/LICENSE.Apache-2.0' },
+], indirect = false, version = '0.1.13' }
+library.thiserror-1-0-69 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/thiserror/1.0.69/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror/1.0.69/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/thiserror/1.0.69/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror/1.0.69/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.69' }
+library.thiserror-2-0-12 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/thiserror/2.0.12/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror/2.0.12/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/thiserror/2.0.12/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror/2.0.12/source/LICENSE-APACHE' },
+], indirect = false, version = '2.0.12' }
+library.thiserror-impl-1-0-69 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/thiserror-impl/1.0.69/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror-impl/1.0.69/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/thiserror-impl/1.0.69/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror-impl/1.0.69/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.69' }
+library.thiserror-impl-2-0-12 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/thiserror-impl/2.0.12/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror-impl/2.0.12/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/thiserror-impl/2.0.12/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror-impl/2.0.12/source/LICENSE-APACHE' },
+], indirect = true, version = '2.0.12' }
+library.triomphe-0-1-14 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/triomphe/0.1.14/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/triomphe/0.1.14/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xe8b2451d
+    { name = 'MIT', url = 'https://docs.rs/crate/triomphe/0.1.14/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x4eb46022
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/triomphe/0.1.14/source/LICENSE-APACHE' },
+], indirect = true, version = '0.1.14' }
+library.typenum-1-18-0 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/typenum/1.18.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/typenum/1.18.0/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 0.9878)] hash = 0xb9f15462
+# clarifyed: LICENSE-MIT [MIT] hash = 0xb9f15462
+    { name = 'MIT', url = 'https://docs.rs/crate/typenum/1.18.0/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x91d5a0a7
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x91d5a0a7
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/typenum/1.18.0/source/LICENSE-APACHE' },
+# LICENSE [unknown] hash = 0xa4618a29
+# clarifyed: LICENSE [MIT OR Apache-2.0] hash = 0xa4618a29
+    { name = 'MIT', url = 'https://docs.rs/crate/typenum/1.18.0/source/LICENSE' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/typenum/1.18.0/source/LICENSE' },
+], indirect = true, version = '1.18.0' }
+library.unicode-ident-1-0-18 = { license = [
+# Cargo.toml (package.license) [(MIT OR Apache-2.0) AND Unicode-3.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/unicode-ident/1.0.18/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unicode-ident/1.0.18/source/Cargo.toml' },
+    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/unicode-ident/1.0.18/source/Cargo.toml' },
+# LICENSE-UNICODE [Unicode-3.0 (confidence 1.0000)] hash = 0x3475d800
+    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/unicode-ident/1.0.18/source/LICENSE-UNICODE' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/unicode-ident/1.0.18/source/LICENSE-MIT' },
+# LICENSE-APACHE [Pixar (confidence 0.9830), maybe Apache-2.0] hash = 0xb5518783
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unicode-ident/1.0.18/source/LICENSE-APACHE' },
+], indirect = true, version = '1.0.18' }
+library.unicode-xid-0-2-6 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+# clarifyed [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/unicode-xid/0.2.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unicode-xid/0.2.6/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0x860b1718
+# clarifyed: COPYRIGHT [MIT OR Apache-2.0] hash = 0x860b1718
+    { name = 'MIT', url = 'https://docs.rs/crate/unicode-xid/0.2.6/source/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unicode-xid/0.2.6/source/COPYRIGHT' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x86e6d3b9
+# clarifyed: LICENSE-MIT [MIT] hash = 0x86e6d3b9
+    { name = 'MIT', url = 'https://docs.rs/crate/unicode-xid/0.2.6/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unicode-xid/0.2.6/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.6' }
+library.varisat-0-2-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat/0.2.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat/0.2.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xd836204e
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat/0.2.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat/0.2.2/source/LICENSE-APACHE' },
+], indirect = false, version = '0.2.2' }
+library.varisat-checker-0-2-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat-checker/0.2.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat-checker/0.2.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xd836204e
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat-checker/0.2.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat-checker/0.2.2/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.2' }
+library.varisat-dimacs-0-2-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat-dimacs/0.2.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat-dimacs/0.2.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xd836204e
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat-dimacs/0.2.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat-dimacs/0.2.2/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.2' }
+library.varisat-formula-0-2-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat-formula/0.2.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat-formula/0.2.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xd836204e
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat-formula/0.2.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat-formula/0.2.2/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.2' }
+library.varisat-internal-macros-0-2-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat-internal-macros/0.2.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat-internal-macros/0.2.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xd836204e
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat-internal-macros/0.2.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat-internal-macros/0.2.2/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.2' }
+library.varisat-internal-proof-0-2-2 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat-internal-proof/0.2.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat-internal-proof/0.2.2/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0xd836204e
+    { name = 'MIT', url = 'https://docs.rs/crate/varisat-internal-proof/0.2.2/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/varisat-internal-proof/0.2.2/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.2' }
+library.vec_mut_scan-0-3-0 = { license = [
+# Cargo.toml (package.license) [0BSD]
+# clarifyed [0BSD]
+    { name = '0BSD', url = 'https://docs.rs/crate/vec_mut_scan/0.3.0/source/Cargo.toml' },
+# COPYRIGHT [unknown] hash = 0xa0851550
+# clarifyed: COPYRIGHT [0BSD] hash = 0xa0851550
+    { name = '0BSD', url = 'https://docs.rs/crate/vec_mut_scan/0.3.0/source/COPYRIGHT' },
+], indirect = true, version = '0.3.0' }
+library.version_check-0-9-5 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/version_check/0.9.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/version_check/0.9.5/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 0.9878)] hash = 0x82d3cdf2
+    { name = 'MIT', url = 'https://docs.rs/crate/version_check/0.9.5/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/version_check/0.9.5/source/LICENSE-APACHE' },
+], indirect = true, version = '0.9.5' }
+library.wasi-0-11-0-wasi-snapshot-preview1 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT]
+# clarifyed [Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasi/0.11.0+wasi-snapshot-preview1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasi/0.11.0+wasi-snapshot-preview1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasi/0.11.0+wasi-snapshot-preview1/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+# clarifyed: LICENSE-MIT [MIT] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/wasi/0.11.0+wasi-snapshot-preview1/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasi/0.11.0+wasi-snapshot-preview1/source/LICENSE-APACHE' },
+# LICENSE-Apache-2.0_WITH_LLVM-exception [Apache-2.0 (confidence 0.9569)] hash = 0xdebf99f1
+# clarifyed: LICENSE-Apache-2.0_WITH_LLVM-exception [Apache-2.0] hash = 0xdebf99f1
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasi/0.11.0+wasi-snapshot-preview1/source/LICENSE-Apache-2.0_WITH_LLVM-exception' },
+], indirect = true, version = '0.11.0+wasi-snapshot-preview1' }
+library.wasi-0-14-2-wasi-0-2-4 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT]
+# clarifyed [Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasi/0.14.2+wasi-0.2.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasi/0.14.2+wasi-0.2.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasi/0.14.2+wasi-0.2.4/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x386ca1bc
+# clarifyed: LICENSE-MIT [MIT] hash = 0x386ca1bc
+    { name = 'MIT', url = 'https://docs.rs/crate/wasi/0.14.2+wasi-0.2.4/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+# clarifyed: LICENSE-APACHE [Apache-2.0] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasi/0.14.2+wasi-0.2.4/source/LICENSE-APACHE' },
+# LICENSE-Apache-2.0_WITH_LLVM-exception [Apache-2.0 (confidence 0.9569)] hash = 0xdebf99f1
+# clarifyed: LICENSE-Apache-2.0_WITH_LLVM-exception [Apache-2.0] hash = 0xdebf99f1
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasi/0.14.2+wasi-0.2.4/source/LICENSE-Apache-2.0_WITH_LLVM-exception' },
+], indirect = true, version = '0.14.2+wasi-0.2.4' }
+library.wasm-bindgen-0-2-100 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen/0.2.100/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen/0.2.100/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x9374b940
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen/0.2.100/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen/0.2.100/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.100' }
+library.wasm-bindgen-backend-0-2-100 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-backend/0.2.100/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-backend/0.2.100/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x9374b940
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-backend/0.2.100/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-backend/0.2.100/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.100' }
+library.wasm-bindgen-macro-0-2-100 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-macro/0.2.100/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-macro/0.2.100/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x9374b940
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-macro/0.2.100/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-macro/0.2.100/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.100' }
+library.wasm-bindgen-macro-support-0-2-100 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-macro-support/0.2.100/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-macro-support/0.2.100/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x9374b940
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-macro-support/0.2.100/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-macro-support/0.2.100/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.100' }
+library.wasm-bindgen-shared-0-2-100 = { license = [
+# Cargo.toml (package.license) [MIT OR Apache-2.0]
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-shared/0.2.100/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-shared/0.2.100/source/Cargo.toml' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x9374b940
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-shared/0.2.100/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x24b54f4b
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-shared/0.2.100/source/LICENSE-APACHE' },
+], indirect = true, version = '0.2.100' }
+library.wide-0-7-32 = { license = [
+# Cargo.toml (package.license) [Zlib OR Apache-2.0 OR MIT]
+    { name = 'Zlib', url = 'https://docs.rs/crate/wide/0.7.32/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wide/0.7.32/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wide/0.7.32/source/Cargo.toml' },
+# LICENSE-ZLIB.md [Zlib (confidence 1.0000)] hash = 0x213003c2
+    { name = 'Zlib', url = 'https://docs.rs/crate/wide/0.7.32/source/LICENSE-ZLIB.md' },
+], indirect = true, version = '0.7.32' }
+library.wit-bindgen-rt-0-39-0 = { license = [
+# Cargo.toml (package.license) [Apache-2.0 WITH LLVM-exception OR Apache-2.0 OR MIT]
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wit-bindgen-rt/0.39.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wit-bindgen-rt/0.39.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wit-bindgen-rt/0.39.0/source/Cargo.toml' },
+], indirect = true, version = '0.39.0' }
+library.wyz-0-5-1 = { license = [
+# Cargo.toml (package.license) [MIT]
+    { name = 'MIT', url = 'https://docs.rs/crate/wyz/0.5.1/source/Cargo.toml' },
+# LICENSE.txt [MIT (confidence 1.0000)] hash = 0x73149b5e
+    { name = 'MIT', url = 'https://docs.rs/crate/wyz/0.5.1/source/LICENSE.txt' },
+], indirect = true, version = '0.5.1' }
+library.zerocopy-0-8-25 = { license = [
+# Cargo.toml (package.license) [BSD-2-Clause OR Apache-2.0 OR MIT]
+    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/zerocopy/0.8.25/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zerocopy/0.8.25/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/zerocopy/0.8.25/source/Cargo.toml' },
+# LICENSE-BSD [BSD-2-Clause (confidence 0.9728)] hash = 0x336921c7
+    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/zerocopy/0.8.25/source/LICENSE-BSD' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x27be07da
+    { name = 'MIT', url = 'https://docs.rs/crate/zerocopy/0.8.25/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x211b8648
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zerocopy/0.8.25/source/LICENSE-APACHE' },
+], indirect = true, version = '0.8.25' }
+library.zerocopy-derive-0-8-25 = { license = [
+# Cargo.toml (package.license) [BSD-2-Clause OR Apache-2.0 OR MIT]
+    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/zerocopy-derive/0.8.25/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zerocopy-derive/0.8.25/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/zerocopy-derive/0.8.25/source/Cargo.toml' },
+# LICENSE-BSD [BSD-2-Clause (confidence 0.9728)] hash = 0x336921c7
+    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/zerocopy-derive/0.8.25/source/LICENSE-BSD' },
+# LICENSE-MIT [MIT (confidence 1.0000)] hash = 0x27be07da
+    { name = 'MIT', url = 'https://docs.rs/crate/zerocopy-derive/0.8.25/source/LICENSE-MIT' },
+# LICENSE-APACHE [Apache-2.0 (confidence 1.0000)] hash = 0x211b8648
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zerocopy-derive/0.8.25/source/LICENSE-APACHE' },
+], indirect = true, version = '0.8.25' }
+
+# キー: filename
+# 型:   文字列
+# 要否: 必須
+# 説明: 配置するファイル名
+#       提出されたソースコードがこの名前でカレントディレクトリに作成されます
+#       基本的には Main + 拡張子 で統一してください
+#       ただしファイル名に意味がある場合やプロジェクトファイルを用いる場合は適切にファイルパスを指定してください
+# 例:   'Main.c'
+#       'Main.cpp'
+#       'src/main.rs'
+filename = 'src/main.rs'
+
+# キー: install
+# 型:   文字列
+# 要否: 必須
+# 説明: インストールスクリプト
+#       このスクリプトでは言語環境のイメージを作成するために使用されます
+#       そのためコンパイラ/インタプリタやライブラリのインストールだけでなく、プロジェクトの生成やプリコンパイルといった、提出によらずにすべてで行うべき工程はこのインストールスクリプトで行ってください
+#       ネットワークアクセスができるのはこのタイミングだけです
+#       後述のコンパイルスクリプト、および実行コマンドではネットワークアクセスができないため、必要なファイルがインターネットにある場合はこのスクリプトでダウンロードを行っておいてください
+#
+#       ここで記述されたスクリプトはbashに渡されて実行されます
+#       シェル変数などは通常通り使用可能ですが、コンパイルスクリプト、実行コマンドには引き継がれないので注意してください
+#       コンパイルスクリプトにおいては同様にbashで実行されるため、同じ内容を記述してください
+#       実行コマンドはシェルを介さず直接起動されるため、環境変数の修正が必要な場合は後述のenvironmentを使用してください
+#
+#       またイメージを最小化するために、インストール作業には必要だが最終成果物として不要なものは /tmp においてください
+#       インストールスクリプトが終了したあとで /tmp 以下のものは削除されます
+install = '''
+# Generated by https://github.com/rust-lang-ja/atcoder-proposal/tree/8d2b334b45b438b0e18c4f5b82f3cf1e27da9497
+
+set -e
+
+sudo apt-get update
+sudo apt-get install -y --no-install-recommends build-essential ca-certificates curl
+
+rust_version=1.87.0
+rust_channel=1.87.0
+
+# https://forge.rust-lang.org/infra/other-installation-methods.html#standalone-installers
+curl "https://static.rust-lang.org/dist/rust-$rust_channel-x86_64-unknown-linux-gnu.tar.gz" -fO --output-dir /tmp
+tar xvf "/tmp/rust-$rust_channel-x86_64-unknown-linux-gnu.tar.gz" -C /tmp
+sudo "/tmp/rust-$rust_channel-x86_64-unknown-linux-gnu/install.sh"
+
+cargo -vV
+[ "$(command -v cargo)" = /usr/local/bin/cargo ]
+[ "$(cargo -vV | sed -n 's/release: \(.*\)/\1/p')" = "$rust_version" ]
+[ "$(cargo -vV | sed -n 's/host: \(.*\)/\1/p')" = x86_64-unknown-linux-gnu ]
+
+mkdir ./.cargo ./src
+
+cat > ./.cargo/config.toml << EOF
+[build]
+rustflags = [
+    "--cfg", "atcoder",
+]
+EOF
+
+cat > ./Cargo.toml << EOF
+[profile.release]
+lto = true # コンパイル時間が著しく長くなってしまう場合は無し
+
+[package]
+name = "main"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+# 202411から:
+rpds = "=1.1.1"
+rand_xorshift = "=0.4.0"
+rand_xoshiro = "=0.7.0"
+statrs = "=0.18.0"
+primal = "=0.3.3"
+thiserror = "=2.0.12"
+# 202301から:
+ac-library-rs = { git = "https://github.com/rust-lang-ja/ac-library-rs", rev = "89356739594fa35cb744f374bfb68a2eb27a64ae" }
+#ac-library-rs = "=0.1.1"
+once_cell = "=1.21.3"
+static_assertions = "=1.1.0"
+varisat = "=0.2.2"
+memoise = "=0.3.2"
+argio = "=0.2.0"
+bitvec = "=1.0.1"
+counter = "=0.6.0"
+hashbag = "=0.1.12"
+pathfinding = "=4.14.0"
+recur-fn = "=2.2.0"
+indexing = { version = "=0.4.1", features = ["experimental_pointer_ranges"] }
+amplify = { version = "=4.9.0", features = ["c_raw", "rand", "stringly_conversions"] }
+amplify_derive = "=4.0.1"
+amplify_num = { version = "=0.5.3", features = ["std"] }
+easy-ext = "=1.0.2"
+multimap = "=0.10.1"
+btreemultimap = "=0.1.1"
+bstr = "=1.12.0"
+az = "=1.2.1"
+glidesort = "=0.1.2"
+tap = "=1.0.1"
+omniswap = "=0.1.0"
+multiversion = "=0.8.0"
+# 202004から続投:
+num = "=0.4.3"
+num-bigint = "=0.4.6"
+num-complex = "=0.4.6"
+num-integer = "=0.1.46"
+num-iter = "=0.1.45"
+num-rational = "=0.4.2"
+num-traits = "=0.2.19"
+num-derive = "=0.4.2"
+ndarray = "=0.16.1"
+nalgebra = "=0.33.2"
+alga = "=0.9.3"
+libm = "=0.2.15"
+rand = "=0.9.1"
+getrandom = "=0.3.3"
+rand_chacha = "=0.9.0"
+rand_core = "=0.9.3"
+rand_hc = "=0.4.0"
+rand_pcg = "=0.9.0"
+rand_distr = "=0.5.1"
+petgraph = "=0.8.1"
+indexmap = "=2.9.0"
+regex = "=1.11.1"
+lazy_static = "=1.5.0"
+ordered-float = "=5.0.0"
+ascii = "=1.1.0"
+permutohedron = "=0.2.4"
+superslice = "=1.0.0"
+itertools = "=0.14.0"
+itertools-num = "=0.1.3"
+maplit = "=1.0.2"
+either = "=1.15.0"
+im-rc = "=15.1.0"
+fixedbitset = "=0.5.7"
+bitset-fixed = "=0.1.0"
+proconio = { version = "=0.5.0", features = ["derive"] }
+text_io = "=0.1.13"
+rustc-hash = "=2.1.1"
+smallvec = { version = "=1.15.0", features = ["const_generics", "const_new", "write", "union", "serde", "arbitrary"] }
+EOF
+
+# 1000行以上あるので、GitHubのリポジトリからダウンロード
+curl https://raw.githubusercontent.com/rust-lang-ja/atcoder-proposal/8d2b334b45b438b0e18c4f5b82f3cf1e27da9497/Cargo.lock -fO
+
+# transitive dependenciesのライセンスについては:
+# - https://github.com/rust-lang-ja/atcoder-proposal/blob/8d2b334b45b438b0e18c4f5b82f3cf1e27da9497/deny.toml
+# - https://github.com/rust-lang-ja/atcoder-proposal/blob/8d2b334b45b438b0e18c4f5b82f3cf1e27da9497/clarify.toml
+# - https://github.com/rust-lang-ja/atcoder-proposal/actions/workflows/licenses.yml
+
+echo 'fn main() {}' > ./src/main.rs
+
+cargo build -vv --release
+rm target/release/main
+'''
+
+# キー: compile
+# 型:   文字列
+# 要否: 任意
+# 説明: コンパイルスクリプト
+#       コンパイルを行う言語の場合はコンパイルコマンドを記入してください
+#
+#       ここで記述されたスクリプトはbashに渡されて実行されます
+#       シェル変数などは通常通り使用可能ですが、実行コマンドには引き継がれないので注意してください
+#       実行コマンドはシェルを介さず直接起動されるため、環境変数の修正が必要な場合は後述のenvironmentを使用してください
+#
+#       コンパイルを行わない言語の場合は記述不要です
+#       ただしコンパイルを行う必要のない言語の場合でも、構文チェックなどをコンパイル代わりに行わせることが可能です
+#       成功時に後述の object で指定するファイルが生成されるようにコマンドを記述してください
+compile = '''
+cargo build --release --quiet --offline
+'''
+
+# キー: object
+# 型:   文字列
+# 要否: 任意
+# 説明: コンパイル成否を判断するためのファイルパス
+#       コンパイルが成功したかどうかの判定に行うファイルを/judgeからの相対パスで記入してください
+#       コンパイルの成否はこのファイルの存在で判定を行います
+#       コンパイラの出力内容や、コンパイラの終了コードでは判定を行いませんので注意してください
+#       またこの仕様を用いて、インタプリタ言語で構文チェックなどを行うことが可能です
+#       例えばコンパイルコマンドとして構文チェックを行い、その成否に応じてここで指定するファイルを生成する/しないを行えば、インタプリタ言語でもコンパイルエラーで実行を中断させることが可能です
+# 例:   'a.out'
+#       'publish/Main'
+#       'target/release/main'
+object = 'target/release/main'
+
+# キー: environment
+# 型:   テーブル
+#       テーブル内の各キー/値は環境変数1つを表し、キーには環境変数名を、値は文字列型で環境変数の内容を記述
+# 要否: 任意
+# 説明: 実行時の環境変数
+#       実行はシェルを介さず直接実行されるためシェルと同じ方法では環境変数を設定できません
+#       そのため環境変数を修正する場合はenvironmentテーブル内にキー/値を記述してください
+#
+#       デフォルトでは以下の環境変数が設定されています
+#           environment.PATH    = '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+#           environment.HOME    = '/home/runner'
+#           environment.LANG    = 'C.UTF-8'
+#           environment.ATCODER = '1'
+#
+#       ここで指定する環境変数は実行時のみ影響するものです
+#       インストールスクリプト、コンパイルスクリプトには影響しません
+#       それぞれで環境変数を変更する場合はそれぞれのスクリプト内で直接変更するようにしてください
+#
+#       また以下の文字列は実行直前にジャッジシステムによって置換されます:
+#           {memory:b}     問題のメモリ制限の数値（単位: バイト）
+#           {memory:kb}    問題のメモリ制限の数値（単位: KiB）
+#           {memory:mb}    問題のメモリ制限の数値（単位: MiB）
+#       インタプリタ言語など、環境変数によって実行環境の設定を行う場合に使用できます
+environment.RUST_BACKTRACE = '0'
+
+# キー: execution
+# 型:   配列
+#       配列内の各要素は文字列で、実行コマンドとして渡される各引数
+# 要否: 必須
+# 説明: 実行コマンド
+#       実行を行うときのコマンドを配列で指定してください
+#       実行はオーバーヘッドを取り除くためにシェルなどを使わずに直接起動させます
+#       そのためシェルの構文などは一切使えません
+#       ただし以下の文字列は実行直前にジャッジシステムによって置換されます:
+#           {memory:b}     問題のメモリ制限の数値（単位: バイト）
+#           {memory:kb}    問題のメモリ制限の数値（単位: KiB）
+#           {memory:mb}    問題のメモリ制限の数値（単位: MiB）
+#       インタプリタ言語など、実行環境の設定を行う場合に使用できます
+# 例:   [ './a.out' ]
+#       [ './target/release/main' ]
+#       [ 'java', '-Xss{memory:mb}M', 'Main' ]
+execution = [ './target/release/main' ]

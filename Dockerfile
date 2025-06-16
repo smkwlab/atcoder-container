@@ -41,7 +41,7 @@ RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.2 && \
     echo ". ${HOME}/.asdf/completions/asdf.bash" >> ${HOME}/.bashrc
 
 # Python, oj
-ARG AC_CPYTHON_VERSION=3.13.2
+ARG AC_CPYTHON_VERSION=3.13.5
 
 # Install build dependencies
 RUN apt-get update && \
@@ -102,44 +102,36 @@ RUN python3.13 -m pip install setuptools==75.8.0
 
 # Install base scientific packages
 RUN python3.13 -m pip install \
-    numpy==2.1.3 \
-    pandas==2.2.3 \
-    scipy==1.15.1 \
+    numpy==2.2.6 \
+    pandas==2.3.0 \
+    scipy==1.15.3 \
     sympy==1.13.1
 
 # Install additional scientific packages
 RUN python3.13 -m pip install \
-    networkx==3.4.2 \
-    scikit-learn==1.6.1 \
-    numba==0.61.0 \
+    networkx==3.5 \
+    scikit-learn==1.7.0 \
+    numba==0.61.2 \
     mpmath==1.3.0
 
 # Install the rest of the packages
 RUN python3.13 -m pip install \
     "git+https://github.com/not522/ac-library-python@27fdbb71cd0d566bdeb12746db59c9d908c6b5d5" \
-    acl-cpp-python==0.6.1 \
-    bitarray==3.0.0 \
+    bitarray==3.4.2 \
     filelock==3.17.0 \
     fsspec==2025.2.0 \
-    gmpy2==2.2.1 \
     Jinja2==3.1.5 \
     joblib==1.4.2 \
-    lightgbm==4.5.0 \
-    llvmlite==0.44.0 \
     MarkupSafe==3.0.2 \
-    more-itertools==10.6.0 \
-    polars==1.21.0 \
+    more-itertools==10.7.0 \
     PuLP==2.9.0 \
     python-dateutil==2.9.0.post0 \
     pytz==2025.1 \
-    rustworkx==0.16.0 \
-    shapely==2.0.7 \
     six==1.17.0 \
     sortedcontainers==2.4.0 \
     threadpoolctl==3.5.0 \
     typing_extensions==4.12.2 \
-    tzdata==2025.1 \
-    z3-solver==4.13.4.0
+    tzdata==2025.1
 
 # Install PyTorch CPU
 RUN python3.13 -m pip install torch==2.6.0+cpu --index-url https://download.pytorch.org/whl/cpu
@@ -156,7 +148,7 @@ RUN python3.13 -m pip install online-judge-tools==11.5.1
 #    asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git && \
 #    asdf install nodejs 22.11.0 && \
 #    asdf global nodejs 22.11.0 && \
-ARG NODE_VERSION=22.14.0
+ARG NODE_VERSION=22.16.0
 RUN case "$(uname -m)" in \
         x86_64) \
             wget -q -O /tmp/node.tar.xz https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz \
@@ -170,11 +162,12 @@ RUN case "$(uname -m)" in \
             ;; \
     esac && \
     tar -C /usr/local --strip-components=1 -xf /tmp/node.tar.xz --wildcards '*/bin' '*/share' '*/lib' '*/include' && \
+    ln -s /usr/local/lib/node_modules /node_modules && \
     npm install -g \
       ac-library-js@0.1.1 \
-      data-structure-typed@2.0.3 \
+      data-structure-typed@2.0.4 \
       lodash@4.17.21 \
-      mathjs@14.3.0 \
+      mathjs@14.5.2 \
       tstl@3.0.0 \
       atcoder-cli@2.2.0
 
@@ -259,7 +252,7 @@ RUN apt-get update && \
 
 # Install libtorch
 WORKDIR /tmp
-ARG AC_LIBTORCH_VERSION="2.6.0"
+ARG AC_LIBTORCH_VERSION="2.7.0"
 RUN wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-${AC_LIBTORCH_VERSION}%2Bcpu.zip && \
    unzip -q libtorch.zip && \
    cd libtorch && \
@@ -270,14 +263,16 @@ RUN wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-c
    cd .. && \
    rm -rf libtorch*
 
-# Install ruby-build and Ruby
+# Install ruby-build and Ruby with GC patch
 RUN curl -s https://api.github.com/repos/rbenv/ruby-build/releases/latest | \
    grep -o 'https://[^"]*tarball[^"]*' | \
    xargs curl -o ruby-build.tarball -L && \
    tar -xf ruby-build.tarball && \
    PREFIX=/usr/local ./*ruby-build-*/install.sh && \
-   ruby-build 3.4.1 /root/.rubies/ruby && \
-   rm -rf *ruby-build* ruby-build.tarball
+   wget -q -O gc.patch https://patch-diff.githubusercontent.com/raw/ruby/ruby/pull/12667.patch && \
+   sed -i 's@[ab]/@@g' gc.patch && \
+   ruby-build --patch 3.4.4 /root/.rubies/ruby < gc.patch && \
+   rm -rf *ruby-build* ruby-build.tarball gc.patch
 
 # Set Ruby PATH
 ENV PATH=/root/.rubies/ruby/bin:$PATH
@@ -295,11 +290,11 @@ RUN gem install -N \
     faster_prime:1.0.1 \
     ffi-geos:2.5.0 \
     immutable-ruby:0.2.0 \
-    lightgbm:0.4.0 \
+    lightgbm:0.4.1 \
     numo-linalg:0.1.7 \
     numo-narray:0.9.2.1 \
-    numo-openblas:0.4.16 \
-    polars-df:0.17.0 \
+    numo-openblas:0.5.0 \
+    polars-df:0.19.0 \
     rbtree:0.4.6 \
     rgl:0.6.6 \
     rumale:1.0.0 \
@@ -315,8 +310,8 @@ RUN if [ "$(uname -m)" = "x86_64" ]; then \
     cd or-tools && \
     cmake -S . -B build -DBUILD_DEPS=ON && \
     cmake --build build --target install && \
-    gem install or-tools -v 0.14.1; \
-    gem install torch-rb -v 0.19.0 -- --with-torch-dir=/tmp/libtorch; \
+    gem install or-tools -v 0.15.0; \
+    gem install torch-rb -v 0.20.0 -- --with-torch-dir=/usr/local; \
     fi
 
 # torch-rbのインストール（LibTorchのパスを指定）
@@ -340,7 +335,7 @@ RUN if [ "$(uname -m)" = "x86_64" ]; then \
 #    gem install polars-df
 
 # erlang
-ARG AC_OTP_VERSION=27.2.3
+ARG AC_OTP_VERSION=28.0
 RUN apt-get update && \
     apt-get install -y \
         libssl-dev \
@@ -361,8 +356,9 @@ RUN wget -q -O erlang.tar.gz https://github.com/erlang/otp/releases/download/OTP
 
 # elixir
 # Install Elixir
-RUN AC_OTP_MAJOR_VERSION=$(echo $AC_OTP_VERSION | cut -d '.' -f 1) && \
-    wget -q https://github.com/elixir-lang/elixir/releases/download/v1.18.2/elixir-otp-${AC_OTP_MAJOR_VERSION}.zip && \
+# Elixir v1.18.4 precompiled for OTP 27 is binary compatible with OTP 28
+RUN AC_OTP_MAJOR_VERSION=27 && \
+    wget -q https://github.com/elixir-lang/elixir/releases/download/v1.18.4/elixir-otp-${AC_OTP_MAJOR_VERSION}.zip && \
     unzip elixir-otp-${AC_OTP_MAJOR_VERSION}.zip 'bin/*' 'lib/*' -d /usr/local && \
     rm elixir-otp-${AC_OTP_MAJOR_VERSION}.zip
 
