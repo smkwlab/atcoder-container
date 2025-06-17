@@ -1,0 +1,52 @@
+# Optimized build action for Lite version
+name: Build Lite Docker image
+description: Build lightweight AtCoder container optimized for competitive programming
+inputs:
+  platforms:
+    description: List of target platforms for build
+    required: false
+    default: 'linux/amd64'
+  load:
+    description: Load is a shorthand for --output=type=docker
+    required: false
+    default: 'false'
+  push:
+    description: Push is a shorthand for --output=type=registry
+    required: false
+    default: 'false'
+  tags:
+    description: List of tags
+    required: true
+  dockerfile:
+    description: Path to Dockerfile
+    required: false
+    default: './Dockerfile.lite'
+runs:
+  using: 'composite'
+  steps:
+    - name: Set up QEMU
+      if: contains(inputs.platforms, 'arm64')
+      uses: docker/setup-qemu-action@v3
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      with:
+        config-inline: |
+          [dns]
+            nameservers=["1.1.1.1"]
+        driver-opts: |
+          network=host
+
+    - name: Build and push Lite version
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ${{ inputs.dockerfile }}
+        platforms: ${{ inputs.platforms }}
+        load: ${{ inputs.load }}
+        push: ${{ inputs.push }}
+        tags: ${{ inputs.tags }}
+        cache-from: type=gha,scope=lite
+        cache-to: type=gha,mode=max,scope=lite
+        build-args: |
+          BUILDKIT_INLINE_CACHE=1
