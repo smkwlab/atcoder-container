@@ -1,29 +1,64 @@
+---
 name: Build latest
-on:
+"on":
   push:
     branches:
       - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-latest
+          - platform: linux/arm64
+            runner: arm-runner
+    runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
       packages: write
     steps:
+      - name: Check ARM runner availability
+        if: matrix.runner == 'arm-runner'
+        run: |
+          echo "::notice::Using ARM runner for native ARM64 build"
+          echo "Runner: ${{ matrix.runner }}"
+          echo "Platform: ${{ matrix.platform }}"
+
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        if: matrix.platform == 'linux/arm64' && matrix.runner == 'ubuntu-latest'
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build Docker image
-        uses: ./.github/actions/build/
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
         with:
-          platforms: linux/amd64,linux/arm64
-          push: true
+          images: ghcr.io/${{ github.repository_owner }}/atcoder-container
           tags: |
-            ghcr.io/${{ github.repository_owner }}/atcoder-container:latest
-            ghcr.io/${{ github.repository_owner }}/atcoder-container:all
+            type=raw,value=latest
+            type=raw,value=all
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
