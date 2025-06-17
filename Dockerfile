@@ -3,7 +3,7 @@ FROM ubuntu:24.04
 # コンテナ構築用にホームディレクトリ代入
 ARG HOME=/home/runner
 ARG PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-ARG asdf_init=${HOME}/.asdf/asdf.sh
+# No asdf needed - using direct installation for all languages
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG DEBCONF_NONINTERACTIVE_SEEN=true
@@ -20,7 +20,7 @@ RUN apt-get update && \
             time \
             tzdata \
             xdg-utils \
-            g++-12 \
+            g++-13 \
             build-essential \
             wget \
             unzip \
@@ -34,11 +34,7 @@ ENV LANG="ja_JP.UTF-8" \
     LC_ALL="ja_JP.UTF-8" \
     ATCODER=1
 
-# asdf 
-SHELL ["/bin/bash", "-lc"]
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.2 && \
-    echo ". ${asdf_init}" >> ${HOME}/.bashrc && \
-    echo ". ${HOME}/.asdf/completions/asdf.bash" >> ${HOME}/.bashrc
+# No asdf needed - using direct installation for all languages
 
 # Python, oj
 ARG AC_CPYTHON_VERSION=3.13.5
@@ -231,7 +227,7 @@ RUN apt-get update && \
    bison \
    patch \
    build-essential \
-   rustc \
+# rustc removed - using official Rust installation instead
    libssl-dev \
    libyaml-dev \
    libreadline6-dev \
@@ -380,22 +376,93 @@ RUN MIX_ENV=prod mix deps.get && \
     MIX_ENV=prod mix release && \
     rm _build/prod/rel/main/bin/main
 
-# Rust
-RUN . ${asdf_init} && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends unzip && \
-    asdf plugin-add rust https://github.com/code-lever/asdf-rust.git && \
-    asdf install rust 1.70.0 && \
-    asdf global rust 1.70.0 && \
-    apt-get clean && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
+# Rust (from TOML install-script)
+ARG RUST_VERSION=1.87.0
+WORKDIR /tmp
+RUN case "$(uname -m)" in \
+        x86_64) \
+            curl "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" -fO && \
+            tar xf "rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" && \
+            "./rust-${RUST_VERSION}-x86_64-unknown-linux-gnu/install.sh" --prefix=/usr/local \
+            ;; \
+        aarch64) \
+            curl "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-aarch64-unknown-linux-gnu.tar.gz" -fO && \
+            tar xf "rust-${RUST_VERSION}-aarch64-unknown-linux-gnu.tar.gz" && \
+            "./rust-${RUST_VERSION}-aarch64-unknown-linux-gnu/install.sh" --prefix=/usr/local \
+            ;; \
+        *) \
+            echo "Unsupported architecture: $(uname -m)" \
+            exit 1 \
+            ;; \
+    esac && \
+    rm -rf rust-*
+
+# Setup Rust project with competitive programming libraries (from TOML)
+WORKDIR /judge
+RUN mkdir -p .cargo src && \
+    echo '[build]' > .cargo/config.toml && \
+    echo 'rustflags = ["--cfg", "atcoder"]' >> .cargo/config.toml
+
+# Copy Rust project files from TOML configuration
+COPY rust/Cargo.toml rust/Cargo.lock /judge/
+RUN echo 'fn main() {}' > src/main.rs && \
+    cargo build --release && \
+    rm target/release/main
 
 ## # AHC用のRustのinstall
 #RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 #ENV PATH $PATH:/home/root/.cargo/bin
 
-# C, C++ のバージョン指定
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 90 --slave /usr/bin/g++ g++ /usr/bin/g++-12
+# C++ ライブラリ追加 (TOML config.toml部分実装)
+RUN apt-get update && \
+    apt-get install -y \
+        cmake \
+        libeigen3-dev \
+        libgmp-dev \
+        libgmpxx4ldbl \
+        && \
+    rm -rf /var/lib/apt/lists/*
+
+# range-v3 (軽量ヘッダーライブラリ)
+ARG RANGEV3_VERSION=0.12.0
+WORKDIR /tmp
+RUN wget -q https://github.com/ericniebler/range-v3/archive/refs/tags/${RANGEV3_VERSION}.tar.gz -O range-v3.tar.gz && \
+    tar -xzf range-v3.tar.gz && \
+    cp -r range-v3-${RANGEV3_VERSION}/include/range /usr/local/include/ && \
+    rm -rf range-v3*
+
+# unordered_dense (軽量ハッシュマップライブラリ)
+ARG UNORDERED_DENSE_VERSION=4.5.0
+RUN wget -q https://github.com/martinus/unordered_dense/archive/refs/tags/v${UNORDERED_DENSE_VERSION}.tar.gz -O unordered_dense.tar.gz && \
+    tar -xzf unordered_dense.tar.gz && \
+    mkdir -p build_unordered_dense && \
+    cd build_unordered_dense && \
+    cmake -DCMAKE_INSTALL_PREFIX=/usr/local ../unordered_dense-${UNORDERED_DENSE_VERSION} && \
+    make install && \
+    cd .. && \
+    rm -rf unordered_dense* build_unordered_dense
+
+# Boost (軽量版 - 一部ライブラリのみ)
+ARG BOOST_VERSION=1.88.0
+RUN apt-get update && \
+    apt-get install -y \
+        libboost-system-dev \
+        libboost-filesystem-dev \
+        libboost-program-options-dev \
+        libboost-regex-dev \
+        libboost-graph-dev \
+        && \
+    rm -rf /var/lib/apt/lists/*
+
+# AC Library C++ (TOMLバージョン)
+ARG AC_LIBRARY_VERSION=1.6
+RUN wget -q https://github.com/atcoder/ac-library/archive/refs/tags/v${AC_LIBRARY_VERSION}.tar.gz -O ac-library.tar.gz && \
+    tar -xzf ac-library.tar.gz && \
+    cp -r ac-library-${AC_LIBRARY_VERSION}/atcoder /usr/local/include/ && \
+    rm -rf ac-library* && \
+    echo 'C++ libraries from TOML config: AC Library 1.6, Eigen3, range-v3 0.12.0, unordered_dense 4.5.0, Boost (subset)' > /usr/local/share/cpp-libraries.txt
+
+# C, C++ のバージョン指定 (GCC 13に統一)
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90 --slave /usr/bin/g++ g++ /usr/bin/g++-13
 
 WORKDIR /root
