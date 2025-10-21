@@ -1,8 +1,9 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # コンテナ構築用にホームディレクトリ代入
-ARG HOME=/root
-ARG asdf_init=${HOME}/.asdf/asdf.sh
+ARG HOME=/home/runner
+ARG PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+# No asdf needed - using direct installation for all languages
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG DEBCONF_NONINTERACTIVE_SEEN=true
@@ -19,8 +20,10 @@ RUN apt-get update && \
             time \
             tzdata \
             xdg-utils \
-            g++-12 \
+            g++-13 \
             build-essential \
+            wget \
+            unzip \
             && \
     localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && \
     apt-get clean && \
@@ -31,35 +34,138 @@ ENV LANG="ja_JP.UTF-8" \
     LC_ALL="ja_JP.UTF-8" \
     ATCODER=1
 
-# asdf 
-SHELL ["/bin/bash", "-lc"]
-RUN git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.11.2 && \
-    echo ". ${asdf_init}" >> ${HOME}/.bashrc && \
-    echo ". ${HOME}/.asdf/completions/asdf.bash" >> ${HOME}/.bashrc
+# No asdf needed - using direct installation for all languages
 
 # Python, oj
-RUN . ${asdf_init} && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends \
-            jq \
-            libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev \
-            libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev \
-            lzma lzma-dev tk-dev uuid-dev zlib1g-dev \
-            && \
-    asdf plugin-add python https://github.com/danhper/asdf-python.git && \
-    asdf install python 3.11.4 && \
-    asdf global python 3.11.4 && \
-    pip install online-judge-tools==11.5.1 && \
-    apt-get clean && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
-# nodejs, atcoder-cli
-RUN . ${asdf_init} && \
-    asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git && \
-    asdf install nodejs 18.16.1 && \
-    asdf global nodejs 18.16.1 && \
-    npm install -g atcoder-cli@2.2.0
+ARG AC_CPYTHON_VERSION=3.13.5
 
+# Install build dependencies
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget gnupg software-properties-common && \
+#    wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add - && \
+#    add-apt-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy-18 main" && \
+#    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
+   apt-get install -y \
+   build-essential \
+   gdb \
+   lcov \
+   pkg-config \
+   libbz2-dev \
+   libffi-dev \
+   libgdbm-dev \
+   libgdbm-compat-dev \
+   liblzma-dev \
+   libncurses5-dev \
+   libreadline6-dev \
+   libsqlite3-dev \
+   libssl-dev \
+   lzma \
+   lzma-dev \
+   tk-dev \
+   uuid-dev \
+   zlib1g-dev \
+   libgmp-dev \
+   libmpfr-dev \
+   libmpc-dev \
+   $(if [ "$(uname -m)" = "x86_64" ]; then echo "llvm-18"; fi) \
+   git \
+#   llvm-bolt \
+   && rm -rf /var/lib/apt/lists/*
+
+# Build and install Python
+WORKDIR /tmp
+RUN wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
+   tar xf Python-${AC_CPYTHON_VERSION}.tar.xz && \
+   cd Python-${AC_CPYTHON_VERSION} && \
+   if [ "$(uname -m)" = "x86_64" ]; then \
+       ln -s /usr/lib/llvm-18/lib/libbolt_rt_instr.a /usr/lib/libbolt_rt_instr.a && \
+       BOLT_FLAGS="--enable-bolt"; \
+   else \
+       BOLT_FLAGS=""; \
+   fi && \
+   ./configure --enable-optimizations --with-lto=full --with-strict-overflow ${BOLT_FLAGS} && \
+   make -j1 && \
+   make altinstall && \
+   cd .. && \
+   rm -rf Python-${AC_CPYTHON_VERSION} Python-${AC_CPYTHON_VERSION}.tar.xz
+
+# Install Python packages
+COPY python/freeze.txt /tmp/freeze.txt
+
+# Install setuptools first
+RUN python3.13 -m pip install setuptools==75.8.0
+
+# Install base scientific packages
+RUN python3.13 -m pip install \
+    numpy==2.2.6 \
+    pandas==2.3.0 \
+    scipy==1.15.3 \
+    sympy==1.13.1
+
+# Install additional scientific packages
+RUN python3.13 -m pip install \
+    networkx==3.5 \
+    scikit-learn==1.7.0 \
+    numba==0.61.2 \
+    mpmath==1.3.0
+
+# Install the rest of the packages
+RUN python3.13 -m pip install \
+    "git+https://github.com/not522/ac-library-python@27fdbb71cd0d566bdeb12746db59c9d908c6b5d5" \
+    bitarray==3.4.2 \
+    filelock==3.17.0 \
+    fsspec==2025.2.0 \
+    Jinja2==3.1.5 \
+    joblib==1.4.2 \
+    MarkupSafe==3.0.2 \
+    more-itertools==10.7.0 \
+    PuLP==2.9.0 \
+    python-dateutil==2.9.0.post0 \
+    pytz==2025.1 \
+    six==1.17.0 \
+    sortedcontainers==2.4.0 \
+    threadpoolctl==3.5.0 \
+    typing_extensions==4.12.2 \
+    tzdata==2025.1
+
+# Install PyTorch CPU
+RUN python3.13 -m pip install torch==2.6.0+cpu --index-url https://download.pytorch.org/whl/cpu
+
+# Clean up
+RUN python3.13 -m pip cache purge && \
+    rm /tmp/freeze.txt
+
+# Install online-judge-tools
+RUN python3.13 -m pip install online-judge-tools==11.5.1
+
+# nodejs, atcoder-cli
+#RUN . ${asdf_init} && \
+#    asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git && \
+#    asdf install nodejs 22.11.0 && \
+#    asdf global nodejs 22.11.0 && \
+ARG NODE_VERSION=22.16.0
+RUN case "$(uname -m)" in \
+        x86_64) \
+            wget -q -O /tmp/node.tar.xz https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz \
+            ;; \
+        aarch64) \
+            wget -q -O /tmp/node.tar.xz https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-arm64.tar.xz \
+            ;; \
+        *) \
+            echo "Unsupported architecture: $(uname -m)" \
+            exit 1 \
+            ;; \
+    esac && \
+    tar -C /usr/local --strip-components=1 -xf /tmp/node.tar.xz --wildcards '*/bin' '*/share' '*/lib' '*/include' && \
+    ln -s /usr/local/lib/node_modules /node_modules && \
+    npm install -g \
+      ac-library-js@0.1.1 \
+      data-structure-typed@2.0.4 \
+      lodash@4.17.21 \
+      mathjs@14.5.2 \
+      tstl@3.0.0 \
+      atcoder-cli@2.2.0
 
 # AtCoder 参加用プログラミング言語
 # C++
@@ -88,21 +194,134 @@ RUN . ${asdf_init} && \
 #     rm -rf /var/lib/apt/lists/*
 
 # Java
-RUN . ${asdf_init} && \
-    asdf plugin-add java https://github.com/halcyon/asdf-java.git && \
-    asdf install java adoptopenjdk-17.0.8+7 && \
-    asdf global java adoptopenjdk-17.0.8+7
+# OpenJDKのダウンロードとインストール
+RUN case "$(uname -m)" in \
+        x86_64) \
+            curl -L https://download.java.net/java/GA/jdk23.0.1/c28985cbf10d4e648e4004050f8781aa/11/GPL/openjdk-23.0.1_linux-x64_bin.tar.gz | \
+            tar zx -C /usr/local --strip-components 1 \
+            ;; \
+        aarch64) \
+            curl -L https://download.java.net/java/GA/jdk23.0.1/c28985cbf10d4e648e4004050f8781aa/11/GPL/openjdk-23.0.1_linux-aarch64_bin.tar.gz | \
+            tar zx -C /usr/local --strip-components 1 \
+            ;; \
+        *) \
+            echo "Unsupported architecture: $(uname -m)" \
+            exit 1 \
+            ;; \
+    esac
+
+# AC Libraryのダウンロード
+RUN wget -q https://github.com/ocha98/ac-library-java/releases/download/v2.0.0/ac_library23.jar && \
+    mv ac_library23.jar ac_library.jar
+
+# 実行スクリプトの作成
+COPY java/java.sh /judge/java.sh
+RUN chmod +x /judge/java.sh
+
 
 # Ruby
-RUN . ${asdf_init} && \
+# Install dependencies
+RUN apt-get update && \
+   DEBIAN_FRONTEND=noninteractive apt-get install -y \
+   autoconf \
+   bison \
+   patch \
+   build-essential \
+# rustc removed - using official Rust installation instead
+   libssl-dev \
+   libyaml-dev \
+   libreadline6-dev \
+   zlib1g-dev \
+   libgmp-dev \
+   libncurses5-dev \
+   libffi-dev \
+   libgdbm6 \
+   libgdbm-dev \
+   libdb-dev \
+   uuid-dev \
+   libz3-dev \
+   libgeos-dev \
+   curl \
+   wget \
+   unzip \
+   && rm -rf /var/lib/apt/lists/*
+
+# Install libtorch
+WORKDIR /tmp
+ARG AC_LIBTORCH_VERSION="2.7.0"
+RUN wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-${AC_LIBTORCH_VERSION}%2Bcpu.zip && \
+   unzip -q libtorch.zip && \
+   cd libtorch && \
+   cp -dR include /usr/local/ && \
+   cp -dR lib /usr/local/ && \
+   echo /usr/local/lib/libtorch > /etc/ld.so.conf.d/libtorch.conf && \
+   echo "libtorch $AC_LIBTORCH_VERSION" >> /root/library_version && \
+   cd .. && \
+   rm -rf libtorch*
+
+# Install ruby-build and Ruby with GC patch
+RUN curl -s https://api.github.com/repos/rbenv/ruby-build/releases/latest | \
+   grep -o 'https://[^"]*tarball[^"]*' | \
+   xargs curl -o ruby-build.tarball -L && \
+   tar -xf ruby-build.tarball && \
+   PREFIX=/usr/local ./*ruby-build-*/install.sh && \
+   wget -q -O gc.patch https://patch-diff.githubusercontent.com/raw/ruby/ruby/pull/12667.patch && \
+   sed -i 's@[ab]/@@g' gc.patch && \
+   ruby-build --patch 3.4.4 /root/.rubies/ruby < gc.patch && \
+   rm -rf *ruby-build* ruby-build.tarball gc.patch
+
+# Set Ruby PATH
+ENV PATH=/root/.rubies/ruby/bin:$PATH
+
+# Save default gems list
+RUN gem list -q --no-versions > /tmp/default-gems
+
+# Install Ruby gems
+# 基本的なgemsのインストール（問題のないもの）
+RUN gem install -N \
+    ac-library-rb:1.2.0 \
+    bit_utils:0.1.2 \
+    bitarray:1.3.1 \
+    fast_trie:0.5.1 \
+    faster_prime:1.0.1 \
+    ffi-geos:2.5.0 \
+    immutable-ruby:0.2.0 \
+    lightgbm:0.4.1 \
+    numo-linalg:0.1.7 \
+    numo-narray:0.9.2.1 \
+    numo-openblas:0.5.0 \
+    polars-df:0.19.0 \
+    rbtree:0.4.6 \
+    rgl:0.6.6 \
+    rumale:1.0.0 \
+    sorted_containers:1.1.0 \
+    sorted_set:1.0.3 \
+    z3:0.0.20230311
+
+# or-toolsのインストール（aarch64用の特別な設定が必要）
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
     apt-get update && \
-    apt-get install -y --no-install-recommends libyaml-dev && \
-    asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git && \
-    asdf install ruby 3.2.2 && \
-    asdf global ruby 3.2.2 && \
-    apt-get clean && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install -y cmake && \
+    git clone https://github.com/google/or-tools.git && \
+    cd or-tools && \
+    cmake -S . -B build -DBUILD_DEPS=ON && \
+    cmake --build build --target install && \
+    gem install or-tools -v 0.15.0; \
+    gem install torch-rb -v 0.20.0 -- --with-torch-dir=/usr/local; \
+    fi
+
+# torch-rbのインストール（LibTorchのパスを指定）
+#RUN gem install torch-rb -v 0.19.0 -- --with-torch-dir=/tmp/libtorch
+
+#RUN . ${asdf_init} && \
+#    apt-get update && \
+#    apt-get install -y --no-install-recommends libyaml-dev && \
+#    asdf plugin-add ruby https://github.com/asdf-vm/asdf-ruby.git && \
+#    asdf install ruby 3.2.2 && \
+#    asdf global ruby 3.2.2 && \
+#    apt-get clean && \
+#    apt-get autoremove -y && \
+#    rm -rf /var/lib/apt/lists/*
 #RUN . ${asdf_init} && \
 #    gem install rbtree && \
 #    gem install ac-library-rb && \
@@ -112,83 +331,138 @@ RUN . ${asdf_init} && \
 #    gem install polars-df
 
 # erlang
-RUN . ${asdf_init} && \
-#     apt-get update && \
-#     apt-get install -y --no-install-recommends \
-#             libncurses5-dev libwxgtk3.0-gtk3-dev libgl1-mesa-dev libglu1-mesa-dev \
-#             libpng-dev libssh-dev \
-#             unixodbc-dev xsltproc fop libxml2-utils libncurses-dev \
-#             openjdk-11-jdk libwxgtk-webview3.0-gtk3-dev \
-#             erlang-dev erlang-xmerl erlang-parsetools erlang-os-mon inotify-tools && \
-    asdf plugin-add erlang https://github.com/asdf-vm/asdf-erlang.git && \
-    asdf install erlang 26.0.2 && \
-    asdf global erlang 26.0.2 && \
-#     apt-get clean && \
-#     apt-get autoremove -y && \
-#     rm -rf /var/lib/apt/lists/* && \
-    rm -rf ${HOME}/.asdf/plugins/erlang/kerl-home/
-
+ARG AC_OTP_VERSION=28.0
+RUN apt-get update && \
+    apt-get install -y \
+        libssl-dev \
+        unixodbc-dev \
+        libblas-dev \
+        liblapack-dev \
+    && rm -rf /var/lib/apt/lists/*
+WORKDIR /tmp
+RUN wget -q -O erlang.tar.gz https://github.com/erlang/otp/releases/download/OTP-${AC_OTP_VERSION}/otp_src_${AC_OTP_VERSION}.tar.gz && \
+    mkdir erlang && \
+    tar -C erlang --strip-components=1 -xf erlang.tar.gz && \
+    cd erlang && \
+    ./configure --without-termcap && \
+    make -j4 && \
+    make install && \
+    cd .. && \
+    rm -rf erlang erlang.tar.gz
 
 # elixir
-RUN . ${asdf_init} && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends unzip && \
-    asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git && \
-    asdf install elixir 1.15.2-otp-26 && \
-    asdf global elixir 1.15.2-otp-26 && \
-    apt-get clean && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
-#RUN . ${asdf_init} && \
-#     mix local.hex --force && \
-#     mix local.rebar --force
+# Install Elixir
+# Elixir v1.18.4 precompiled for OTP 27 is binary compatible with OTP 28
+RUN AC_OTP_MAJOR_VERSION=27 && \
+    wget -q https://github.com/elixir-lang/elixir/releases/download/v1.18.4/elixir-otp-${AC_OTP_MAJOR_VERSION}.zip && \
+    unzip elixir-otp-${AC_OTP_MAJOR_VERSION}.zip 'bin/*' 'lib/*' -d /usr/local && \
+    rm elixir-otp-${AC_OTP_MAJOR_VERSION}.zip
 
-# Python
-#RUN . ${asdf_init} && \
-#     apt-get update && \
-#     apt-get install -y \
-#              libgmp-dev libmpfr-dev libmpc-dev && \
-#     python3.11 -m pip install \
-#                 numpy==1.24.1 \
-#                 scipy==1.10.1 \
-#                 networkx==3.0 \
-#                 sympy==1.11.1 \
-#                 sortedcontainers==2.4.0 \
-#                 more-itertools==9.0.0 \
-#                 shapely==2.0.0 \
-#                 bitarray==2.6.2 \
-#                 PuLP==2.7.0 \
-#                 mpmath==1.2.1 \
-#                 pandas==1.5.2 \
-#                 z3-solver==4.12.1.0 \
-#                 scikit-learn==1.2.0 \
-#                 ortools==9.5.2237 \
-#                 torch \
-#                 polars==0.15.15 \
-#                 lightgbm==3.3.1 \
-#                 gmpy2==2.1.5 \
-#                 numba==0.57.0 \
-#                 git+https://github.com/not522/ac-library-python && \
-#     python3.11 -m pip install -U setuptools==66.0.0 && \
-#     python3.11 -m pip install cppyy==2.4.1 && \
-#     apt-get clean && \
-#     apt-get autoremove -y && \
-#     rm -rf /var/lib/apt/lists/*
+# Create and setup Elixir project
+WORKDIR /judge
+RUN mix local.hex --force && \
+    mix local.rebar --force && \
+    mix new main && \
+    cd main
 
-# Rust
-RUN . ${asdf_init} && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends unzip && \
-    asdf plugin-add rust https://github.com/code-lever/asdf-rust.git && \
-    asdf install rust 1.70.0 && \
-    asdf global rust 1.70.0 && \
-    apt-get clean && \
-    apt-get autoremove -y && \
-    rm -rf /var/lib/apt/lists/*
+COPY elixir/mix.exs /judge/main/
+COPY elixir/config.exs /judge/main/config/
+COPY elixir/main.ex /judge/main/lib/
+
+WORKDIR /judge/main
+ENV EXLA_BUILD=fast \
+    EXLA_TARGET=cpu
+RUN MIX_ENV=prod mix deps.get && \
+    MIX_ENV=prod mix release && \
+    rm _build/prod/rel/main/bin/main
+
+# Rust (from TOML install-script)
+ARG RUST_VERSION=1.87.0
+WORKDIR /tmp
+RUN case "$(uname -m)" in \
+        x86_64) \
+            curl "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" -fO && \
+            tar xf "rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" && \
+            "./rust-${RUST_VERSION}-x86_64-unknown-linux-gnu/install.sh" --prefix=/usr/local \
+            ;; \
+        aarch64) \
+            curl "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-aarch64-unknown-linux-gnu.tar.gz" -fO && \
+            tar xf "rust-${RUST_VERSION}-aarch64-unknown-linux-gnu.tar.gz" && \
+            "./rust-${RUST_VERSION}-aarch64-unknown-linux-gnu/install.sh" --prefix=/usr/local \
+            ;; \
+        *) \
+            echo "Unsupported architecture: $(uname -m)" \
+            exit 1 \
+            ;; \
+    esac && \
+    rm -rf rust-*
+
+# Setup Rust project with competitive programming libraries (from TOML)
+WORKDIR /judge
+RUN mkdir -p .cargo src && \
+    echo '[build]' > .cargo/config.toml && \
+    echo 'rustflags = ["--cfg", "atcoder"]' >> .cargo/config.toml
+
+# Copy Rust project files from TOML configuration
+COPY rust/Cargo.toml rust/Cargo.lock /judge/
+RUN echo 'fn main() {}' > src/main.rs && \
+    cargo build --release && \
+    rm target/release/main
 
 ## # AHC用のRustのinstall
 #RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 #ENV PATH $PATH:/home/root/.cargo/bin
 
-# C, C++ のバージョン指定
-RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 90 --slave /usr/bin/g++ g++ /usr/bin/g++-12
+# C++ ライブラリ追加 (TOML config.toml部分実装)
+RUN apt-get update && \
+    apt-get install -y \
+        cmake \
+        libeigen3-dev \
+        libgmp-dev \
+        libgmpxx4ldbl \
+        && \
+    rm -rf /var/lib/apt/lists/*
+
+# range-v3 (軽量ヘッダーライブラリ)
+ARG RANGEV3_VERSION=0.12.0
+WORKDIR /tmp
+RUN wget -q https://github.com/ericniebler/range-v3/archive/refs/tags/${RANGEV3_VERSION}.tar.gz -O range-v3.tar.gz && \
+    tar -xzf range-v3.tar.gz && \
+    cp -r range-v3-${RANGEV3_VERSION}/include/range /usr/local/include/ && \
+    rm -rf range-v3*
+
+# unordered_dense (軽量ハッシュマップライブラリ)
+ARG UNORDERED_DENSE_VERSION=4.5.0
+RUN wget -q https://github.com/martinus/unordered_dense/archive/refs/tags/v${UNORDERED_DENSE_VERSION}.tar.gz -O unordered_dense.tar.gz && \
+    tar -xzf unordered_dense.tar.gz && \
+    mkdir -p build_unordered_dense && \
+    cd build_unordered_dense && \
+    cmake -DCMAKE_INSTALL_PREFIX=/usr/local ../unordered_dense-${UNORDERED_DENSE_VERSION} && \
+    make install && \
+    cd .. && \
+    rm -rf unordered_dense* build_unordered_dense
+
+# Boost (軽量版 - 一部ライブラリのみ)
+ARG BOOST_VERSION=1.88.0
+RUN apt-get update && \
+    apt-get install -y \
+        libboost-system-dev \
+        libboost-filesystem-dev \
+        libboost-program-options-dev \
+        libboost-regex-dev \
+        libboost-graph-dev \
+        && \
+    rm -rf /var/lib/apt/lists/*
+
+# AC Library C++ (TOMLバージョン)
+ARG AC_LIBRARY_VERSION=1.6
+RUN wget -q https://github.com/atcoder/ac-library/archive/refs/tags/v${AC_LIBRARY_VERSION}.tar.gz -O ac-library.tar.gz && \
+    tar -xzf ac-library.tar.gz && \
+    cp -r ac-library-${AC_LIBRARY_VERSION}/atcoder /usr/local/include/ && \
+    rm -rf ac-library* && \
+    echo 'C++ libraries from TOML config: AC Library 1.6, Eigen3, range-v3 0.12.0, unordered_dense 4.5.0, Boost (subset)' > /usr/local/share/cpp-libraries.txt
+
+# C, C++ のバージョン指定 (GCC 13に統一)
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90 --slave /usr/bin/g++ g++ /usr/bin/g++-13
+
+WORKDIR /root

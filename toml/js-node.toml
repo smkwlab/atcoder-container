@@ -1,0 +1,116 @@
+# SPDX-License-Identifier: CC0-1.0
+
+language = 'JavaScript'
+display = 'JavaScript (Node.js 22.16.0)'
+license = [
+    { name = '!License-31', url = 'https://github.com/nodejs/node/blob/main/LICENSE' },
+]
+
+library.ac-library-js = { license = [
+    { name = 'CC0-1.0', url = 'https://www.npmjs.com/package/ac-library-js' },
+], version = '0.1.1' }
+library.data-structure-typed = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/data-structure-typed' },
+], version = '2.0.4' }
+library.lodash = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/lodash' },
+], version = '4.17.21' }
+library.mathjs = { license = [
+    { name = 'Apache-2.0', url = 'https://www.npmjs.com/package/mathjs' },
+], version = '14.5.2' }
+library.tstl = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/tstl' },
+], version = '3.0.0' }
+library.'@commander-js/extra-typings' = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/@commander-js/extra-typings' },
+], indirect = true }
+library.commander = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/commander' },
+], indirect = true }
+library.esbuild = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/esbuild' },
+], indirect = true }
+library.'@esbuild/linux-x64' = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/@esbuild/linux-x64' },
+], indirect = true }
+library.'@babel/runtime' = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/@babel/runtime' },
+], indirect = true }
+library.'complex.js' = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/complex.js' },
+], indirect = true }
+library.'decimal.js' = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/decimal.js' },
+], indirect = true }
+library.escape-latex = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/escape-latex' },
+], indirect = true }
+library.'fraction.js' = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/fraction.js' },
+], indirect = true }
+library.javascript-natural-sort = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/javascript-natural-sort' },
+], indirect = true }
+library.seedrandom = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/seedrandom' },
+], indirect = true }
+library.tiny-emitter = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/tiny-emitter' },
+], indirect = true }
+library.typed-function = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/typed-function' },
+], indirect = true }
+
+filename = 'Main.js'
+
+install = '''
+NODE_VERSION=22.16.0
+wget -q -O /tmp/node.tar.xz https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz
+sudo tar -C /usr/local --strip-components=1 -xf /tmp/node.tar.xz --wildcards '*/bin' '*/share' '*/lib' '*/include'
+
+# tsc and Node.js cannot find libraries in /usr/local/lib/node_modules
+sudo ln -s /usr/local/lib/node_modules /node_modules
+
+# Create a script to execute with limited stack size
+cat << 'EOF' > node.sh
+#!/bin/sh
+
+if [ "$1" -gt 1048576 ]; then
+  stack_size=1048576
+else
+  stack_size="$1"
+fi
+
+filename="$2"
+
+node \
+--stack-size="$stack_size" \
+"$filename" \
+ONLINE_JUDGE \
+ATCODER
+EOF
+
+# install libraries
+sudo npm install -g \
+ac-library-js@0.1.1 \
+data-structure-typed@2.0.4 \
+lodash@4.17.21 \
+mathjs@14.5.2 \
+tstl@3.0.0 \
+
+'''
+
+compile = '''
+node --check Main.js && touch ok
+'''
+
+object = 'ok'
+
+execution = [
+    'sh',
+    'node.sh',
+    '{memory:kb}',
+    'Main.js',
+    'ONLINE_JUDGE',
+    'ATCODER',
+]

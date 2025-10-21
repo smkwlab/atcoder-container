@@ -1,0 +1,42 @@
+# SPDX-License-Identifier: CC0-1.0
+
+language = 'Java'
+
+display = 'Java24 (OpenJDK 24.0.1)'
+
+license = [
+    { name = 'GPL-2.0-or-later', url = 'https://openjdk.org/legal/gplv2+ce.html', exception = 'Classpath-exception-2.0' }
+]
+
+library.ac-library-java = { license = [
+    { name = 'CC0-1.0', url = 'https://github.com/ocha98/ac-library-java/blob/main/LICENSE' },
+], version = 'v2.0.0' }
+
+filename = 'Main.java'
+
+install = '''
+curl https://download.java.net/java/GA/jdk24.0.1/24a58e0e276943138bf3e963e6291ac2/9/GPL/openjdk-24.0.1_linux-x64_bin.tar.gz | sudo tar zx -C /usr/local --strip-component 1
+wget https://github.com/ocha98/ac-library-java/releases/download/v2.0.0/ac_library23.jar
+mv ac_library23.jar ac_library.jar
+cat << 'EOF' > java.sh
+#! /bin/sh
+if [ "$1" -gt 1024 ]; then
+    stack_size=1024
+else
+    stack_size="$1"
+fi
+java -Xss"$stack_size"M -DONLINE_JUDGE=true -cp ac_library.jar: Main
+EOF
+'''
+
+compile = '''
+javac -cp ac_library.jar Main.java
+'''
+
+object = 'Main.class'
+
+execution = [
+    'sh',
+    'java.sh',
+    '{memory:mb}',
+]
