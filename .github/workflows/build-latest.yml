@@ -1,35 +1,116 @@
+---
 name: Build latest
-on:
+"on":
   push:
     branches:
       - main
 
 jobs:
   build:
+    strategy:
+      matrix:
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-latest
+            arch: amd64
+          - platform: linux/arm64
+            runner: arm-runner
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check ARM runner availability
+        if: matrix.runner == 'arm-runner'
+        run: |
+          echo "::notice::Using ARM runner for native ARM64 build"
+          echo "Runner: ${{ matrix.runner }}"
+          echo "Platform: ${{ matrix.platform }}"
+
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        # v4.1.7
+
+      - name: Set up QEMU
+        if: matrix.platform == 'linux/arm64' && matrix.runner == 'ubuntu-latest'
+        uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf
+        # v3.2.0
+
+      - name: Set up Docker Buildx
+        # yamllint disable-line rule:line-length
+        uses: docker/setup-buildx-action@988b5a0280414f521da01fcc63a27aeeb4b104db
+        # v3.6.1
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
+        # v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@8e5442c4ef9f78752691e2d8f8d19755c6f78e81
+        # v5.5.1
+        with:
+          images: ghcr.io/${{ github.repository_owner }}/atcoder-container
+          tags: |
+            type=raw,value=latest-${{ matrix.arch }}
+            type=raw,value=all-${{ matrix.arch }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@5cd11c3a4ced054e52742c5fd54dca954e0edd85
+        # v6.7.0
+        with:
+          context: .
+          platforms: ${{ matrix.platform }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=${{ matrix.platform }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.platform }}
+
+  create-manifest:
+    needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     steps:
-      - uses: FranzDiebold/github-env-vars-action@v2
       - name: Get current date
         id: date
-        run: echo "::set-output name=today::$(date +'%Y%m%d')"
+        run: echo "today=$(date +'%Y%m%d')" >> "$GITHUB_OUTPUT"
 
-      - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
+        # v3.3.0
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build Docker image
-        uses: ./.github/actions/build/
-        with:
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/${{ env.CI_REPOSITORY_NAME }}:${{ steps.date.outputs.today }}
-            ghcr.io/${{ github.repository_owner }}/${{ env.CI_REPOSITORY_NAME }}:latest
-            ghcr.io/${{ github.repository_owner }}/${{ env.CI_REPOSITORY_NAME }}:all
+
+      - name: Create and push manifest for latest
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:latest \
+            ${IMAGE}:latest-amd64 \
+            ${IMAGE}:latest-arm64
+
+      - name: Create and push manifest for all
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:all \
+            ${IMAGE}:all-amd64 \
+            ${IMAGE}:all-arm64
+
+      - name: Create and push manifest for date tag
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:${{ steps.date.outputs.today }} \
+            ${IMAGE}:latest-amd64 \
+            ${IMAGE}:latest-arm64
