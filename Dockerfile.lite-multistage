@@ -267,7 +267,7 @@ ENV LANG="ja_JP.UTF-8" \
 
 # Copy built languages from builder stage
 COPY --from=builder /opt/python /usr/local/
-COPY --from=builder /opt/ruby /usr/local/
+COPY --from=builder /opt/ruby /opt/ruby
 COPY --from=builder /opt/erlang /usr/local/
 COPY --from=builder /opt/rust /usr/local/
 COPY --from=builder /opt/rust-project /judge/
@@ -276,7 +276,7 @@ COPY --from=builder /opt/elixir /usr/local/
 COPY --from=builder /opt/elixir-project /judge/
 
 # Set up paths and library paths
-ENV PATH=/usr/local/bin:$PATH \
+ENV PATH=/opt/ruby/bin:/usr/local/bin:$PATH \
     LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH \
     ERL_ROOTDIR=/usr/local/lib/erlang
 
