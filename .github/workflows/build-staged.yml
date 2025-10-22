@@ -211,10 +211,10 @@ jobs:
 
           echo "✅ All basic tests passed!"
 
-  # Stage 3: Build Full Version (After Lite success)
+  # Stage 3: Build Full Version (Parallel with Lite)
   build-full:
-    needs: [determine-strategy, build-lite]
-    if: always() && needs.determine-strategy.outputs.build_full == 'true' && (needs.build-lite.result == 'success' || needs.build-lite.result == 'skipped')
+    needs: [determine-strategy]
+    if: needs.determine-strategy.outputs.build_full == 'true'
     strategy:
       matrix:
         include:
