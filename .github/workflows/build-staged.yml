@@ -159,6 +159,8 @@ jobs:
             type=raw,value=lite-${{ steps.date.outputs.date }},enable={{is_default_branch}}
 
       - name: Build and push Lite version
+        # Skip ARM64 on PRs to avoid slow QEMU emulation
+        if: matrix.platform != 'linux/arm64' || github.event_name != 'pull_request'
         uses: docker/build-push-action@v5
         with:
           context: .
