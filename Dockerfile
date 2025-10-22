@@ -228,19 +228,20 @@ WORKDIR /opt/elixir-project/main
 RUN PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH MIX_ENV=prod /opt/elixir/bin/mix deps.get && \
     PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH MIX_ENV=prod /opt/elixir/bin/mix compile
 
-# Install LibTorch (Full version - for C++ and Ruby torch-rb)
+# Install LibTorch and torch-rb (Full version - x86_64 only)
+# Create empty directory structure for ARM64 compatibility
 WORKDIR /tmp
 ARG AC_LIBTORCH_VERSION="2.8.0"
-RUN wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-${AC_LIBTORCH_VERSION}%2Bcpu.zip && \
-   unzip -q libtorch.zip && \
-   mkdir -p /opt/libtorch && \
-   cp -dR libtorch/include /opt/libtorch/ && \
-   cp -dR libtorch/lib /opt/libtorch/ && \
-   rm -rf libtorch*
-
-# Install torch-rb (Full version - requires LibTorch)
 ENV PATH=/opt/ruby/bin:$PATH
-RUN gem install torch-rb -v 0.21.0 -- --with-torch-dir=/opt/libtorch
+RUN mkdir -p /opt/libtorch/include /opt/libtorch/lib && \
+    if [ "$(uname -m)" = "x86_64" ]; then \
+        wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-${AC_LIBTORCH_VERSION}%2Bcpu.zip && \
+        unzip -q libtorch.zip && \
+        cp -dR libtorch/include /opt/libtorch/ && \
+        cp -dR libtorch/lib /opt/libtorch/ && \
+        rm -rf libtorch* && \
+        gem install torch-rb -v 0.21.0 -- --with-torch-dir=/opt/libtorch; \
+    fi
 
 # Stage 2: Runtime stage with minimal dependencies
 FROM ubuntu:24.04 AS runtime
@@ -311,9 +312,11 @@ COPY --from=builder /opt/cpp-headers/include /usr/local/include/
 COPY --from=builder /opt/elixir /usr/local/
 COPY --from=builder /opt/elixir-project /judge/
 
-# Copy LibTorch (Full version)
-COPY --from=builder /opt/libtorch /usr/local/
-RUN echo /usr/local/lib > /etc/ld.so.conf.d/libtorch.conf && ldconfig
+# Copy LibTorch (Full version - x86_64 only, but copy empty dir for ARM64)
+COPY --from=builder /opt/libtorch /usr/local/libtorch
+RUN if [ "$(uname -m)" = "x86_64" ] && [ -d /usr/local/libtorch/lib ] && [ -n "$(ls -A /usr/local/libtorch/lib 2>/dev/null)" ]; then \
+        echo /usr/local/libtorch/lib > /etc/ld.so.conf.d/libtorch.conf && ldconfig; \
+    fi
 
 # Set up paths and library paths
 ENV PATH=/opt/ruby/bin:/usr/local/bin:$PATH \
