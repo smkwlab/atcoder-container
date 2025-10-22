@@ -44,12 +44,20 @@ jobs:
       platforms: ${{ steps.strategy.outputs.platforms }}
       is_main_branch: ${{ steps.strategy.outputs.is_main_branch }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
       - name: Determine build strategy
         id: strategy
         run: |
           echo "Event: ${{ github.event_name }}"
           echo "Branch: ${{ github.ref_name }}"
-          echo "Commit message: ${{ github.event.head_commit.message }}"
+
+          # Get commit message (works for both push and pull_request events)
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          echo "Commit message: $COMMIT_MESSAGE"
           
           # Default values
           BUILD_LITE="true"
@@ -87,10 +95,10 @@ jobs:
           fi
           
           # Auto-detect from commit message
-          if [[ "${{ github.event.head_commit.message }}" == *"[build-all]"* ]]; then
+          if [[ "$COMMIT_MESSAGE" == *"[build-all]"* ]]; then
             BUILD_LITE="true"
             BUILD_FULL="true"
-          elif [[ "${{ github.event.head_commit.message }}" == *"[build-full]"* ]]; then
+          elif [[ "$COMMIT_MESSAGE" == *"[build-full]"* ]]; then
             BUILD_FULL="true"
           fi
           
