@@ -158,12 +158,9 @@ RUN gem install -N \
     sorted_containers:1.1.0 \
     sorted_set:1.0.3
 
-# or-tools (x86_64 only, Full version)
+# or-tools (x86_64 only, Full version - using precompiled binary gem)
+# The or-tools gem includes precompiled binaries, no source build needed
 RUN if [ "$(uname -m)" = "x86_64" ]; then \
-    git clone https://github.com/google/or-tools.git && \
-    cd or-tools && \
-    cmake -S . -B build -DBUILD_DEPS=ON && \
-    cmake --build build --target install && \
     gem install or-tools -v 0.16.0; \
     fi
 
