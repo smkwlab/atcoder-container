@@ -172,6 +172,33 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Test basic functionality
+        # Only test on AMD64 for PRs
+        if: matrix.platform == 'linux/amd64' && github.event_name == 'pull_request'
+        run: |
+          IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
+          echo "Testing image: $IMAGE_TAG"
+
+          echo "🔍 Testing Python..."
+          docker run --rm $IMAGE_TAG python3.13 --version
+
+          echo "🔍 Testing Ruby..."
+          docker run --rm $IMAGE_TAG ruby --version
+
+          echo "🔍 Testing Rust..."
+          docker run --rm $IMAGE_TAG rustc --version
+
+          echo "🔍 Testing Node.js..."
+          docker run --rm $IMAGE_TAG node --version
+
+          echo "🔍 Testing Java..."
+          docker run --rm $IMAGE_TAG java --version
+
+          echo "🔍 Testing C++..."
+          docker run --rm $IMAGE_TAG g++ --version
+
+          echo "✅ All basic tests passed!"
+
   # Stage 3: Build Full Version (After Lite success)
   build-full:
     needs: [determine-strategy, build-lite]

@@ -1,16 +1,19 @@
 name: PR Test Build
 
+# Disabled: Redundant with build-staged.yml
+# Testing is now integrated into build-staged.yml
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - 'Dockerfile*'
-      - '.github/workflows/**'
-      - 'rust/**'
-      - 'elixir/**'
-      - 'java/**'
-      - 'toml/**'
+  workflow_dispatch:  # Manual trigger only
+  # pull_request:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - 'Dockerfile*'
+  #     - '.github/workflows/**'
+  #     - 'rust/**'
+  #     - 'elixir/**'
+  #     - 'java/**'
+  #     - 'toml/**'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
