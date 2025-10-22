@@ -251,6 +251,8 @@ jobs:
             type=raw,value=full-latest,enable={{is_default_branch}}
             type=raw,value=full-${{ steps.date.outputs.date }},enable={{is_default_branch}}
             type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=all,enable={{is_default_branch}}
+            type=raw,value=${{ steps.date.outputs.date }},enable={{is_default_branch}}
 
       - name: Build and push Full version
         uses: docker/build-push-action@v5
