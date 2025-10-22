@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 language = 'Erlang'
-display = 'Erlang (Erlang 28.0)'
+display = 'Erlang (Erlang 28.0.2)'
 license = [
     { name = 'Apache-2.0', url = 'https://github.com/erlang/otp/blob/master/LICENSE.txt' },
 ]
@@ -9,7 +9,7 @@ license = [
 filename = 'Main.erl'
 
 install = '''
-AC_OTP_VERSION=28.0
+AC_OTP_VERSION=28.0.2
 sudo apt-get update
 sudo apt-get install -y libssl-dev unixodbc-dev
 

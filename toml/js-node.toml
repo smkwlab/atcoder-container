@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 language = 'JavaScript'
-display = 'JavaScript (Node.js 22.16.0)'
+display = 'JavaScript (Node.js 22.19.0)'
 license = [
     { name = '!License-31', url = 'https://github.com/nodejs/node/blob/main/LICENSE' },
 ]
@@ -12,12 +12,15 @@ library.ac-library-js = { license = [
 library.data-structure-typed = { license = [
     { name = 'MIT', url = 'https://www.npmjs.com/package/data-structure-typed' },
 ], version = '2.0.4' }
+library.immutable = { license = [
+    { name = 'MIT', url = 'https://www.npmjs.com/package/immutable' },
+], version = '5.1.3' }
 library.lodash = { license = [
     { name = 'MIT', url = 'https://www.npmjs.com/package/lodash' },
 ], version = '4.17.21' }
 library.mathjs = { license = [
     { name = 'Apache-2.0', url = 'https://www.npmjs.com/package/mathjs' },
-], version = '14.5.2' }
+], version = '14.7.0' }
 library.tstl = { license = [
     { name = 'MIT', url = 'https://www.npmjs.com/package/tstl' },
 ], version = '3.0.0' }
@@ -64,7 +67,7 @@ library.typed-function = { license = [
 filename = 'Main.js'
 
 install = '''
-NODE_VERSION=22.16.0
+NODE_VERSION=22.19.0
 wget -q -O /tmp/node.tar.xz https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz
 sudo tar -C /usr/local --strip-components=1 -xf /tmp/node.tar.xz --wildcards '*/bin' '*/share' '*/lib' '*/include'
 
@@ -94,8 +97,9 @@ EOF
 sudo npm install -g \
 ac-library-js@0.1.1 \
 data-structure-typed@2.0.4 \
+immutable@5.1.3 \
 lodash@4.17.21 \
-mathjs@14.5.2 \
+mathjs@14.7.0 \
 tstl@3.0.0 \
 
 '''
