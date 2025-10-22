@@ -47,7 +47,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 2  # Need 2 to access HEAD^2 for pull_request events
 
       - name: Determine build strategy
         id: strategy
@@ -55,8 +55,13 @@ jobs:
           echo "Event: ${{ github.event_name }}"
           echo "Branch: ${{ github.ref_name }}"
 
-          # Get commit message (works for both push and pull_request events)
-          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          # Get commit message
+          # For pull_request events, GitHub creates a merge commit, so we need to get the PR branch tip
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            COMMIT_MESSAGE=$(git log -1 --pretty=%B HEAD^2 2>/dev/null || git log -1 --pretty=%B)
+          else
+            COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          fi
           echo "Commit message: $COMMIT_MESSAGE"
           
           # Default values
