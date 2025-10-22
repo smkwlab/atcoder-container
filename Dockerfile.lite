@@ -65,28 +65,14 @@ ENV LANG="ja_JP.UTF-8" \
     LC_ALL="ja_JP.UTF-8" \
     ATCODER=1
 
-# Build Python from source (architecture-specific optimization)
+# Build Python from source (PGO optimization for faster CI builds)
 ARG AC_CPYTHON_VERSION=3.13.7
 WORKDIR /tmp
 RUN wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
    tar xf Python-${AC_CPYTHON_VERSION}.tar.xz && \
    cd Python-${AC_CPYTHON_VERSION} && \
-   case "$(uname -m)" in \
-       x86_64) \
-           # AMD64: Full optimization (PGO + LTO) for maximum performance \
-           ./configure --enable-optimizations --with-lto=full --with-strict-overflow --prefix=/opt/python && \
-           make -j$(nproc) \
-           ;; \
-       aarch64) \
-           # ARM64: PGO only for faster build time \
-           ./configure --enable-optimizations --with-strict-overflow --prefix=/opt/python && \
-           make -j$(nproc) \
-           ;; \
-       *) \
-           echo "Unsupported architecture: $(uname -m)" \
-           exit 1 \
-           ;; \
-   esac && \
+   ./configure --enable-optimizations --with-strict-overflow --prefix=/opt/python && \
+   make -j$(nproc) && \
    make install && \
    cd .. && \
    rm -rf Python-${AC_CPYTHON_VERSION} Python-${AC_CPYTHON_VERSION}.tar.xz
@@ -141,15 +127,6 @@ RUN gem install -N \
     rgl:0.6.6 \
     sorted_containers:1.1.0 \
     sorted_set:1.0.3
-
-# or-tools (x86_64 only, lightweight)
-RUN if [ "$(uname -m)" = "x86_64" ]; then \
-    git clone https://github.com/google/or-tools.git && \
-    cd or-tools && \
-    cmake -S . -B build -DBUILD_DEPS=ON && \
-    cmake --build build --target install && \
-    gem install or-tools -v 0.15.0; \
-    fi
 
 # Install Rust from official precompiled tarball
 ARG RUST_VERSION=1.87.0
