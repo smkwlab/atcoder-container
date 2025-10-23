@@ -69,11 +69,17 @@ jobs:
           BUILD_FULL="false"
           PLATFORMS="linux/amd64"
           IS_MAIN="false"
-          
+
           # Check if main branch
           if [[ "${{ github.ref_name }}" == "main" ]]; then
             IS_MAIN="true"
             PLATFORMS="linux/amd64,linux/arm64"
+          fi
+
+          # For pull requests: build Full version on x86_64 to catch issues early
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            BUILD_FULL="true"
+            PLATFORMS="linux/amd64"  # x86_64 only for faster CI
           fi
           
           # Manual workflow dispatch
