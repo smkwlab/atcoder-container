@@ -157,12 +157,6 @@ RUN gem install -N \
     sorted_containers:1.1.0 \
     sorted_set:1.0.3
 
-# or-tools (x86_64 only, Full version - using precompiled binary gem)
-# The or-tools gem includes precompiled binaries, no source build needed
-RUN if [ "$(uname -m)" = "x86_64" ]; then \
-    gem install or-tools -v 0.16.0; \
-    fi
-
 # Install Rust from official precompiled tarball
 ARG RUST_VERSION=1.87.0
 RUN case "$(uname -m)" in \
@@ -224,8 +218,9 @@ WORKDIR /opt/elixir-project/main
 RUN PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH MIX_ENV=prod /opt/elixir/bin/mix deps.get && \
     PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH MIX_ENV=prod /opt/elixir/bin/mix compile
 
-# Install LibTorch and torch-rb (Full version - x86_64 only)
-# Create empty directory structure for ARM64 compatibility
+# Install LibTorch (Full version - x86_64 only)
+# Following ruby.toml specification: install to /usr/local for gem install
+# Also copy to /opt/libtorch for Runtime stage
 WORKDIR /tmp
 ARG AC_LIBTORCH_VERSION="2.8.0"
 ENV PATH=/opt/ruby/bin:$PATH
@@ -233,10 +228,30 @@ RUN mkdir -p /opt/libtorch/include /opt/libtorch/lib && \
     if [ "$(uname -m)" = "x86_64" ]; then \
         wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-${AC_LIBTORCH_VERSION}%2Bcpu.zip && \
         unzip -q libtorch.zip && \
+        cp -dR libtorch/include /usr/local/ && \
+        cp -dR libtorch/lib /usr/local/ && \
         cp -dR libtorch/include /opt/libtorch/ && \
         cp -dR libtorch/lib /opt/libtorch/ && \
-        rm -rf libtorch* && \
-        gem install torch-rb -v 0.21.0 -- --with-torch-dir=/opt/libtorch; \
+        echo /usr/local/lib | tee /etc/ld.so.conf.d/libtorch.conf && \
+        ldconfig && \
+        rm -rf libtorch*; \
+    fi
+
+# Install Full version Ruby gems (x86_64 only)
+# Following ruby.toml specification: install all gems together with MAKEFLAGS
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+        export MAKEFLAGS="-j$(nproc)" && \
+        gem install -N \
+            ffi-geos:2.5.0 \
+            lightgbm:0.4.3 \
+            numo-linalg:0.1.7 \
+            numo-narray:0.9.2.1 \
+            numo-openblas:0.5.1 \
+            or-tools:0.16.0 \
+            polars-df:0.21.1 \
+            rumale:1.0.0 \
+            torch-rb:0.21.0 \
+            z3:0.0.20230311; \
     fi
 
 # Stage 2: Runtime stage with minimal dependencies
