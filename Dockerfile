@@ -115,7 +115,7 @@ RUN /opt/python/bin/python3.13 -m pip install \
 
 # Install PyTorch CPU and ortools (Full version)
 RUN /opt/python/bin/python3.13 -m pip install \
-    torch==2.6.0+cpu --index-url https://download.pytorch.org/whl/cpu && \
+    torch==2.8.0+cpu --index-url https://download.pytorch.org/whl/cpu && \
     /opt/python/bin/python3.13 -m pip install ortools==9.14.6206
 
 # Install online-judge-tools
