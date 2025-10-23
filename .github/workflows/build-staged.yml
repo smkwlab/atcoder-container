@@ -88,8 +88,8 @@ jobs:
           fi
 
           # For pull requests: build Full version on x86_64 to catch issues early
-          # Only set if not already configured by [build-all] tag
-          if [[ "${{ github.event_name }}" == "pull_request" && "$COMMIT_MESSAGE" != *"[build-all]"* ]]; then
+          # Only set if not already configured by [build-all] or [build-full] tag
+          if [[ "${{ github.event_name }}" == "pull_request" && "$COMMIT_MESSAGE" != *"[build-all]"* && "$BUILD_FULL" != "true" ]]; then
             BUILD_FULL="true"
             PLATFORMS="linux/amd64"  # x86_64 only for faster CI
           fi
