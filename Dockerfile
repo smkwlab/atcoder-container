@@ -254,6 +254,8 @@ RUN mkdir -p /opt/libtorch/include /opt/libtorch/lib && \
 
 # Install Rice 4.6.1 before installing the Full version Ruby gems below,
 # because or-tools and torch-rb are not compatible with Rice 4.7.0+.
+# Note: This step is only performed on x86_64, because the full Ruby gems (including or-tools and torch-rb)
+# are only installed on x86_64. On ARM64, these gems are not installed, so Rice is not required.
 RUN if [ "$(uname -m)" = "x86_64" ]; then \
         gem install rice:4.6.1; \
     fi
