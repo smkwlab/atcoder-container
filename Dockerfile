@@ -75,25 +75,21 @@ RUN if [ "$(uname -m)" = "x86_64" ]; then \
 ARG AC_CPYTHON_VERSION=3.13.7
 WORKDIR /tmp
 RUN if [ "$(uname -m)" = "x86_64" ]; then \
-        ln -s /usr/lib/llvm-18/lib/libbolt_rt_instr.a /usr/lib/libbolt_rt_instr.a && \
-        wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
-        tar xf Python-${AC_CPYTHON_VERSION}.tar.xz && \
-        cd Python-${AC_CPYTHON_VERSION} && \
-        ./configure --enable-optimizations --with-lto=full --with-strict-overflow --enable-bolt --prefix=/opt/python && \
-        make -j$(nproc) && \
-        make install && \
-        cd .. && \
-        rm -rf Python-${AC_CPYTHON_VERSION} Python-${AC_CPYTHON_VERSION}.tar.xz; \
+        ln -s /usr/lib/llvm-18/lib/libbolt_rt_instr.a /usr/lib/libbolt_rt_instr.a; \
+    fi && \
+    wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
+    tar xf Python-${AC_CPYTHON_VERSION}.tar.xz && \
+    cd Python-${AC_CPYTHON_VERSION} && \
+    if [ "$(uname -m)" = "x86_64" ]; then \
+        BOLT_FLAG="--enable-bolt"; \
     else \
-        wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
-        tar xf Python-${AC_CPYTHON_VERSION}.tar.xz && \
-        cd Python-${AC_CPYTHON_VERSION} && \
-        ./configure --enable-optimizations --with-lto=full --with-strict-overflow --prefix=/opt/python && \
-        make -j$(nproc) && \
-        make install && \
-        cd .. && \
-        rm -rf Python-${AC_CPYTHON_VERSION} Python-${AC_CPYTHON_VERSION}.tar.xz; \
-    fi
+        BOLT_FLAG=""; \
+    fi && \
+    ./configure --enable-optimizations --with-lto=full --with-strict-overflow $BOLT_FLAG --prefix=/opt/python && \
+    make -j$(nproc) && \
+    make install && \
+    cd .. && \
+    rm -rf Python-${AC_CPYTHON_VERSION} Python-${AC_CPYTHON_VERSION}.tar.xz
 
 # Install Python packages in build stage
 RUN /opt/python/bin/python3.13 -m pip install setuptools==75.8.0
@@ -256,7 +252,8 @@ RUN mkdir -p /opt/libtorch/include /opt/libtorch/lib && \
         rm -rf libtorch*; \
     fi
 
-# Install Rice 4.6.1 first (or-tools and torch-rb are not compatible with Rice 4.7.0+)
+# Install Rice 4.6.1 before installing the Full version Ruby gems below,
+# because or-tools and torch-rb are not compatible with Rice 4.7.0+.
 RUN if [ "$(uname -m)" = "x86_64" ]; then \
         gem install rice:4.6.1; \
     fi

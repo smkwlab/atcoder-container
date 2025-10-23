@@ -81,7 +81,7 @@ jobs:
             BUILD_FULL="true"
             PLATFORMS="linux/amd64"  # x86_64 only for faster CI
           fi
-          
+
           # Manual workflow dispatch
           if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
             case "${{ github.event.inputs.build_variant }}" in
