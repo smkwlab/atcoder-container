@@ -26,6 +26,10 @@ on:
         default: false
         type: boolean
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/atcoder-container
@@ -40,12 +44,25 @@ jobs:
       platforms: ${{ steps.strategy.outputs.platforms }}
       is_main_branch: ${{ steps.strategy.outputs.is_main_branch }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Need 2 to access HEAD^2 for pull_request events
+
       - name: Determine build strategy
         id: strategy
         run: |
           echo "Event: ${{ github.event_name }}"
           echo "Branch: ${{ github.ref_name }}"
-          echo "Commit message: ${{ github.event.head_commit.message }}"
+
+          # Get commit message
+          # For pull_request events, GitHub creates a merge commit, so we need to get the PR branch tip
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            COMMIT_MESSAGE=$(git log -1 --pretty=%B HEAD^2 2>/dev/null || git log -1 --pretty=%B)
+          else
+            COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          fi
+          echo "Commit message: $COMMIT_MESSAGE"
           
           # Default values
           BUILD_LITE="true"
@@ -83,10 +100,10 @@ jobs:
           fi
           
           # Auto-detect from commit message
-          if [[ "${{ github.event.head_commit.message }}" == *"[build-all]"* ]]; then
+          if [[ "$COMMIT_MESSAGE" == *"[build-all]"* ]]; then
             BUILD_LITE="true"
             BUILD_FULL="true"
-          elif [[ "${{ github.event.head_commit.message }}" == *"[build-full]"* ]]; then
+          elif [[ "$COMMIT_MESSAGE" == *"[build-full]"* ]]; then
             BUILD_FULL="true"
           fi
           
@@ -115,8 +132,10 @@ jobs:
         include:
           - platform: linux/amd64
             runner: ubuntu-latest
+            arch: amd64
           - platform: linux/arm64
-            runner: ${{ needs.determine-strategy.outputs.is_main_branch == 'true' && 'arm-runner' || 'ubuntu-latest' }}
+            runner: ubuntu-24.04-arm
+            arch: arm64
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
@@ -153,10 +172,10 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=ref,event=branch,suffix=-lite
-            type=ref,event=pr,suffix=-lite
-            type=raw,value=lite-latest,enable={{is_default_branch}}
-            type=raw,value=lite-${{ steps.date.outputs.date }},enable={{is_default_branch}}
+            type=ref,event=branch,suffix=-lite-${{ matrix.arch }}
+            type=ref,event=pr,suffix=-lite-${{ matrix.arch }}
+            type=raw,value=lite-latest-${{ matrix.arch }},enable={{is_default_branch}}
+            type=raw,value=lite-${{ steps.date.outputs.date }}-${{ matrix.arch }},enable={{is_default_branch}}
 
       - name: Build and push Lite version
         uses: docker/build-push-action@v5
@@ -170,17 +189,46 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
-  # Stage 3: Build Full Version (After Lite success)
+      - name: Test basic functionality
+        # Test on AMD64 for PRs, and both architectures for main branch
+        if: (matrix.platform == 'linux/amd64' && github.event_name == 'pull_request') || (github.ref == 'refs/heads/main' && github.event_name == 'push')
+        run: |
+          IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
+          echo "Testing image: $IMAGE_TAG ($(uname -m))"
+
+          echo "🔍 Testing Python..."
+          docker run --rm $IMAGE_TAG python3.13 --version
+
+          echo "🔍 Testing Ruby..."
+          docker run --rm $IMAGE_TAG ruby --version
+
+          echo "🔍 Testing Rust..."
+          docker run --rm $IMAGE_TAG rustc --version
+
+          echo "🔍 Testing Node.js..."
+          docker run --rm $IMAGE_TAG node --version
+
+          echo "🔍 Testing Java..."
+          docker run --rm $IMAGE_TAG java --version
+
+          echo "🔍 Testing C++..."
+          docker run --rm $IMAGE_TAG g++ --version
+
+          echo "✅ All basic tests passed!"
+
+  # Stage 3: Build Full Version (Parallel with Lite)
   build-full:
-    needs: [determine-strategy, build-lite]
-    if: always() && needs.determine-strategy.outputs.build_full == 'true' && (needs.build-lite.result == 'success' || needs.build-lite.result == 'skipped')
+    needs: [determine-strategy]
+    if: needs.determine-strategy.outputs.build_full == 'true'
     strategy:
       matrix:
         include:
           - platform: linux/amd64
             runner: ubuntu-latest
-          - platform: linux/arm64  
-            runner: ${{ needs.determine-strategy.outputs.is_main_branch == 'true' && 'arm-runner' || 'ubuntu-latest' }}
+            arch: amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            arch: arm64
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
@@ -217,11 +265,13 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=ref,event=branch,suffix=-full
-            type=ref,event=pr,suffix=-full
-            type=raw,value=full-latest,enable={{is_default_branch}}
-            type=raw,value=full-${{ steps.date.outputs.date }},enable={{is_default_branch}}
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=ref,event=branch,suffix=-full-${{ matrix.arch }}
+            type=ref,event=pr,suffix=-full-${{ matrix.arch }}
+            type=raw,value=full-latest-${{ matrix.arch }},enable={{is_default_branch}}
+            type=raw,value=full-${{ steps.date.outputs.date }}-${{ matrix.arch }},enable={{is_default_branch}}
+            type=raw,value=latest-${{ matrix.arch }},enable={{is_default_branch}}
+            type=raw,value=all-${{ matrix.arch }},enable={{is_default_branch}}
+            type=raw,value=${{ steps.date.outputs.date }}-${{ matrix.arch }},enable={{is_default_branch}}
 
       - name: Build and push Full version
         uses: docker/build-push-action@v5
@@ -234,6 +284,45 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Test basic functionality
+        # Test on AMD64 for PRs, and both architectures for main branch
+        if: (matrix.platform == 'linux/amd64' && github.event_name == 'pull_request') || (github.ref == 'refs/heads/main' && github.event_name == 'push')
+        run: |
+          IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
+          echo "Testing image: $IMAGE_TAG ($(uname -m))"
+
+          echo "🔍 Testing Python..."
+          docker run --rm $IMAGE_TAG python3.13 --version
+
+          echo "🔍 Testing Ruby..."
+          docker run --rm $IMAGE_TAG ruby --version
+
+          echo "🔍 Testing Rust..."
+          docker run --rm $IMAGE_TAG rustc --version
+
+          echo "🔍 Testing Node.js..."
+          docker run --rm $IMAGE_TAG node --version
+
+          echo "🔍 Testing Java..."
+          docker run --rm $IMAGE_TAG java --version
+
+          echo "🔍 Testing C++..."
+          docker run --rm $IMAGE_TAG g++ --version
+
+          echo "🔍 Testing scientific libraries..."
+          docker run --rm $IMAGE_TAG python3.13 -c "import numpy; print('NumPy', numpy.__version__)"
+          docker run --rm $IMAGE_TAG python3.13 -c "import scipy; print('SciPy', scipy.__version__)"
+          docker run --rm $IMAGE_TAG python3.13 -c "import pandas; print('Pandas', pandas.__version__)"
+          docker run --rm $IMAGE_TAG python3.13 -c "import sklearn; print('scikit-learn', sklearn.__version__)"
+
+          # Only test numba on x86_64 (not available on ARM64)
+          if [ "${{ matrix.platform }}" = "linux/amd64" ]; then
+            echo "🔍 Testing Numba (x86_64 only)..."
+            docker run --rm $IMAGE_TAG python3.13 -c "import numba; print('Numba', numba.__version__)"
+          fi
+
+          echo "✅ All tests passed!"
 
   # Stage 4: Summary and notification
   build-summary:

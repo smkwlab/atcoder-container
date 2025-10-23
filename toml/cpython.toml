@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 language = 'Python'
-display = 'Python (CPython 3.13.5)'
+display = 'Python (CPython 3.13.7)'
 license = [{ name = 'PSF-2.0', url = 'https://docs.python.org/3/license.html' }]
 
 library.ac-library-python = { license = [
@@ -11,14 +11,14 @@ library.acl-cpp-python = { license = [
     { name = 'CC0-1.0', url = 'https://github.com/tatyam-prime/acl-cpp-python/blob/v0.6.2/LICENSE' },
 ], version = 'v0.6.2' }
 library.bitarray = { license = [
-    { name = 'PSF-2.0', url = 'https://github.com/ilanschnell/bitarray/blob/3.4.2/LICENSE' },
-], version = 'v3.4.2' }
+    { name = 'PSF-2.0', url = 'https://github.com/ilanschnell/bitarray/blob/3.6.1/LICENSE' },
+], version = 'v3.6.1' }
 library.cppyy = { license = [
     { name = 'BSD-3-Clause-LBNL', url = 'https://github.com/wlav/cppyy/blob/cppyy-3.5.0/LICENSE.txt' },
 ], version = 'v3.5.0' }
 library.Cython = { license = [
-    { name = "Apache-2.0", url = "https://github.com/cython/cython/blob/3.1.2/LICENSE.txt" },
-], version = 'v3.1.2' }
+    { name = "Apache-2.0", url = "https://github.com/cython/cython/blob/3.1.3/LICENSE.txt" },
+], version = 'v3.1.3' }
 library.gmpy2 = { license = [
     { name = 'LGPL-3.0-or-later', url = 'https://github.com/aleaxit/gmpy/blob/v2.2.1/COPYING.LESSER' },
 ], version = 'v2.2.1' }
@@ -51,34 +51,34 @@ library.numpy = { license = [
     { name = 'Zlib', url = 'https://github.com/numpy/numpy/blob/v2.2.6/numpy/_core/include/numpy/libdivide/LICENSE.txt' },       # libdivide
 ], version = 'v2.2.6' }
 library.ortools = { license = [
-    { name = 'Apache-2.0', url = 'https://github.com/google/or-tools/blob/v9.13/LICENSE' },
-], version = 'v9.13.4784' }
+    { name = 'Apache-2.0', url = 'https://github.com/google/or-tools/blob/v9.14/LICENSE' },
+], version = 'v9.14.6206' }
 library.pandas = { license = [
-    { name = 'BSD-3-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSE' },
-    { name = 'BSD-2-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/BOTTLENECK_LICENCE' },
-    { name = 'Apache-2.0', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/DATEUTIL_LICENSE' },
-    { name = 'BSD-3-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/DATEUTIL_LICENSE' },
-    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/HAVEN_LICENSE' },
-    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/HAVEN_MIT' },
-    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/KLIB_LICENSE' },
-    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/MUSL_LICENSE' },
-    { name = 'BSD-3-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/NUMPY_LICENSE' },
-    { name = 'Apache-2.0', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/PACKAGING_LICENSE' },
-    { name = 'PSF-2.0', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/PSF_LICENSE' },
-    { name = 'BSD-3-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/PYPERCLIP_LICENSE' },
-    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/PYUPGRADE_LICENSE' },
-    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/SAS7BDAT_LICENSE' },
-    { name = 'BSD-3-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/ULTRAJSON_LICENSE' },
-    { name = 'TCL', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/ULTRAJSON_LICENSE' },
-    { name = 'Apache-2.0', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.0/LICENSES/XARRAY_LICENSE' },
-], version = 'v2.3.0' }
+    { name = 'BSD-3-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSE' },
+    { name = 'BSD-2-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/BOTTLENECK_LICENCE' },
+    { name = 'Apache-2.0', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/DATEUTIL_LICENSE' },
+    { name = 'BSD-3-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/DATEUTIL_LICENSE' },
+    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/HAVEN_LICENSE' },
+    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/HAVEN_MIT' },
+    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/KLIB_LICENSE' },
+    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/MUSL_LICENSE' },
+    { name = 'BSD-3-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/NUMPY_LICENSE' },
+    { name = 'Apache-2.0', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/PACKAGING_LICENSE' },
+    { name = 'PSF-2.0', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/PSF_LICENSE' },
+    { name = 'BSD-3-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/PYPERCLIP_LICENSE' },
+    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/PYUPGRADE_LICENSE' },
+    { name = 'MIT', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/SAS7BDAT_LICENSE' },
+    { name = 'BSD-3-Clause', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/ULTRAJSON_LICENSE' },
+    { name = 'TCL', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/ULTRAJSON_LICENSE' },
+    { name = 'Apache-2.0', url = 'https://github.com/pandas-dev/pandas/blob/v2.3.2/LICENSES/XARRAY_LICENSE' },
+], version = 'v2.3.2' }
 library.polars = { license = [
-    { name = 'MIT', url = 'https://github.com/pola-rs/polars/blob/py-1.21.0/LICENSE' },
-], version = 'v1.21.0' }
+    { name = 'MIT', url = 'https://github.com/pola-rs/polars/blob/py-1.31.0/LICENSE' },
+], version = 'v1.31.0' }
 # PyPIにはBSDと書かれているがGitHub上ではMITになっているので注意
 library.PuLP = { license = [
-    { name = 'MIT', url = 'https://github.com/coin-or/pulp/blob/master/LICENSE' },
-], version = 'v2.9.0' }
+    { name = 'MIT', url = 'https://github.com/coin-or/pulp/blob/3.2.2/LICENSE' },
+], version = 'v3.2.2' }
 library.pyrsistent = { license = [
     { name = 'MIT', url = 'https://github.com/tobgu/pyrsistent/blob/v0.20.0/LICENSE.mit' },
 ], version = 'v0.20.0' }
@@ -86,34 +86,33 @@ library.rustworkx = { license = [
     { name = 'Apache-2.0', url = 'https://github.com/Qiskit/rustworkx/blob/0.16.0/LICENSE' },
 ], version = 'v0.16.0' }
 library.scikit-learn = { license = [
-    { name = 'BSD-3-Clause', url = 'https://github.com/scikit-learn/scikit-learn/blob/1.7.0/COPYING' },
-], version = 'v1.7.0' }
+    { name = 'BSD-3-Clause', url = 'https://github.com/scikit-learn/scikit-learn/blob/1.7.1/COPYING' },
+], version = 'v1.7.1' }
 library.scipy = { license = [
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/LICENSE.txt' },
-    { name = 'BSD-2-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/_lib/decorator.py' },                                                     # Decorator
-    { name = 'BSD-2-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/io/_fast_matrix_market/LICENSE.txt' },                                    # fast_matrix_market
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/io/_fast_matrix_market/src/pystreambuf.h' },                              # pystreambuf
-    { name = 'MIT', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/io/_fast_matrix_market/fast_matrix_market/dependencies/fast_float/LICENSE-MIT' },  # fast_float
-    { name = 'BSL-1.0', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/io/_fast_matrix_market/fast_matrix_market/dependencies/ryu/LICENSE-Boost' },   # ryu
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/LICENSES_bundled.txt#L43' },                                                    # LAPJVsp
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/sparse/linalg/_dsolve/SuperLU/License.txt' },                             # SuperLU
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/sparse/linalg/_eigen/arpack/ARPACK/COPYING' },                            # ARPACK
-    { name = 'Qhull', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/spatial/qhull_src/COPYING.txt' },                                                # Qhull
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/LICENSES_bundled.txt#L94' },                                                    # Cephes
-    { name = 'MIT', url = 'https://github.com/scipy/scipy/blob/v1.15.3/LICENSES_bundled.txt#L130' },                                                            # Faddeeva
-    { name = 'BSD-3-Clause-LBNL', url = 'https://github.com/scipy/scipy/blob/v1.15.3/LICENSES_bundled.txt#L154' },                                              # qd
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/fft/_pocketfft/LICENSE.md' },                                             # pocketfft
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/_lib/_uarray/LICENSE' },                                                  # uarray
-    { name = 'MIT', url = 'https://github.com/scipy/scipy/blob/v1.15.3/LICENSES_bundled.txt#L217' },                                                            # ampgo
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/LICENSES_bundled.txt#L223' },                                                   # Pybind11
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/stats/biasedurn/license.txt' },                                           # Biasedurn
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/unuran/blob/21810c856880bb2f1b3071c8ac4aaf634983b338/license.txt' },                               # Unuran
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/stats/libnpyrandom/logfactorial.c' },                                     # Numpy
-    { name = 'MIT', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/_build_utils/tempita/LICENSE.txt' },                                               # Tempita
-    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/special/xsf/third_party/kokkos/mdspan.hpp' }, # mdspan
-    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/interpolate/_bary_rational.py' },                                         # Chebfun
-    { name = 'BSD-2-Clause', url = 'https://github.com/scipy/scipy/blob/v1.15.3/scipy/integrate/_lebedev.py' },                                                 # getLebedevSphere
-], version = 'v1.15.3' }
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/LICENSE.txt' },
+    { name = 'BSD-2-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/_lib/decorator.py' },                                                    # Decorator
+    { name = 'BSD-2-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/io/_fast_matrix_market/LICENSE.txt' },                                   # fast_matrix_market
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/io/_fast_matrix_market/src/pystreambuf.h' },                             # pystreambuf
+    { name = 'MIT', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/io/_fast_matrix_market/fast_matrix_market/dependencies/fast_float/LICENSE-MIT' }, # fast_float
+    { name = 'BSL-1.0', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/io/_fast_matrix_market/fast_matrix_market/dependencies/ryu/LICENSE-Boost' },  # ryu
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/optimize/__lbfgsb.c' },                                                  # lbfgsb
+    { name = 'MIT', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/optimize/_lbfgsb_py.py' },                                                        # lbfgsb python wrapper
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/LICENSES_bundled.txt#L43' },                                                   # LAPJVsp
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/sparse/linalg/_dsolve/SuperLU/License.txt' },                            # SuperLU
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/sparse/linalg/_eigen/arpack/ARPACK/COPYING' },                           # ARPACK
+    { name = 'Qhull', url = 'https://github.com/scipy/scipy/blob/main/subprojects/qhull_r/libqhull_r/COPYING.txt' },                                           # Qhull
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/fft/_pocketfft/LICENSE.md' },                                            # pocketfft
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/_lib/_uarray/LICENSE' },                                                 # uarray
+    { name = 'MIT', url = 'https://github.com/scipy/scipy/blob/v1.16.1/LICENSES_bundled.txt#L110' },                                                           # ampgo
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/LICENSES_bundled.txt#L116' },                                                  # Pybind11
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/stats/biasedurn/license.txt' },                                          # Biasedurn
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/unuran/blob/21810c856880bb2f1b3071c8ac4aaf634983b338/license.txt' },                              # Unuran
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/stats/libnpyrandom/logfactorial.c' },                                    # Numpy
+    { name = 'MIT', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/_build_utils/tempita/LICENSE.txt' },                                              # Tempita
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/interpolate/_bary_rational.py' },                                        # Chebfun
+    { name = 'BSD-2-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/integrate/_lebedev.py' },                                                # getLebedevSphere
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/scipy/_lib/pyprima/LICENCE.txt' },                                             # prima
+], version = 'v1.16.1' }
 library.shapely = { license = [
     { name = 'BSD-3-Clause', url = 'https://github.com/shapely/shapely/blob/2.1.1/LICENSE.txt' },
 ], version = 'v2.1.1' }
@@ -121,23 +120,23 @@ library.sortedcontainers = { license = [
     { name = 'Apache-2.0', url = 'https://github.com/grantjenks/python-sortedcontainers/blob/v2.4.0/LICENSE' },
 ], version = 'v2.4.0' }
 library.sympy = { license = [
-    { name = 'BSD-3-Clause', url = 'https://github.com/sympy/sympy/blob/sympy-1.13.1/LICENSE' },
-    { name = 'BSD-3-Clause', url = 'https://github.com/sympy/sympy/blob/sympy-1.13.1/LICENSE#L32' },  # diofant
-    { name = 'BSD-3-Clause', url = 'https://github.com/sympy/sympy/blob/sympy-1.13.1/LICENSE#L67' },  # multipledispatch
-    { name = 'BSD-3-Clause', url = 'https://github.com/sympy/sympy/blob/sympy-1.13.1/LICENSE#L101' }, # PyDy
-    { name = 'MIT', url = 'https://github.com/sympy/sympy/blob/sympy-1.13.1/LICENSE#L132' },          # latex2sympy
-], version = 'v1.13.1' }
+    { name = 'BSD-3-Clause', url = 'https://github.com/sympy/sympy/blob/sympy-1.14.0/LICENSE' },
+    { name = 'BSD-3-Clause', url = 'https://github.com/sympy/sympy/blob/sympy-1.14.0/LICENSE#L32' },  # diofant
+    { name = 'BSD-3-Clause', url = 'https://github.com/sympy/sympy/blob/sympy-1.14.0/LICENSE#L67' },  # multipledispatch
+    { name = 'BSD-3-Clause', url = 'https://github.com/sympy/sympy/blob/sympy-1.14.0/LICENSE#L101' }, # PyDy
+    { name = 'MIT', url = 'https://github.com/sympy/sympy/blob/sympy-1.14.0/LICENSE#L132' },          # latex2sympy
+], version = 'v1.14.0' }
 library.torch = { license = [
-    { name = '!License-30', url = 'https://download.pytorch.org/whl/cpu/torch-2.6.0%2Bcpu-cp313-cp313-linux_x86_64.whl' },
-], version = 'v2.6.0+cpu' }
+    { name = '!License-30', url = 'https://download.pytorch.org/whl/cpu/torch-2.8.0%2Bcpu-cp313-cp313-manylinux_2_28_x86_64.whl' },
+], version = 'v2.8.0+cpu' }
 library.z3-solver = { license = [
-    { name = 'MIT', url = 'https://github.com/Z3Prover/z3/blob/z3-4.15.1/LICENSE.txt' },
-], version = 'v4.15.1.0' }
+    { name = 'MIT', url = 'https://github.com/Z3Prover/z3/blob/z3-4.15.3/LICENSE.txt' },
+], version = 'v4.15.3.0' }
 
 # 間接的な依存だが使えるのでindirectはtrueにしないでおく
 library.absl-py = { license = [
-    { name = 'Apache-2.0', url = 'https://github.com/abseil/abseil-py/blob/v2.3.0/LICENSE' },
-], version = 'v2.3.0' }
+    { name = 'Apache-2.0', url = 'https://github.com/abseil/abseil-py/blob/v2.3.1/LICENSE' },
+], version = 'v2.3.1' }
 library.cppyy-backend = { license = [
     { name = 'BSD-3-Clause-LBNL', url = 'https://github.com/wlav/cppyy-backend/blob/clingwrapper-1.15.3/clingwrapper/LICENSE.txt' },
 ], version = 'v1.15.3' }
@@ -153,11 +152,11 @@ library.CPyCppyy = { license = [
     { name = 'BSD-3-Clause-LBNL', url = 'https://github.com/wlav/CPyCppyy/blob/CPyCppyy-1.13.0/LICENSE.txt' },
 ], version = 'v1.13.0' }
 library.filelock = { license = [
-    { name = 'Unlicense', url = 'https://github.com/tox-dev/filelock/blob/3.18.0/LICENSE' },
-], version = 'v3.18.0' }
+    { name = 'Unlicense', url = 'https://github.com/tox-dev/filelock/blob/3.19.1/LICENSE' },
+], version = 'v3.19.1' }
 library.fsspec = { license = [
-    { name = 'BSD-3-Clause', url = 'https://github.com/fsspec/filesystem_spec/blob/2025.5.1/LICENSE' },
-], version = '2025.5.1' }
+    { name = 'BSD-3-Clause', url = 'https://github.com/fsspec/filesystem_spec/blob/2025.7.0/LICENSE' },
+], version = '2025.7.0' }
 library.immutabledict = { license = [
     { name = 'MIT', url = 'https://github.com/corenting/immutabledict/blob/v4.2.1/LICENSE' },
 ], version = 'v4.2.1' }
@@ -191,8 +190,8 @@ library.threadpoolctl = { license = [
     { name = 'BSD-3-Clause', url = 'https://github.com/joblib/threadpoolctl/blob/3.6.0/LICENSE' },
 ], version = 'v3.6.0' }
 library.typing_extensions = { license = [
-    { name = 'PSF-2.0', url = 'https://github.com/python/typing_extensions/blob/4.14.0/LICENSE' },
-], version = 'v4.14.0' }
+    { name = 'PSF-2.0', url = 'https://github.com/python/typing_extensions/blob/4.14.1/LICENSE' },
+], version = 'v4.14.1' }
 library.tzdata = { license = [
     { name = 'Apache-2.0', url = 'https://github.com/python/tzdata/blob/2025.2/LICENSE' },
 ], version = 'v2025.2' }
@@ -232,31 +231,38 @@ library.fast_double_parser = { license = [
 # from numpy, scikit-learn and scipy
 library."GCC runtime library" = { license = [
     { name = 'GPL-3.0-only', exception = 'GCC-exception-3.1', url = 'https://github.com/numpy/numpy/blob/v2.2.6/tools/wheels/LICENSE_linux.txt#L98' },
-    { name = 'GPL-3.0-only', exception = 'GCC-exception-3.1', url = 'https://github.com/scikit-learn/scikit-learn/blob/1.7.0/build_tools/wheels/LICENSE_linux.txt' },
-    { name = 'GPL-3.0-only', exception = 'GCC-exception-3.1', url = 'https://github.com/scipy/scipy/blob/v1.15.3/tools/wheels/LICENSE_linux.txt#L99' },
+    { name = 'GPL-3.0-only', exception = 'GCC-exception-3.1', url = 'https://github.com/scikit-learn/scikit-learn/blob/1.7.1/build_tools/wheels/LICENSE_linux.txt' },
+    { name = 'GPL-3.0-or-later', exception = 'GCC-exception-3.1', url = 'https://github.com/scipy/scipy/blob/v1.16.1/tools/wheels/LICENSE_linux.txt#L44' },
 ], indirect = true }
 # from numpy and scipy
 library.OpenBLAS = { license = [
     { name = 'BSD-3-Clause', url = 'https://github.com/numpy/numpy/blob/v2.2.6/tools/wheels/LICENSE_linux.txt#L7' },
-    { name = 'BSD-3-Clause-Attribution', url = 'https://github.com/scipy/scipy/blob/v1.15.3/tools/wheels/LICENSE_linux.txt#L8' },
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/scipy/blob/v1.16.1/tools/wheels/LICENSE_linux.txt#L8' },
 ], indirect = true }
 library.LAPACK = { license = [
     { name = 'BSD-3-Clause-Open-MPI', url = 'https://github.com/numpy/numpy/blob/v2.2.6/tools/wheels/LICENSE_linux.txt#L43' },
-    { name = 'BSD-3-Clause-Open-MPI', url = 'https://github.com/scipy/scipy/blob/v1.15.3/tools/wheels/LICENSE_linux.txt#L44' },
+    { name = 'BSD-3-Clause-Open-MPI', url = 'https://github.com/scipy/scipy/blob/v1.16.1/tools/wheels/LICENSE_linux.txt#L44' },
 ], indirect = true }
 library.libquadmath = { license = [
     { name = 'LGPL-2.1-or-later', url = 'https://github.com/numpy/numpy/blob/v2.2.6/tools/wheels/LICENSE_linux.txt#L882' },
-    { name = 'LGPL-2.1-or-later', url = 'https://github.com/scipy/scipy/blob/v1.15.3/tools/wheels/LICENSE_linux.txt#L884' },
+    { name = 'LGPL-2.1-or-later', url = 'https://github.com/scipy/scipy/blob/v1.16.1/tools/wheels/LICENSE_linux.txt#L884' },
 ], indirect = true }
 # from scipy
+library.xsf = { license = [
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/xsf/blob/4fff9b2cb2b5c31a0cf0b0f609d2699a5eeac53b/LICENSE' },
+    { name = 'BSD-3-Clause', url = 'https://github.com/scipy/xsf/blob/4fff9b2cb2b5c31a0cf0b0f609d2699a5eeac53b/LICENSES_bundled.txt#L3' },                                               # Cephes
+    { name = 'MIT', url = 'https://github.com/scipy/xsf/blob/4fff9b2cb2b5c31a0cf0b0f609d2699a5eeac53b/LICENSES_bundled.txt#L39' },                                                       # Faddeeva
+    { name = 'BSD-3-Clause-LBNL', url = 'https://github.com/scipy/xsf/blob/4fff9b2cb2b5c31a0cf0b0f609d2699a5eeac53b/LICENSES_bundled.txt#L63' },                                         # qd
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://github.com/scipy/xsf/blob/4fff9b2cb2b5c31a0cf0b0f609d2699a5eeac53b/include/xsf/third_party/kokkos/mdspan.hpp' }, # mdspan
+], indirect = true }
 library.HiGHS = { license = [
     { name = 'MIT', url = 'https://github.com/scipy/HiGHS/blob/222cce79a2bca866dbfbcd91b55da11336ae88f4/LICENSE.txt' },
 ], indirect = true }
 library.Boost = { license = [
-    { name = 'BSL-1.0', url = 'https://github.com/boostorg/math/blob/260f7600e95dcf87b228d46a4a37cf594df5437b/LICENSE' },
+    { name = 'BSL-1.0', url = 'https://github.com/boostorg/math/blob/529f3a759d83aa9437613666ea6293c9336d4069/LICENSE' },
 ], indirect = true }
 library.array-api-compat = { license = [
-    { name = 'MIT', url = 'https://github.com/data-apis/array-api-compat/blob/498f086568362002185b005a0a7f38ad136ca8bb/LICENSE' },
+    { name = 'MIT', url = 'https://github.com/data-apis/array-api-compat/blob/8005d6d02c0f1717881de37a710871bb955eb5cd/LICENSE' },
 ], indirect = true }
 #from shapely
 library.GEOS = { license = [
@@ -266,18 +272,348 @@ library.GEOS = { license = [
 library.utf8_range = { license = [
     { name = 'MIT', url = 'https://github.com/protocolbuffers/protobuf/blob/v6.31.1/third_party/utf8_range/LICENSE' },
 ], indirect = true }
-# from polars
+# from polars and rustworkx
 library.adler2 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/adler2/2.0.0/source/Cargo.toml' },
     { name = '0BSD', url = 'https://docs.rs/crate/adler2/2.0.0/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/adler2/2.0.0/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/adler2/2.0.0/source/Cargo.toml' },
-], indirect = true }
-library.adler32 = { license = [
-    { name = 'Zlib', url = 'https://docs.rs/crate/adler32/1.2.0/source/Cargo.toml' },
 ], indirect = true }
 library.ahash = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/ahash/0.8.11/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/ahash/0.8.11/source/Cargo.toml' },
+], indirect = true }
+library.allocator-api2 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/allocator-api2/0.2.21/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/allocator-api2/0.2.21/source/Cargo.toml' },
+], indirect = true }
+library.autocfg = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/autocfg/1.4.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/autocfg/1.4.0/source/Cargo.toml' },
+], indirect = true }
+library.byteorder = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/byteorder/1.5.0/source/Cargo.toml' },
+    { name = 'Unlicense', url = 'https://docs.rs/crate/byteorder/1.5.0/source/Cargo.toml' },
+], indirect = true }
+library.cfg-if = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/cfg-if/1.0.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/cfg-if/1.0.0/source/Cargo.toml' },
+], indirect = true }
+library.crc32fast = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crc32fast/1.4.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crc32fast/1.4.2/source/Cargo.toml' },
+], indirect = true }
+library.crossbeam-deque = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/crossbeam-deque/0.8.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crossbeam-deque/0.8.6/source/Cargo.toml' },
+], indirect = true }
+library.crossbeam-epoch = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crossbeam-epoch/0.9.18/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crossbeam-epoch/0.9.18/source/Cargo.toml' },
+], indirect = true }
+library.crossbeam-utils = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crossbeam-utils/0.8.21/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crossbeam-utils/0.8.21/source/Cargo.toml' },
+], indirect = true }
+library.either = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/either/1.15.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/either/1.15.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/either/1.13.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/either/1.13.0/source/Cargo.toml' },
+], indirect = true }
+library.equivalent = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/equivalent/1.0.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/equivalent/1.0.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/equivalent/1.0.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/equivalent/1.0.1/source/Cargo.toml' },
+], indirect = true }
+library.flate2 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/flate2/1.1.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/flate2/1.1.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/flate2/1.0.35/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/flate2/1.0.35/source/Cargo.toml' },
+], indirect = true }
+library.foldhash = { license = [
+    { name = 'Zlib', url = 'https://docs.rs/crate/foldhash/0.1.5/source/Cargo.toml' },
+    { name = 'Zlib', url = 'https://docs.rs/crate/foldhash/0.1.4/source/Cargo.toml' },
+], indirect = true }
+library.getrandom = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/getrandom/0.2.16/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/getrandom/0.2.16/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/getrandom/0.3.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/getrandom/0.3.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/getrandom/0.2.15/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/getrandom/0.2.15/source/Cargo.toml' },
+], indirect = true }
+library.hashbrown = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/hashbrown/0.12.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hashbrown/0.15.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/hashbrown/0.14.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hashbrown/0.12.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/hashbrown/0.15.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hashbrown/0.14.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/hashbrown/0.15.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hashbrown/0.15.2/source/Cargo.toml' },
+], indirect = true }
+library.heck = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/heck/0.5.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/heck/0.5.0/source/Cargo.toml' },
+], indirect = true }
+library.indexmap = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/indexmap/2.9.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indexmap/2.9.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indexmap/1.9.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/indexmap/1.9.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/indexmap/2.7.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indexmap/2.7.0/source/Cargo.toml' },
+], indirect = true }
+library.indoc = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indoc/2.0.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/indoc/2.0.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/indoc/2.0.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indoc/2.0.5/source/Cargo.toml' },
+], indirect = true }
+library.itertools = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itertools/0.10.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/itertools/0.10.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itertools/0.14.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/itertools/0.14.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itertools/0.13.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/itertools/0.11.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itertools/0.11.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/itertools/0.13.0/source/Cargo.toml' },
+], indirect = true }
+library.itoa = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itoa/1.0.15/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/itoa/1.0.15/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/itoa/1.0.14/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itoa/1.0.14/source/Cargo.toml' },
+], indirect = true }
+library.libc = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/libc/0.2.172/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/libc/0.2.172/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/libc/0.2.169/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/libc/0.2.169/source/Cargo.toml' },
+], indirect = true }
+library.matrixmultiply = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/matrixmultiply/0.3.9/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/matrixmultiply/0.3.9/source/Cargo.toml' },
+], indirect = true }
+library.memchr = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/memchr/2.7.4/source/Cargo.toml' },
+    { name = 'Unlicense', url = 'https://docs.rs/crate/memchr/2.7.4/source/Cargo.toml' },
+], indirect = true }
+library.memoffset = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/memoffset/0.9.1/source/Cargo.toml' },
+], indirect = true }
+library.miniz_oxide = { license = [
+    { name = 'Zlib', url = 'https://docs.rs/crate/miniz_oxide/0.8.8/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/miniz_oxide/0.8.8/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/miniz_oxide/0.8.8/source/Cargo.toml' },
+    { name = 'Zlib', url = 'https://docs.rs/crate/miniz_oxide/0.8.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/miniz_oxide/0.8.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/miniz_oxide/0.8.3/source/Cargo.toml' },
+], indirect = true }
+library.ndarray = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ndarray/0.16.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/ndarray/0.16.1/source/Cargo.toml' },
+], indirect = true }
+library.num-complex = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-complex/0.4.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/num-complex/0.4.6/source/Cargo.toml' },
+], indirect = true }
+library.num-integer = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-integer/0.1.46/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/num-integer/0.1.46/source/Cargo.toml' },
+], indirect = true }
+library.num-traits = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-traits/0.2.19/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/num-traits/0.2.19/source/Cargo.toml' },
+], indirect = true }
+library.numpy-rust-crate = { license = [ # キーが重複してしまうのでrust-crateをつけている
+    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/numpy/0.25.0/source/Cargo.toml' },
+    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/numpy/0.23.0/source/Cargo.toml' },
+], indirect = true }
+library.once_cell = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/once_cell/1.21.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/once_cell/1.21.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/once_cell/1.20.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/once_cell/1.20.2/source/Cargo.toml' },
+], indirect = true }
+library.portable-atomic = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/portable-atomic/1.11.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/portable-atomic/1.11.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/portable-atomic/1.10.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/portable-atomic/1.10.0/source/Cargo.toml' },
+], indirect = true }
+library.portable-atomic-util = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/portable-atomic-util/0.2.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/portable-atomic-util/0.2.4/source/Cargo.toml' },
+], indirect = true }
+library.ppv-lite86 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ppv-lite86/0.2.21/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/ppv-lite86/0.2.21/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ppv-lite86/0.2.20/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/ppv-lite86/0.2.20/source/Cargo.toml' },
+], indirect = true }
+library.proc-macro2 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/proc-macro2/1.0.95/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/proc-macro2/1.0.95/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/proc-macro2/1.0.93/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/proc-macro2/1.0.93/source/Cargo.toml' },
+], indirect = true }
+library.pyo3 = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/pyo3/0.23.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3/0.23.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3/0.25.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/pyo3/0.25.0/source/Cargo.toml' },
+], indirect = true }
+library.pyo3-build-config = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-build-config/0.23.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-build-config/0.23.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-build-config/0.25.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-build-config/0.25.0/source/Cargo.toml' },
+], indirect = true }
+library.pyo3-ffi = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-ffi/0.23.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-ffi/0.23.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-ffi/0.25.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-ffi/0.25.0/source/Cargo.toml' },
+], indirect = true }
+library.pyo3-macros = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-macros/0.23.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-macros/0.23.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-macros/0.25.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-macros/0.25.0/source/Cargo.toml' },
+], indirect = true }
+library.pyo3-macros-backend = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-macros-backend/0.23.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-macros-backend/0.23.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-macros-backend/0.25.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-macros-backend/0.25.0/source/Cargo.toml' },
+], indirect = true }
+library.quick-xml = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/quick-xml/0.37.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/quick-xml/0.37.5/source/Cargo.toml' },
+], indirect = true }
+library.quote = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/quote/1.0.38/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/quote/1.0.38/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/quote/1.0.40/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/quote/1.0.40/source/Cargo.toml' },
+], indirect = true }
+library.rand = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/rand/0.8.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand/0.8.5/source/Cargo.toml' },
+], indirect = true }
+library.rand_chacha = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_chacha/0.3.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_chacha/0.3.1/source/Cargo.toml' },
+], indirect = true }
+library.rand_core = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_core/0.6.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_core/0.6.4/source/Cargo.toml' },
+], indirect = true }
+library.rawpointer = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/rawpointer/0.2.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rawpointer/0.2.1/source/Cargo.toml' },
+], indirect = true }
+library.rayon = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/rayon/1.10.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rayon/1.10.0/source/Cargo.toml' },
+], indirect = true }
+library.rayon-core = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/rayon-core/1.12.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rayon-core/1.12.1/source/Cargo.toml' },
+], indirect = true }
+library.rustc-hash = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/rustc-hash/2.1.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustc-hash/2.1.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustc-hash/2.1.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustc-hash/2.1.1/source/Cargo.toml' },
+], indirect = true }
+library.ryu = { license = [
+    { name = 'BSL-1.0', url = 'https://docs.rs/crate/ryu/1.0.18/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ryu/1.0.18/source/Cargo.toml' },
+    { name = 'BSL-1.0', url = 'https://docs.rs/crate/ryu/1.0.20/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ryu/1.0.20/source/Cargo.toml' },
+], indirect = true }
+library.serde = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/serde/1.0.217/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde/1.0.217/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/serde/1.0.219/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde/1.0.219/source/Cargo.toml' },
+], indirect = true }
+library.serde_derive = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/serde_derive/1.0.217/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_derive/1.0.217/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/serde_derive/1.0.219/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_derive/1.0.219/source/Cargo.toml' },
+], indirect = true }
+library.serde_json = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_json/1.0.135/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/serde_json/1.0.135/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_json/1.0.140/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/serde_json/1.0.140/source/Cargo.toml' },
+], indirect = true }
+library.smallvec = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/smallvec/1.13.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/smallvec/1.13.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/smallvec/1.15.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/smallvec/1.15.0/source/Cargo.toml' },
+], indirect = true }
+library.syn = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/syn/2.0.96/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/syn/2.0.96/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/syn/2.0.101/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/syn/1.0.109/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/syn/1.0.109/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/syn/2.0.101/source/Cargo.toml' },
+], indirect = true }
+library.target-lexicon = { license = [
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/target-lexicon/0.12.16/source/Cargo.toml' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/target-lexicon/0.13.2/source/Cargo.toml' },
+], indirect = true }
+library.unicode-ident = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/unicode-ident/1.0.14/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unicode-ident/1.0.14/source/Cargo.toml' },
+    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/unicode-ident/1.0.14/source/Cargo.toml' },
+    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/unicode-ident/1.0.18/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unicode-ident/1.0.18/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/unicode-ident/1.0.18/source/Cargo.toml' },
+], indirect = true }
+library.unindent = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unindent/0.2.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/unindent/0.2.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unindent/0.2.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/unindent/0.2.4/source/Cargo.toml' },
+], indirect = true }
+library.version_check = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/version_check/0.9.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/version_check/0.9.5/source/Cargo.toml' },
+], indirect = true }
+library.wasi = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasi/0.14.2+wasi-0.2.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasi/0.11.0+wasi-snapshot-preview1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasi/0.11.0+wasi-snapshot-preview1/source/Cargo.toml' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/wasi/0.14.2+wasi-0.2.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/wasi/0.11.0+wasi-snapshot-preview1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasi/0.14.2+wasi-0.2.4/source/Cargo.toml' },
+], indirect = true }
+library.zerocopy = { license = [
+    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/zerocopy/0.7.35/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zerocopy/0.8.25/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/zerocopy/0.8.25/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zerocopy/0.7.35/source/Cargo.toml' },
+    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/zerocopy/0.8.25/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/zerocopy/0.7.35/source/Cargo.toml' },
+], indirect = true }
+# from polars
+library.addr2line = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/addr2line/0.24.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/addr2line/0.24.2/source/Cargo.toml' },
+], indirect = true }
+library.adler32 = { license = [
+    { name = 'Zlib', url = 'https://docs.rs/crate/adler32/1.2.0/source/Cargo.toml' },
 ], indirect = true }
 library.aho-corasick = { license = [
     { name = 'Unlicense', url = 'https://docs.rs/crate/aho-corasick/1.1.3/source/Cargo.toml' },
@@ -289,20 +625,28 @@ library.alloc-no-stdlib = { license = [
 library.alloc-stdlib = { license = [
     { name = 'BSD-3-Clause', url = 'https://docs.rs/crate/alloc-stdlib/0.2.2/source/Cargo.toml' },
 ], indirect = true }
-library.allocator-api2 = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/allocator-api2/0.2.21/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/allocator-api2/0.2.21/source/Cargo.toml' },
+library.android-tzdata = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/android-tzdata/0.1.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/android-tzdata/0.1.1/source/Cargo.toml' },
+], indirect = true }
+library.android_system_properties = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/android_system_properties/0.1.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/android_system_properties/0.1.5/source/Cargo.toml' },
+], indirect = true }
+library.anyhow = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/anyhow/1.0.98/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/anyhow/1.0.98/source/Cargo.toml' },
 ], indirect = true }
 library.arboard = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/arboard/3.4.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/arboard/3.4.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/arboard/3.5.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/arboard/3.5.0/source/Cargo.toml' },
 ], indirect = true }
 library.argminmax = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/argminmax/0.6.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/argminmax/0.6.3/source/Cargo.toml' },
 ], indirect = true }
 library.array-init-cursor = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/array-init-cursor/0.2.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/array-init-cursor/0.2.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/array-init-cursor/0.2.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/array-init-cursor/0.2.1/source/Cargo.toml' },
 ], indirect = true }
 library.arrayref = { license = [
     { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/arrayref/0.3.9/source/Cargo.toml' },
@@ -311,6 +655,10 @@ library.arrayvec = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/arrayvec/0.7.6/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/arrayvec/0.7.6/source/Cargo.toml' },
 ], indirect = true }
+library.async-channel = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/async-channel/2.3.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/async-channel/2.3.1/source/Cargo.toml' },
+], indirect = true }
 library.async-stream = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/async-stream/0.3.6/source/Cargo.toml' },
 ], indirect = true }
@@ -318,8 +666,8 @@ library.async-stream-impl = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/async-stream-impl/0.3.6/source/Cargo.toml' },
 ], indirect = true }
 library.async-trait = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/async-trait/0.1.84/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/async-trait/0.1.84/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/async-trait/0.1.88/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/async-trait/0.1.88/source/Cargo.toml' },
 ], indirect = true }
 library.atoi_simd = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/atoi_simd/0.16.0/source/Cargo.toml' },
@@ -329,147 +677,289 @@ library.atomic-waker = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/atomic-waker/1.1.2/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/atomic-waker/1.1.2/source/Cargo.toml' },
 ], indirect = true }
-library.autocfg = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/autocfg/1.4.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/autocfg/1.4.0/source/Cargo.toml' },
-], indirect = true }
 library.avro-schema = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/avro-schema/0.3.0/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/avro-schema/0.3.0/source/Cargo.toml' },
 ], indirect = true }
+library.aws-config = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-config/1.6.2/source/Cargo.toml' },
+], indirect = true }
+library.aws-credential-types = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-credential-types/1.2.3/source/Cargo.toml' },
+], indirect = true }
+library.aws-runtime = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-runtime/1.5.7/source/Cargo.toml' },
+], indirect = true }
+library.aws-sdk-s3 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-sdk-s3/1.83.0/source/Cargo.toml' },
+], indirect = true }
+library.aws-sdk-sso = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-sdk-sso/1.65.0/source/Cargo.toml' },
+], indirect = true }
+library.aws-sdk-ssooidc = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-sdk-ssooidc/1.66.0/source/Cargo.toml' },
+], indirect = true }
+library.aws-sdk-sts = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-sdk-sts/1.66.0/source/Cargo.toml' },
+], indirect = true }
+library.aws-sigv4 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-sigv4/1.3.1/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-async = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-async/1.2.5/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-checksums = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-checksums/0.63.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-checksums/0.60.13/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-eventstream = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-eventstream/0.60.8/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-http = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-http/0.62.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-http/0.60.12/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-http-client = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-http-client/1.0.1/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-json = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-json/0.61.3/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-observability = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-observability/0.1.3/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-query = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-query/0.60.7/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-runtime = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-runtime/1.8.3/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-runtime-api = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-runtime-api/1.8.0/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-types = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-types/1.3.1/source/Cargo.toml' },
+], indirect = true }
+library.aws-smithy-xml = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-smithy-xml/0.60.9/source/Cargo.toml' },
+], indirect = true }
+library.aws-types = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/aws-types/1.3.7/source/Cargo.toml' },
+], indirect = true }
+library.backtrace = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/backtrace/0.3.74/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/backtrace/0.3.74/source/Cargo.toml' },
+], indirect = true }
+library.base16ct = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/base16ct/0.1.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/base16ct/0.1.1/source/Cargo.toml' },
+], indirect = true }
 library.base64 = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/base64/0.22.1/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/base64/0.22.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/base64/0.21.7/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/base64/0.21.7/source/Cargo.toml' },
+], indirect = true }
+library.base64-simd = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/base64-simd/0.8.0/source/Cargo.toml' },
+], indirect = true }
+library.base64ct = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/base64ct/1.7.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/base64ct/1.7.3/source/Cargo.toml' },
 ], indirect = true }
 library.bincode = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/bincode/1.3.3/source/Cargo.toml' },
 ], indirect = true }
 library.bitflags = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bitflags/2.6.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/bitflags/2.6.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bitflags/2.9.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/bitflags/2.9.0/source/Cargo.toml' },
 ], indirect = true }
 library.blake3 = { license = [
-    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/blake3/1.5.5/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/blake3/1.5.5/source/Cargo.toml' },
-    { name = 'CC0-1.0', url = 'https://docs.rs/crate/blake3/1.5.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/blake3/1.8.2/source/Cargo.toml' },
+    { name = 'CC0-1.0', url = 'https://docs.rs/crate/blake3/1.8.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/blake3/1.8.2/source/Cargo.toml' },
+], indirect = true }
+library.block-buffer = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/block-buffer/0.10.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/block-buffer/0.10.4/source/Cargo.toml' },
+], indirect = true }
+library.boxcar = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/boxcar/0.2.12/source/Cargo.toml' },
 ], indirect = true }
 library.brotli = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/brotli/7.0.0/source/Cargo.toml' },
     { name = 'BSD-3-Clause', url = 'https://docs.rs/crate/brotli/7.0.0/source/Cargo.toml' },
 ], indirect = true }
 library.brotli-decompressor = { license = [
-    { name = 'BSD-3-Clause', url = 'https://docs.rs/crate/brotli-decompressor/4.0.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/brotli-decompressor/4.0.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/brotli-decompressor/4.0.3/source/Cargo.toml' },
+    { name = 'BSD-3-Clause', url = 'https://docs.rs/crate/brotli-decompressor/4.0.3/source/Cargo.toml' },
+], indirect = true }
+library.bumpalo = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bumpalo/3.17.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/bumpalo/3.17.0/source/Cargo.toml' },
 ], indirect = true }
 library.bytemuck = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bytemuck/1.21.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/bytemuck/1.21.0/source/Cargo.toml' },
-    { name = 'Zlib', url = 'https://docs.rs/crate/bytemuck/1.21.0/source/Cargo.toml' },
+    { name = 'Zlib', url = 'https://docs.rs/crate/bytemuck/1.23.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bytemuck/1.23.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/bytemuck/1.23.0/source/Cargo.toml' },
 ], indirect = true }
 library.bytemuck_derive = { license = [
-    { name = 'Zlib', url = 'https://docs.rs/crate/bytemuck_derive/1.8.1/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bytemuck_derive/1.8.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/bytemuck_derive/1.8.1/source/Cargo.toml' },
-], indirect = true }
-library.byteorder = { license = [
-    { name = 'Unlicense', url = 'https://docs.rs/crate/byteorder/1.5.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/byteorder/1.5.0/source/Cargo.toml' },
+    { name = 'Zlib', url = 'https://docs.rs/crate/bytemuck_derive/1.9.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bytemuck_derive/1.9.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/bytemuck_derive/1.9.3/source/Cargo.toml' },
 ], indirect = true }
 library.bytes = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/bytes/1.9.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/bytes/1.10.1/source/Cargo.toml' },
+], indirect = true }
+library.bytes-utils = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/bytes-utils/0.1.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/bytes-utils/0.1.4/source/Cargo.toml' },
 ], indirect = true }
 library.castaway = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/castaway/0.2.3/source/Cargo.toml' },
 ], indirect = true }
 library.cc = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/cc/1.2.7/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/cc/1.2.7/source/Cargo.toml' },
-], indirect = true }
-library.cfg-if = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/cfg-if/1.0.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/cfg-if/1.0.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/cc/1.2.21/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/cc/1.2.21/source/Cargo.toml' },
 ], indirect = true }
 library.chrono = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/chrono/0.4.39/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/chrono/0.4.39/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/chrono/0.4.41/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/chrono/0.4.41/source/Cargo.toml' },
 ], indirect = true }
 library.chrono-tz = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/chrono-tz/0.10.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/chrono-tz/0.10.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/chrono-tz/0.10.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/chrono-tz/0.10.3/source/Cargo.toml' },
 ], indirect = true }
 library.chrono-tz-build = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/chrono-tz-build/0.4.0/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/chrono-tz-build/0.4.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/chrono-tz-build/0.4.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/chrono-tz-build/0.4.1/source/Cargo.toml' },
+], indirect = true }
+library.clipboard-win = { license = [
+    { name = 'BSL-1.0', url = 'https://docs.rs/crate/clipboard-win/5.4.0/source/Cargo.toml' },
 ], indirect = true }
 library.comfy-table = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/comfy-table/7.1.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/comfy-table/7.1.4/source/Cargo.toml' },
 ], indirect = true }
 library.compact_str = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/compact_str/0.8.1/source/Cargo.toml' },
+], indirect = true }
+library.concurrent-queue = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/concurrent-queue/2.5.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/concurrent-queue/2.5.0/source/Cargo.toml' },
+], indirect = true }
+library.const-oid = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/const-oid/0.9.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/const-oid/0.9.6/source/Cargo.toml' },
 ], indirect = true }
 library.constant_time_eq = { license = [
     { name = 'MIT-0', url = 'https://docs.rs/crate/constant_time_eq/0.3.1/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/constant_time_eq/0.3.1/source/Cargo.toml' },
     { name = 'CC0-1.0', url = 'https://docs.rs/crate/constant_time_eq/0.3.1/source/Cargo.toml' },
 ], indirect = true }
+library.core-foundation = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/core-foundation/0.9.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/core-foundation/0.10.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/core-foundation/0.10.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/core-foundation/0.9.4/source/Cargo.toml' },
+], indirect = true }
+library.core-foundation-sys = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/core-foundation-sys/0.8.7/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/core-foundation-sys/0.8.7/source/Cargo.toml' },
+], indirect = true }
+library.cpufeatures = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/cpufeatures/0.2.17/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/cpufeatures/0.2.17/source/Cargo.toml' },
+], indirect = true }
 library.crc = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/crc/2.1.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crc/3.2.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crc/3.2.1/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/crc/2.1.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crc/2.1.0/source/Cargo.toml' },
 ], indirect = true }
 library.crc-catalog = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crc-catalog/2.4.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crc-catalog/2.4.0/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/crc-catalog/1.1.1/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/crc-catalog/1.1.1/source/Cargo.toml' },
 ], indirect = true }
-library.crc32fast = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/crc32fast/1.4.2/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crc32fast/1.4.2/source/Cargo.toml' },
+library.crc32c = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crc32c/0.6.8/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crc32c/0.6.8/source/Cargo.toml' },
+], indirect = true }
+library.crc64fast-nvme = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crc64fast-nvme/1.2.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crc64fast-nvme/1.2.0/source/Cargo.toml' },
 ], indirect = true }
 library.crossbeam-channel = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crossbeam-channel/0.5.14/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/crossbeam-channel/0.5.14/source/Cargo.toml' },
-], indirect = true }
-library.crossbeam-deque = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crossbeam-deque/0.8.6/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/crossbeam-deque/0.8.6/source/Cargo.toml' },
-], indirect = true }
-library.crossbeam-epoch = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crossbeam-epoch/0.9.18/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/crossbeam-epoch/0.9.18/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crossbeam-channel/0.5.15/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crossbeam-channel/0.5.15/source/Cargo.toml' },
 ], indirect = true }
 library.crossbeam-queue = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/crossbeam-queue/0.3.12/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/crossbeam-queue/0.3.12/source/Cargo.toml' },
 ], indirect = true }
-library.crossbeam-utils = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crossbeam-utils/0.8.21/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/crossbeam-utils/0.8.21/source/Cargo.toml' },
-], indirect = true }
 library.crossterm = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/crossterm/0.28.1/source/Cargo.toml' },
+], indirect = true }
+library.crossterm_winapi = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/crossterm_winapi/0.9.1/source/Cargo.toml' },
+], indirect = true }
+library.crypto-bigint = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crypto-bigint/0.5.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crypto-bigint/0.5.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crypto-bigint/0.4.9/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crypto-bigint/0.4.9/source/Cargo.toml' },
+], indirect = true }
+library.crypto-common = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/crypto-common/0.1.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/crypto-common/0.1.6/source/Cargo.toml' },
+], indirect = true }
+library.der = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/der/0.6.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/der/0.6.1/source/Cargo.toml' },
+], indirect = true }
+library.deranged = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/deranged/0.4.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/deranged/0.4.0/source/Cargo.toml' },
+], indirect = true }
+library.digest = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/digest/0.10.7/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/digest/0.10.7/source/Cargo.toml' },
 ], indirect = true }
 library.displaydoc = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/displaydoc/0.2.5/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/displaydoc/0.2.5/source/Cargo.toml' },
 ], indirect = true }
 library.dyn-clone = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/dyn-clone/1.0.17/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/dyn-clone/1.0.17/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/dyn-clone/1.0.19/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/dyn-clone/1.0.19/source/Cargo.toml' },
 ], indirect = true }
-library.either = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/either/1.13.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/either/1.13.0/source/Cargo.toml' },
+library.ecdsa = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ecdsa/0.14.8/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/ecdsa/0.14.8/source/Cargo.toml' },
 ], indirect = true }
-library.enum_dispatch = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/enum_dispatch/0.3.13/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/enum_dispatch/0.3.13/source/Cargo.toml' },
+library.elliptic-curve = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/elliptic-curve/0.12.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/elliptic-curve/0.12.3/source/Cargo.toml' },
 ], indirect = true }
-library.equivalent = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/equivalent/1.0.1/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/equivalent/1.0.1/source/Cargo.toml' },
+library.errno = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/errno/0.3.11/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/errno/0.3.11/source/Cargo.toml' },
+], indirect = true }
+library.error-code = { license = [
+    { name = 'BSL-1.0', url = 'https://docs.rs/crate/error-code/3.3.1/source/Cargo.toml' },
 ], indirect = true }
 library.ethnum = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ethnum/1.5.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/ethnum/1.5.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ethnum/1.5.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/ethnum/1.5.1/source/Cargo.toml' },
+], indirect = true }
+library.event-listener = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/event-listener/5.4.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/event-listener/5.4.0/source/Cargo.toml' },
+], indirect = true }
+library.event-listener-strategy = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/event-listener-strategy/0.5.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/event-listener-strategy/0.5.4/source/Cargo.toml' },
 ], indirect = true }
 library.fallible-streaming-iterator = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/fallible-streaming-iterator/0.1.9/source/Cargo.toml' },
@@ -479,9 +969,13 @@ library.fast-float2 = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/fast-float2/0.2.3/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/fast-float2/0.2.3/source/Cargo.toml' },
 ], indirect = true }
-library.flate2 = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/flate2/1.0.35/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/flate2/1.0.35/source/Cargo.toml' },
+library.fastrand = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/fastrand/2.3.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/fastrand/2.3.0/source/Cargo.toml' },
+], indirect = true }
+library.ff = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/ff/0.12.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ff/0.12.1/source/Cargo.toml' },
 ], indirect = true }
 library.float-cmp = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/float-cmp/0.10.0/source/Cargo.toml' },
@@ -490,16 +984,21 @@ library.fnv = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/fnv/1.0.7/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/fnv/1.0.7/source/Cargo.toml' },
 ], indirect = true }
-library.foldhash = { license = [
-    { name = 'Zlib', url = 'https://docs.rs/crate/foldhash/0.1.4/source/Cargo.toml' },
+library.foreign-types = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/foreign-types/0.3.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/foreign-types/0.3.2/source/Cargo.toml' },
+], indirect = true }
+library.foreign-types-shared = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/foreign-types-shared/0.1.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/foreign-types-shared/0.1.1/source/Cargo.toml' },
 ], indirect = true }
 library.form_urlencoded = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/form_urlencoded/1.2.1/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/form_urlencoded/1.2.1/source/Cargo.toml' },
 ], indirect = true }
 library.fs4 = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/fs4/0.12.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/fs4/0.12.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/fs4/0.13.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/fs4/0.13.1/source/Cargo.toml' },
 ], indirect = true }
 library.futures = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/futures/0.3.31/source/Cargo.toml' },
@@ -537,71 +1036,95 @@ library.futures-util = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/futures-util/0.3.31/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/futures-util/0.3.31/source/Cargo.toml' },
 ], indirect = true }
-library.getrandom = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/getrandom/0.2.15/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/getrandom/0.2.15/source/Cargo.toml' },
+library.generic-array = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/generic-array/0.14.7/source/Cargo.toml' },
+], indirect = true }
+library.gethostname = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/gethostname/0.4.3/source/Cargo.toml' },
+], indirect = true }
+library.gimli = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/gimli/0.31.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/gimli/0.31.1/source/Cargo.toml' },
 ], indirect = true }
 library.glob = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/glob/0.3.2/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/glob/0.3.2/source/Cargo.toml' },
 ], indirect = true }
+library.group = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/group/0.12.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/group/0.12.1/source/Cargo.toml' },
+], indirect = true }
 library.h2 = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/h2/0.4.7/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/h2/0.3.26/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/h2/0.4.9/source/Cargo.toml' },
 ], indirect = true }
 library.halfbrown = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/halfbrown/0.2.5/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/halfbrown/0.2.5/source/Cargo.toml' },
 ], indirect = true }
-library.hashbrown = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hashbrown/0.14.5/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/hashbrown/0.14.5/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hashbrown/0.15.2/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/hashbrown/0.15.2/source/Cargo.toml' },
-], indirect = true }
-library.heck = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/heck/0.5.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/heck/0.5.0/source/Cargo.toml' },
-], indirect = true }
 library.hex = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/hex/0.4.3/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/hex/0.4.3/source/Cargo.toml' },
+], indirect = true }
+library.hmac = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/hmac/0.12.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hmac/0.12.1/source/Cargo.toml' },
 ], indirect = true }
 library.home = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/home/0.5.11/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/home/0.5.11/source/Cargo.toml' },
 ], indirect = true }
 library.http = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/http/1.2.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/http/1.2.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/http/1.3.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/http/0.2.12/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/http/0.2.12/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/http/1.3.1/source/Cargo.toml' },
 ], indirect = true }
 library.http-body = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/http-body/1.0.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/http-body/0.4.6/source/Cargo.toml' },
 ], indirect = true }
 library.http-body-util = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/http-body-util/0.1.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/http-body-util/0.1.3/source/Cargo.toml' },
 ], indirect = true }
 library.httparse = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/httparse/1.9.5/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/httparse/1.9.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/httparse/1.10.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/httparse/1.10.1/source/Cargo.toml' },
+], indirect = true }
+library.httpdate = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/httpdate/1.0.3/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/httpdate/1.0.3/source/Cargo.toml' },
 ], indirect = true }
 library.humantime = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/humantime/2.1.0/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/humantime/2.1.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/humantime/2.2.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/humantime/2.2.0/source/Cargo.toml' },
 ], indirect = true }
 library.hyper = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/hyper/1.5.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/hyper/1.6.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/hyper/0.14.32/source/Cargo.toml' },
 ], indirect = true }
 library.hyper-rustls = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/hyper-rustls/0.27.5/source/Cargo.toml' },
     { name = 'ISC', url = 'https://docs.rs/crate/hyper-rustls/0.27.5/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/hyper-rustls/0.27.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hyper-rustls/0.24.2/source/Cargo.toml' },
+    { name = 'ISC', url = 'https://docs.rs/crate/hyper-rustls/0.24.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/hyper-rustls/0.24.2/source/Cargo.toml' },
+], indirect = true }
+library.hyper-tls = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hyper-tls/0.6.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/hyper-tls/0.6.0/source/Cargo.toml' },
 ], indirect = true }
 library.hyper-util = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/hyper-util/0.1.10/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/hyper-util/0.1.11/source/Cargo.toml' },
 ], indirect = true }
 library.iana-time-zone = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/iana-time-zone/0.1.61/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/iana-time-zone/0.1.61/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/iana-time-zone/0.1.63/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/iana-time-zone/0.1.63/source/Cargo.toml' },
+], indirect = true }
+library.iana-time-zone-haiku = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/iana-time-zone-haiku/0.1.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/iana-time-zone-haiku/0.1.2/source/Cargo.toml' },
 ], indirect = true }
 library.icu_collections = { license = [
     { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_collections/1.5.0/source/Cargo.toml' },
@@ -613,19 +1136,19 @@ library.icu_locid_transform = { license = [
     { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_locid_transform/1.5.0/source/Cargo.toml' },
 ], indirect = true }
 library.icu_locid_transform_data = { license = [
-    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_locid_transform_data/1.5.0/source/Cargo.toml' },
+    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_locid_transform_data/1.5.1/source/Cargo.toml' },
 ], indirect = true }
 library.icu_normalizer = { license = [
     { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_normalizer/1.5.0/source/Cargo.toml' },
 ], indirect = true }
 library.icu_normalizer_data = { license = [
-    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_normalizer_data/1.5.0/source/Cargo.toml' },
+    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_normalizer_data/1.5.1/source/Cargo.toml' },
 ], indirect = true }
 library.icu_properties = { license = [
     { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_properties/1.5.1/source/Cargo.toml' },
 ], indirect = true }
 library.icu_properties_data = { license = [
-    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_properties_data/1.5.0/source/Cargo.toml' },
+    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_properties_data/1.5.1/source/Cargo.toml' },
 ], indirect = true }
 library.icu_provider = { license = [
     { name = 'Unicode-3.0', url = 'https://docs.rs/crate/icu_provider/1.5.0/source/Cargo.toml' },
@@ -641,50 +1164,28 @@ library.idna_adapter = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/idna_adapter/1.2.0/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/idna_adapter/1.2.0/source/Cargo.toml' },
 ], indirect = true }
-library.indexmap = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indexmap/2.7.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/indexmap/2.7.0/source/Cargo.toml' },
-], indirect = true }
-library.indoc = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/indoc/2.0.5/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/indoc/2.0.5/source/Cargo.toml' },
-], indirect = true }
 library.inventory = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/inventory/0.3.16/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/inventory/0.3.16/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/inventory/0.3.20/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/inventory/0.3.20/source/Cargo.toml' },
 ], indirect = true }
 library.ipnet = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ipnet/2.10.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/ipnet/2.10.1/source/Cargo.toml' },
-], indirect = true }
-library.itertools = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/itertools/0.13.0/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itertools/0.11.0/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itertools/0.13.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/itertools/0.11.0/source/Cargo.toml' },
-], indirect = true }
-library.itoa = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/itoa/1.0.14/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/itoa/1.0.14/source/Cargo.toml' },
-], indirect = true }
-library.jemalloc-sys = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/jemalloc-sys/0.5.4+5.3.0-patched/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/jemalloc-sys/0.5.4+5.3.0-patched/source/Cargo.toml' },
-], indirect = true }
-library.jemallocator = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/jemallocator/0.5.4/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/jemallocator/0.5.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ipnet/2.11.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/ipnet/2.11.0/source/Cargo.toml' },
 ], indirect = true }
 library.jobserver = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/jobserver/0.1.32/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/jobserver/0.1.32/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/jobserver/0.1.33/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/jobserver/0.1.33/source/Cargo.toml' },
+], indirect = true }
+library.js-sys = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/js-sys/0.3.77/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/js-sys/0.3.77/source/Cargo.toml' },
 ], indirect = true }
 library.jsonpath_lib_polars_vendor = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/jsonpath_lib_polars_vendor/0.0.1/source/Cargo.toml' },
 ], indirect = true }
-library.libc = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/libc/0.2.169/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/libc/0.2.169/source/Cargo.toml' },
+library.lazy_static = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/lazy_static/1.5.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/lazy_static/1.5.0/source/Cargo.toml' },
 ], indirect = true }
 library.libflate = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/libflate/1.4.0/source/Cargo.toml' },
@@ -696,97 +1197,134 @@ library.libloading = { license = [
     { name = 'ISC', url = 'https://docs.rs/crate/libloading/0.8.6/source/Cargo.toml' },
 ], indirect = true }
 library.libm = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/libm/0.2.11/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/libm/0.2.11/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/libm/0.2.14/source/Cargo.toml' },
+], indirect = true }
+library.libmimalloc-sys = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/libmimalloc-sys/0.1.42/source/Cargo.toml' },
 ], indirect = true }
 library.libz-rs-sys = { license = [
-    { name = 'Zlib', url = 'https://docs.rs/crate/libz-rs-sys/0.4.1/source/Cargo.toml' },
+    { name = 'Zlib', url = 'https://docs.rs/crate/libz-rs-sys/0.5.0/source/Cargo.toml' },
 ], indirect = true }
 library.linux-raw-sys = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/linux-raw-sys/0.4.14/source/Cargo.toml' },
-    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/linux-raw-sys/0.4.14/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/linux-raw-sys/0.4.14/source/Cargo.toml' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/linux-raw-sys/0.4.15/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/linux-raw-sys/0.9.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/linux-raw-sys/0.4.15/source/Cargo.toml' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/linux-raw-sys/0.9.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/linux-raw-sys/0.9.4/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/linux-raw-sys/0.4.15/source/Cargo.toml' },
 ], indirect = true }
 library.litemap = { license = [
-    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/litemap/0.7.4/source/Cargo.toml' },
+    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/litemap/0.7.5/source/Cargo.toml' },
 ], indirect = true }
 library.lock_api = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/lock_api/0.4.12/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/lock_api/0.4.12/source/Cargo.toml' },
 ], indirect = true }
 library.log = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/log/0.4.22/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/log/0.4.22/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/log/0.4.27/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/log/0.4.27/source/Cargo.toml' },
+], indirect = true }
+library.lru = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/lru/0.12.5/source/Cargo.toml' },
 ], indirect = true }
 library.lz4 = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/lz4/1.28.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/lz4/1.28.1/source/Cargo.toml' },
 ], indirect = true }
 library.lz4-sys = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/lz4-sys/1.11.1+lz4-1.10.0/source/Cargo.toml' },
 ], indirect = true }
-library.matrixmultiply = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/matrixmultiply/0.3.9/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/matrixmultiply/0.3.9/source/Cargo.toml' },
+library.lz4_flex = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/lz4_flex/0.11.3/source/Cargo.toml' },
 ], indirect = true }
-library.memchr = { license = [
-    { name = 'Unlicense', url = 'https://docs.rs/crate/memchr/2.7.4/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/memchr/2.7.4/source/Cargo.toml' },
+library.md-5 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/md-5/0.10.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/md-5/0.10.6/source/Cargo.toml' },
 ], indirect = true }
 library.memmap2 = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/memmap2/0.9.5/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/memmap2/0.9.5/source/Cargo.toml' },
 ], indirect = true }
-library.memoffset = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/memoffset/0.9.1/source/Cargo.toml' },
+library.mimalloc = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/mimalloc/0.1.46/source/Cargo.toml' },
 ], indirect = true }
 library.mime = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/mime/0.3.17/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/mime/0.3.17/source/Cargo.toml' },
 ], indirect = true }
-library.miniz_oxide = { license = [
-    { name = 'Zlib', url = 'https://docs.rs/crate/miniz_oxide/0.8.2/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/miniz_oxide/0.8.2/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/miniz_oxide/0.8.2/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/miniz_oxide/0.8.3/source/Cargo.toml' },
-    { name = 'Zlib', url = 'https://docs.rs/crate/miniz_oxide/0.8.3/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/miniz_oxide/0.8.3/source/Cargo.toml' },
-], indirect = true }
 library.mio = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/mio/1.0.3/source/Cargo.toml' },
 ], indirect = true }
-library.ndarray = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/ndarray/0.16.1/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ndarray/0.16.1/source/Cargo.toml' },
+library.native-tls = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/native-tls/0.2.14/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/native-tls/0.2.14/source/Cargo.toml' },
 ], indirect = true }
 library.now = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/now/0.1.3/source/Cargo.toml' },
 ], indirect = true }
-library.num-complex = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/num-complex/0.4.6/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-complex/0.4.6/source/Cargo.toml' },
+library.ntapi = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ntapi/0.4.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/ntapi/0.4.1/source/Cargo.toml' },
 ], indirect = true }
-library.num-integer = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-integer/0.1.46/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/num-integer/0.1.46/source/Cargo.toml' },
+library.num-conv = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-conv/0.1.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/num-conv/0.1.0/source/Cargo.toml' },
 ], indirect = true }
-library.num-traits = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/num-traits/0.2.19/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/num-traits/0.2.19/source/Cargo.toml' },
+library.objc2 = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/objc2/0.6.1/source/Cargo.toml' },
 ], indirect = true }
-library.numpy-rust-crate = { license = [ # 本当の名前は numpy だが、numpy という名前は既に他のライブラリに使われているため、numpy-rust-crate としている
-    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/numpy/0.23.0/source/Cargo.toml' },
+library.objc2-app-kit = { license = [
+    { name = 'Zlib', url = 'https://docs.rs/crate/objc2-app-kit/0.3.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/objc2-app-kit/0.3.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/objc2-app-kit/0.3.1/source/Cargo.toml' },
+], indirect = true }
+library.objc2-core-foundation = { license = [
+    { name = 'Zlib', url = 'https://docs.rs/crate/objc2-core-foundation/0.3.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/objc2-core-foundation/0.3.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/objc2-core-foundation/0.3.1/source/Cargo.toml' },
+], indirect = true }
+library.objc2-core-graphics = { license = [
+    { name = 'Zlib', url = 'https://docs.rs/crate/objc2-core-graphics/0.3.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/objc2-core-graphics/0.3.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/objc2-core-graphics/0.3.1/source/Cargo.toml' },
+], indirect = true }
+library.objc2-encode = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/objc2-encode/4.1.0/source/Cargo.toml' },
+], indirect = true }
+library.objc2-foundation = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/objc2-foundation/0.3.1/source/Cargo.toml' },
+], indirect = true }
+library.object = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/object/0.36.7/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/object/0.36.7/source/Cargo.toml' },
 ], indirect = true }
 library.object_store = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/object_store/0.11.2/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/object_store/0.11.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/object_store/0.12.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/object_store/0.12.0/source/Cargo.toml' },
 ], indirect = true }
-library.once_cell = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/once_cell/1.20.2/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/once_cell/1.20.2/source/Cargo.toml' },
+library.openssl = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/openssl/0.10.72/source/Cargo.toml' },
+], indirect = true }
+library.openssl-macros = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/openssl-macros/0.1.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/openssl-macros/0.1.1/source/Cargo.toml' },
 ], indirect = true }
 library.openssl-probe = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/openssl-probe/0.1.5/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/openssl-probe/0.1.5/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/openssl-probe/0.1.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/openssl-probe/0.1.6/source/Cargo.toml' },
+], indirect = true }
+library.openssl-sys = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/openssl-sys/0.9.108/source/Cargo.toml' },
+], indirect = true }
+library.outref = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/outref/0.5.2/source/Cargo.toml' },
+], indirect = true }
+library.p256 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/p256/0.11.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/p256/0.11.1/source/Cargo.toml' },
+], indirect = true }
+library.parking = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/parking/2.2.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/parking/2.2.1/source/Cargo.toml' },
 ], indirect = true }
 library.parking_lot = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/parking_lot/0.12.3/source/Cargo.toml' },
@@ -799,184 +1337,148 @@ library.parking_lot_core = { license = [
 library.parse-zoneinfo = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/parse-zoneinfo/0.3.1/source/Cargo.toml' },
 ], indirect = true }
+library.paste = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/paste/1.0.15/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/paste/1.0.15/source/Cargo.toml' },
+], indirect = true }
 library.percent-encoding = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/percent-encoding/2.3.1/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/percent-encoding/2.3.1/source/Cargo.toml' },
 ], indirect = true }
 library.phf = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/phf/0.11.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/phf/0.11.3/source/Cargo.toml' },
 ], indirect = true }
 library.phf_codegen = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/phf_codegen/0.11.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/phf_codegen/0.11.3/source/Cargo.toml' },
 ], indirect = true }
 library.phf_generator = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/phf_generator/0.11.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/phf_generator/0.11.3/source/Cargo.toml' },
 ], indirect = true }
 library.phf_shared = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/phf_shared/0.11.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/phf_shared/0.11.3/source/Cargo.toml' },
 ], indirect = true }
 library.pin-project-lite = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pin-project-lite/0.2.15/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/pin-project-lite/0.2.15/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pin-project-lite/0.2.16/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/pin-project-lite/0.2.16/source/Cargo.toml' },
 ], indirect = true }
 library.pin-utils = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/pin-utils/0.1.0/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/pin-utils/0.1.0/source/Cargo.toml' },
 ], indirect = true }
+library.pkcs8 = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/pkcs8/0.9.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pkcs8/0.9.0/source/Cargo.toml' },
+], indirect = true }
 library.pkg-config = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pkg-config/0.3.31/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/pkg-config/0.3.31/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pkg-config/0.3.32/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/pkg-config/0.3.32/source/Cargo.toml' },
 ], indirect = true }
 library.planus = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/planus/0.3.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/planus/0.3.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/planus/1.1.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/planus/1.1.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-arrow = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-arrow/0.45.1/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/polars-arrow/0.45.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/polars-arrow/0.48.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-arrow/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-arrow-format = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/polars-arrow-format/0.1.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/polars-arrow-format/0.2.0/source/Cargo.toml' },
 ], indirect = true }
 library.polars-compute = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-compute/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-compute/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-core = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-core/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-core/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-error = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-error/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-error/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-expr = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-expr/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-expr/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-ffi = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-ffi/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-ffi/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-io = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-io/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-io/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-json = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-json/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-json/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-lazy = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-lazy/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-lazy/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-mem-engine = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-mem-engine/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-mem-engine/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-ops = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-ops/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-ops/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-parquet = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-parquet/0.45.1/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/polars-parquet/0.45.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/polars-parquet/0.48.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-parquet/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-parquet-format = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/polars-parquet-format/0.1.0/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/polars-parquet-format/0.1.0/source/Cargo.toml' },
 ], indirect = true }
-library.polars-pipe = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-pipe/0.45.1/source/Cargo.toml' },
-], indirect = true }
 library.polars-plan = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-plan/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-plan/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-python = { license = [
-    { name = 'MIT', url = 'https://github.com/pola-rs/polars/blob/py-1.21.0/LICENSE' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-python/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-row = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-row/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-row/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-schema = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-schema/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-schema/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-sql = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-sql/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-sql/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-stream = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-stream/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-stream/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-time = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-time/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-time/0.48.1/source/Cargo.toml' },
 ], indirect = true }
 library.polars-utils = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/polars-utils/0.45.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/polars-utils/0.48.1/source/Cargo.toml' },
 ], indirect = true }
-library.ppv-lite86 = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ppv-lite86/0.2.20/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/ppv-lite86/0.2.20/source/Cargo.toml' },
+library.powerfmt = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/powerfmt/0.2.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/powerfmt/0.2.0/source/Cargo.toml' },
 ], indirect = true }
-library.proc-macro2 = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/proc-macro2/1.0.92/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/proc-macro2/1.0.92/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/proc-macro2/1.0.93/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/proc-macro2/1.0.93/source/Cargo.toml' },
+library.proptest = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/proptest/1.6.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/proptest/1.6.0/source/Cargo.toml' },
+], indirect = true }
+library.prost = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/prost/0.11.9/source/Cargo.toml' },
+], indirect = true }
+library.prost-derive = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/prost-derive/0.11.9/source/Cargo.toml' },
 ], indirect = true }
 library.psm = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/psm/0.1.24/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/psm/0.1.24/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/psm/0.1.26/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/psm/0.1.26/source/Cargo.toml' },
 ], indirect = true }
-library.py-polars = { license = [
-    { name = 'MIT', url = 'https://github.com/pola-rs/polars/blob/py-1.21.0/LICENSE' },
-], indirect = true }
-library.pyo3 = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3/0.23.4/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/pyo3/0.23.4/source/Cargo.toml' },
-], indirect = true }
-library.pyo3-build-config = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-build-config/0.23.4/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-build-config/0.23.4/source/Cargo.toml' },
-], indirect = true }
-library.pyo3-ffi = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-ffi/0.23.4/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-ffi/0.23.4/source/Cargo.toml' },
-], indirect = true }
-library.pyo3-macros = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-macros/0.23.4/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-macros/0.23.4/source/Cargo.toml' },
-], indirect = true }
-library.pyo3-macros-backend = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/pyo3-macros-backend/0.23.4/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/pyo3-macros-backend/0.23.4/source/Cargo.toml' },
-], indirect = true }
-library.quick-xml = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/quick-xml/0.37.2/source/Cargo.toml' },
-], indirect = true }
-library.quote = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/quote/1.0.38/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/quote/1.0.38/source/Cargo.toml' },
-], indirect = true }
-library.rand = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand/0.8.5/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/rand/0.8.5/source/Cargo.toml' },
-], indirect = true }
-library.rand_chacha = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_chacha/0.3.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/rand_chacha/0.3.1/source/Cargo.toml' },
-], indirect = true }
-library.rand_core = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_core/0.6.4/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/rand_core/0.6.4/source/Cargo.toml' },
+library.r-efi = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/r-efi/5.2.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/r-efi/5.2.0/source/Cargo.toml' },
+    { name = 'LGPL-2.1-or-later', url = 'https://docs.rs/crate/r-efi/5.2.0/source/Cargo.toml' },
 ], indirect = true }
 library.rand_distr = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_distr/0.4.3/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/rand_distr/0.4.3/source/Cargo.toml' },
 ], indirect = true }
+library.rand_xorshift = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rand_xorshift/0.3.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rand_xorshift/0.3.0/source/Cargo.toml' },
+], indirect = true }
 library.raw-cpuid = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/raw-cpuid/11.2.0/source/Cargo.toml' },
-], indirect = true }
-library.rawpointer = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/rawpointer/0.2.1/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rawpointer/0.2.1/source/Cargo.toml' },
-], indirect = true }
-library.rayon = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rayon/1.10.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/rayon/1.10.0/source/Cargo.toml' },
-], indirect = true }
-library.rayon-core = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rayon-core/1.12.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/rayon-core/1.12.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/raw-cpuid/11.5.0/source/Cargo.toml' },
 ], indirect = true }
 library.recursive = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/recursive/0.1.1/source/Cargo.toml' },
@@ -984,13 +1486,16 @@ library.recursive = { license = [
 library.recursive-proc-macro-impl = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/recursive-proc-macro-impl/0.1.1/source/Cargo.toml' },
 ], indirect = true }
+library.redox_syscall = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/redox_syscall/0.5.12/source/Cargo.toml' },
+], indirect = true }
 library.ref-cast = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ref-cast/1.0.23/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/ref-cast/1.0.23/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ref-cast/1.0.24/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/ref-cast/1.0.24/source/Cargo.toml' },
 ], indirect = true }
 library.ref-cast-impl = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ref-cast-impl/1.0.23/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/ref-cast-impl/1.0.23/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ref-cast-impl/1.0.24/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/ref-cast-impl/1.0.24/source/Cargo.toml' },
 ], indirect = true }
 library.regex = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/regex/1.11.1/source/Cargo.toml' },
@@ -1000,86 +1505,163 @@ library.regex-automata = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/regex-automata/0.4.9/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/regex-automata/0.4.9/source/Cargo.toml' },
 ], indirect = true }
+library.regex-lite = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/regex-lite/0.1.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/regex-lite/0.1.6/source/Cargo.toml' },
+], indirect = true }
 library.regex-syntax = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/regex-syntax/0.8.5/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/regex-syntax/0.8.5/source/Cargo.toml' },
 ], indirect = true }
 library.reqwest = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/reqwest/0.12.12/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/reqwest/0.12.12/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/reqwest/0.12.15/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/reqwest/0.12.15/source/Cargo.toml' },
+], indirect = true }
+library.rfc6979 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rfc6979/0.3.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rfc6979/0.3.1/source/Cargo.toml' },
+], indirect = true }
+library.ring = { license = [
+    { name = 'ISC', url = 'https://docs.rs/crate/ring/0.17.14/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ring/0.17.14/source/Cargo.toml' },
 ], indirect = true }
 library.rle-decode-fast = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/rle-decode-fast/1.0.3/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/rle-decode-fast/1.0.3/source/Cargo.toml' },
 ], indirect = true }
-library.rustc-hash = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/rustc-hash/2.1.0/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustc-hash/2.1.0/source/Cargo.toml' },
+library.rmp = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/rmp/0.8.14/source/Cargo.toml' },
+], indirect = true }
+library.rmp-serde = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/rmp-serde/1.3.0/source/Cargo.toml' },
+], indirect = true }
+library.rustc-demangle = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustc-demangle/0.1.24/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustc-demangle/0.1.24/source/Cargo.toml' },
+], indirect = true }
+library.rustc_version = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustc_version/0.4.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustc_version/0.4.1/source/Cargo.toml' },
 ], indirect = true }
 library.rustix = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/rustix/0.38.42/source/Cargo.toml' },
-    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/rustix/0.38.42/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustix/0.38.42/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustix/0.38.44/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustix/1.0.7/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustix/0.38.44/source/Cargo.toml' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/rustix/1.0.7/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustix/1.0.7/source/Cargo.toml' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/rustix/0.38.44/source/Cargo.toml' },
 ], indirect = true }
 library.rustls = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustls/0.23.20/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/rustls/0.23.20/source/Cargo.toml' },
-    { name = 'ISC', url = 'https://docs.rs/crate/rustls/0.23.20/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustls/0.23.26/source/Cargo.toml' },
+    { name = 'ISC', url = 'https://docs.rs/crate/rustls/0.21.12/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustls/0.21.12/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustls/0.23.26/source/Cargo.toml' },
+    { name = 'ISC', url = 'https://docs.rs/crate/rustls/0.23.26/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustls/0.21.12/source/Cargo.toml' },
 ], indirect = true }
 library.rustls-native-certs = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustls-native-certs/0.6.3/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustls-native-certs/0.6.3/source/Cargo.toml' },
+    { name = 'ISC', url = 'https://docs.rs/crate/rustls-native-certs/0.6.3/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustls-native-certs/0.8.1/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/rustls-native-certs/0.8.1/source/Cargo.toml' },
     { name = 'ISC', url = 'https://docs.rs/crate/rustls-native-certs/0.8.1/source/Cargo.toml' },
 ], indirect = true }
 library.rustls-pemfile = { license = [
-    { name = 'ISC', url = 'https://docs.rs/crate/rustls-pemfile/2.2.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustls-pemfile/1.0.4/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustls-pemfile/2.2.0/source/Cargo.toml' },
+    { name = 'ISC', url = 'https://docs.rs/crate/rustls-pemfile/2.2.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustls-pemfile/1.0.4/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/rustls-pemfile/2.2.0/source/Cargo.toml' },
+    { name = 'ISC', url = 'https://docs.rs/crate/rustls-pemfile/1.0.4/source/Cargo.toml' },
 ], indirect = true }
 library.rustls-pki-types = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustls-pki-types/1.10.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/rustls-pki-types/1.10.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustls-pki-types/1.11.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustls-pki-types/1.11.0/source/Cargo.toml' },
 ], indirect = true }
 library.rustls-webpki = { license = [
-    { name = 'ISC', url = 'https://docs.rs/crate/rustls-webpki/0.102.8/source/Cargo.toml' },
+    { name = 'ISC', url = 'https://docs.rs/crate/rustls-webpki/0.103.1/source/Cargo.toml' },
+    { name = 'ISC', url = 'https://docs.rs/crate/rustls-webpki/0.101.7/source/Cargo.toml' },
 ], indirect = true }
 library.rustversion = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustversion/1.0.19/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/rustversion/1.0.19/source/Cargo.toml' },
-], indirect = true }
-library.ryu = { license = [
-    { name = 'BSL-1.0', url = 'https://docs.rs/crate/ryu/1.0.18/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/ryu/1.0.18/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/rustversion/1.0.20/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/rustversion/1.0.20/source/Cargo.toml' },
 ], indirect = true }
 library.same-file = { license = [
     { name = 'Unlicense', url = 'https://docs.rs/crate/same-file/1.0.6/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/same-file/1.0.6/source/Cargo.toml' },
 ], indirect = true }
+library.schannel = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/schannel/0.1.27/source/Cargo.toml' },
+], indirect = true }
+library.schemars = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/schemars/0.8.22/source/Cargo.toml' },
+], indirect = true }
+library.schemars_derive = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/schemars_derive/0.8.22/source/Cargo.toml' },
+], indirect = true }
 library.scopeguard = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/scopeguard/1.2.0/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/scopeguard/1.2.0/source/Cargo.toml' },
 ], indirect = true }
-library.serde = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde/1.0.217/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/serde/1.0.217/source/Cargo.toml' },
+library.sct = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/sct/0.7.1/source/Cargo.toml' },
+    { name = 'ISC', url = 'https://docs.rs/crate/sct/0.7.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/sct/0.7.1/source/Cargo.toml' },
 ], indirect = true }
-library.serde_derive = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_derive/1.0.217/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/serde_derive/1.0.217/source/Cargo.toml' },
+library.sec1 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/sec1/0.3.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/sec1/0.3.0/source/Cargo.toml' },
 ], indirect = true }
-library.serde_json = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_json/1.0.134/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/serde_json/1.0.134/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_json/1.0.135/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/serde_json/1.0.135/source/Cargo.toml' },
+library.security-framework = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/security-framework/2.11.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/security-framework/2.11.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/security-framework/3.2.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/security-framework/3.2.0/source/Cargo.toml' },
+], indirect = true }
+library.security-framework-sys = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/security-framework-sys/2.14.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/security-framework-sys/2.14.0/source/Cargo.toml' },
+], indirect = true }
+library.semver = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/semver/1.0.26/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/semver/1.0.26/source/Cargo.toml' },
+], indirect = true }
+library.serde_derive_internals = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_derive_internals/0.29.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/serde_derive_internals/0.29.1/source/Cargo.toml' },
+], indirect = true }
+library.serde_ignored = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/serde_ignored/0.1.12/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_ignored/0.1.12/source/Cargo.toml' },
 ], indirect = true }
 library.serde_urlencoded = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/serde_urlencoded/0.7.1/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/serde_urlencoded/0.7.1/source/Cargo.toml' },
 ], indirect = true }
+library.sha1 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/sha1/0.10.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/sha1/0.10.6/source/Cargo.toml' },
+], indirect = true }
+library.sha2 = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/sha2/0.10.9/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/sha2/0.10.9/source/Cargo.toml' },
+], indirect = true }
 library.shlex = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/shlex/1.3.0/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/shlex/1.3.0/source/Cargo.toml' },
+], indirect = true }
+library.signal-hook = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/signal-hook/0.3.17/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/signal-hook/0.3.17/source/Cargo.toml' },
+], indirect = true }
+library.signal-hook-registry = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/signal-hook-registry/1.4.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/signal-hook-registry/1.4.5/source/Cargo.toml' },
+], indirect = true }
+library.signature = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/signature/1.6.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/signature/1.6.4/source/Cargo.toml' },
 ], indirect = true }
 library.simd-json = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/simd-json/0.14.3/source/Cargo.toml' },
@@ -1090,8 +1672,11 @@ library.simdutf8 = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/simdutf8/0.1.5/source/Cargo.toml' },
 ], indirect = true }
 library.siphasher = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/siphasher/0.3.11/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/siphasher/0.3.11/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/siphasher/1.0.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/siphasher/1.0.1/source/Cargo.toml' },
+], indirect = true }
+library.skiplist = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/skiplist/0.5.1/source/Cargo.toml' },
 ], indirect = true }
 library.slab = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/slab/0.4.9/source/Cargo.toml' },
@@ -1099,27 +1684,16 @@ library.slab = { license = [
 library.slotmap = { license = [
     { name = 'Zlib', url = 'https://docs.rs/crate/slotmap/1.0.7/source/Cargo.toml' },
 ], indirect = true }
-library.smallvec = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/smallvec/1.13.2/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/smallvec/1.13.2/source/Cargo.toml' },
-], indirect = true }
-library.snafu = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/snafu/0.8.5/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/snafu/0.8.5/source/Cargo.toml' },
-], indirect = true }
-library.snafu-derive = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/snafu-derive/0.8.5/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/snafu-derive/0.8.5/source/Cargo.toml' },
-], indirect = true }
 library.snap = { license = [
     { name = 'BSD-3-Clause', url = 'https://docs.rs/crate/snap/1.1.1/source/Cargo.toml' },
 ], indirect = true }
 library.socket2 = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/socket2/0.5.8/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/socket2/0.5.8/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/socket2/0.5.9/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/socket2/0.5.9/source/Cargo.toml' },
 ], indirect = true }
-library.spin = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/spin/0.9.8/source/Cargo.toml' },
+library.spki = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/spki/0.6.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/spki/0.6.0/source/Cargo.toml' },
 ], indirect = true }
 library.sqlparser = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/sqlparser/0.53.0/source/Cargo.toml' },
@@ -1129,8 +1703,8 @@ library.stable_deref_trait = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/stable_deref_trait/1.2.0/source/Cargo.toml' },
 ], indirect = true }
 library.stacker = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/stacker/0.1.17/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/stacker/0.1.17/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/stacker/0.1.21/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/stacker/0.1.21/source/Cargo.toml' },
 ], indirect = true }
 library.static_assertions = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/static_assertions/1.1.0/source/Cargo.toml' },
@@ -1156,39 +1730,50 @@ library.strum_macros = { license = [
 library.subtle = { license = [
     { name = 'BSD-3-Clause', url = 'https://docs.rs/crate/subtle/2.6.1/source/Cargo.toml' },
 ], indirect = true }
-library.syn = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/syn/2.0.94/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/syn/2.0.94/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/syn/2.0.96/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/syn/2.0.96/source/Cargo.toml' },
-], indirect = true }
 library.sync_wrapper = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/sync_wrapper/1.0.2/source/Cargo.toml' },
 ], indirect = true }
 library.synstructure = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/synstructure/0.13.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/synstructure/0.13.2/source/Cargo.toml' },
 ], indirect = true }
 library.sysinfo = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/sysinfo/0.33.1/source/Cargo.toml' },
 ], indirect = true }
-library.target-lexicon = { license = [
-    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/target-lexicon/0.12.16/source/Cargo.toml' },
+library.tempfile = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/tempfile/3.19.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/tempfile/3.19.1/source/Cargo.toml' },
 ], indirect = true }
 library.thiserror = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/thiserror/2.0.9/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror/2.0.9/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/thiserror/2.0.12/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror/2.0.12/source/Cargo.toml' },
 ], indirect = true }
 library.thiserror-impl = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/thiserror-impl/2.0.9/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror-impl/2.0.9/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/thiserror-impl/2.0.12/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/thiserror-impl/2.0.12/source/Cargo.toml' },
+], indirect = true }
+library.tikv-jemalloc-sys = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/tikv-jemalloc-sys/0.6.0+5.3.0-1-ge13ca993e8ccb9ba9847cc330696e02839f328f7/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/tikv-jemalloc-sys/0.6.0+5.3.0-1-ge13ca993e8ccb9ba9847cc330696e02839f328f7/source/Cargo.toml' },
+], indirect = true }
+library.tikv-jemallocator = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/tikv-jemallocator/0.6.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/tikv-jemallocator/0.6.0/source/Cargo.toml' },
+], indirect = true }
+library.time = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/time/0.3.41/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/time/0.3.41/source/Cargo.toml' },
+], indirect = true }
+library.time-core = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/time-core/0.1.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/time-core/0.1.4/source/Cargo.toml' },
 ], indirect = true }
 library.tinystr = { license = [
     { name = 'Unicode-3.0', url = 'https://docs.rs/crate/tinystr/0.7.6/source/Cargo.toml' },
 ], indirect = true }
 library.tinyvec = { license = [
-    { name = 'Zlib', url = 'https://docs.rs/crate/tinyvec/1.8.1/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/tinyvec/1.8.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/tinyvec/1.8.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/tinyvec/1.9.0/source/Cargo.toml' },
+    { name = 'Zlib', url = 'https://docs.rs/crate/tinyvec/1.9.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/tinyvec/1.9.0/source/Cargo.toml' },
 ], indirect = true }
 library.tinyvec_macros = { license = [
     { name = 'Zlib', url = 'https://docs.rs/crate/tinyvec_macros/0.1.1/source/Cargo.toml' },
@@ -1196,17 +1781,22 @@ library.tinyvec_macros = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/tinyvec_macros/0.1.1/source/Cargo.toml' },
 ], indirect = true }
 library.tokio = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/tokio/1.42.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/tokio/1.44.2/source/Cargo.toml' },
 ], indirect = true }
 library.tokio-macros = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/tokio-macros/2.4.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/tokio-macros/2.5.0/source/Cargo.toml' },
+], indirect = true }
+library.tokio-native-tls = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/tokio-native-tls/0.3.1/source/Cargo.toml' },
 ], indirect = true }
 library.tokio-rustls = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/tokio-rustls/0.26.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/tokio-rustls/0.26.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/tokio-rustls/0.24.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/tokio-rustls/0.24.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/tokio-rustls/0.26.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/tokio-rustls/0.26.2/source/Cargo.toml' },
 ], indirect = true }
 library.tokio-util = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/tokio-util/0.7.13/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/tokio-util/0.7.15/source/Cargo.toml' },
 ], indirect = true }
 library.tower = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/tower/0.5.2/source/Cargo.toml' },
@@ -1229,10 +1819,16 @@ library.tracing-core = { license = [
 library.try-lock = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/try-lock/0.2.5/source/Cargo.toml' },
 ], indirect = true }
-library.unicode-ident = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/unicode-ident/1.0.14/source/Cargo.toml' },
-    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/unicode-ident/1.0.14/source/Cargo.toml' },
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unicode-ident/1.0.14/source/Cargo.toml' },
+library.twox-hash = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/twox-hash/1.6.3/source/Cargo.toml' },
+], indirect = true }
+library.typenum = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/typenum/1.18.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/typenum/1.18.0/source/Cargo.toml' },
+], indirect = true }
+library.unarray = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unarray/0.1.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/unarray/0.1.4/source/Cargo.toml' },
 ], indirect = true }
 library.unicode-normalization = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/unicode-normalization/0.1.24/source/Cargo.toml' },
@@ -1250,16 +1846,15 @@ library.unicode-width = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/unicode-width/0.2.0/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/unicode-width/0.2.0/source/Cargo.toml' },
 ], indirect = true }
-library.unindent = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/unindent/0.2.3/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/unindent/0.2.3/source/Cargo.toml' },
-], indirect = true }
 library.untrusted = { license = [
     { name = 'ISC', url = 'https://docs.rs/crate/untrusted/0.9.0/source/Cargo.toml' },
 ], indirect = true }
 library.url = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/url/2.5.4/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/url/2.5.4/source/Cargo.toml' },
+], indirect = true }
+library.urlencoding = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/urlencoding/2.1.3/source/Cargo.toml' },
 ], indirect = true }
 library.utf16_iter = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/utf16_iter/1.0.5/source/Cargo.toml' },
@@ -1270,16 +1865,19 @@ library.utf8_iter = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/utf8_iter/1.0.4/source/Cargo.toml' },
 ], indirect = true }
 library.uuid = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/uuid/1.11.0/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/uuid/1.11.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/uuid/1.16.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/uuid/1.16.0/source/Cargo.toml' },
 ], indirect = true }
 library.value-trait = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/value-trait/0.10.1/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/value-trait/0.10.1/source/Cargo.toml' },
 ], indirect = true }
-library.version_check = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/version_check/0.9.5/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/version_check/0.9.5/source/Cargo.toml' },
+library.vcpkg = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/vcpkg/0.2.15/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/vcpkg/0.2.15/source/Cargo.toml' },
+], indirect = true }
+library.vsimd = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/vsimd/0.8.0/source/Cargo.toml' },
 ], indirect = true }
 library.walkdir = { license = [
     { name = 'Unlicense', url = 'https://docs.rs/crate/walkdir/2.5.0/source/Cargo.toml' },
@@ -1287,6 +1885,177 @@ library.walkdir = { license = [
 ], indirect = true }
 library.want = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/want/0.3.1/source/Cargo.toml' },
+], indirect = true }
+library.wasm-bindgen = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen/0.2.100/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen/0.2.100/source/Cargo.toml' },
+], indirect = true }
+library.wasm-bindgen-backend = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-backend/0.2.100/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-backend/0.2.100/source/Cargo.toml' },
+], indirect = true }
+library.wasm-bindgen-futures = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-futures/0.4.50/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-futures/0.4.50/source/Cargo.toml' },
+], indirect = true }
+library.wasm-bindgen-macro = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-macro/0.2.100/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-macro/0.2.100/source/Cargo.toml' },
+], indirect = true }
+library.wasm-bindgen-macro-support = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-macro-support/0.2.100/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-macro-support/0.2.100/source/Cargo.toml' },
+], indirect = true }
+library.wasm-bindgen-shared = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-bindgen-shared/0.2.100/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-bindgen-shared/0.2.100/source/Cargo.toml' },
+], indirect = true }
+library.wasm-streams = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wasm-streams/0.4.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wasm-streams/0.4.2/source/Cargo.toml' },
+], indirect = true }
+library.web-sys = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/web-sys/0.3.77/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/web-sys/0.3.77/source/Cargo.toml' },
+], indirect = true }
+library.winapi = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/winapi/0.3.9/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/winapi/0.3.9/source/Cargo.toml' },
+], indirect = true }
+library.winapi-i686-pc-windows-gnu = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/winapi-i686-pc-windows-gnu/0.4.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/winapi-i686-pc-windows-gnu/0.4.0/source/Cargo.toml' },
+], indirect = true }
+library.winapi-util = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/winapi-util/0.1.9/source/Cargo.toml' },
+    { name = 'Unlicense', url = 'https://docs.rs/crate/winapi-util/0.1.9/source/Cargo.toml' },
+], indirect = true }
+library.winapi-x86_64-pc-windows-gnu = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/winapi-x86_64-pc-windows-gnu/0.4.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/winapi-x86_64-pc-windows-gnu/0.4.0/source/Cargo.toml' },
+], indirect = true }
+library.windows = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows/0.57.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows/0.57.0/source/Cargo.toml' },
+], indirect = true }
+library.windows-core = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-core/0.61.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-core/0.61.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-core/0.57.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-core/0.57.0/source/Cargo.toml' },
+], indirect = true }
+library.windows-implement = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-implement/0.60.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-implement/0.60.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-implement/0.57.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-implement/0.57.0/source/Cargo.toml' },
+], indirect = true }
+library.windows-interface = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-interface/0.59.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-interface/0.59.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-interface/0.57.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-interface/0.57.0/source/Cargo.toml' },
+], indirect = true }
+library.windows-link = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-link/0.1.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-link/0.1.1/source/Cargo.toml' },
+], indirect = true }
+library.windows-registry = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-registry/0.4.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-registry/0.4.0/source/Cargo.toml' },
+], indirect = true }
+library.windows-result = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-result/0.1.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-result/0.1.2/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-result/0.3.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-result/0.3.2/source/Cargo.toml' },
+], indirect = true }
+library.windows-strings = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-strings/0.4.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-strings/0.4.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-strings/0.3.1/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-strings/0.3.1/source/Cargo.toml' },
+], indirect = true }
+library.windows-sys = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-sys/0.52.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-sys/0.52.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-sys/0.59.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-sys/0.59.0/source/Cargo.toml' },
+], indirect = true }
+library.windows-targets = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-targets/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-targets/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-targets/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-targets/0.48.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows-targets/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows-targets/0.48.5/source/Cargo.toml' },
+], indirect = true }
+library.windows_aarch64_gnullvm = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_aarch64_gnullvm/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_aarch64_gnullvm/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_aarch64_gnullvm/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_aarch64_gnullvm/0.48.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_aarch64_gnullvm/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_aarch64_gnullvm/0.48.5/source/Cargo.toml' },
+], indirect = true }
+library.windows_aarch64_msvc = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_aarch64_msvc/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_aarch64_msvc/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_aarch64_msvc/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_aarch64_msvc/0.48.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_aarch64_msvc/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_aarch64_msvc/0.48.5/source/Cargo.toml' },
+], indirect = true }
+library.windows_i686_gnu = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_i686_gnu/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_i686_gnu/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_i686_gnu/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_i686_gnu/0.48.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_i686_gnu/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_i686_gnu/0.48.5/source/Cargo.toml' },
+], indirect = true }
+library.windows_i686_gnullvm = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_i686_gnullvm/0.52.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_i686_gnullvm/0.52.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_i686_gnullvm/0.53.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_i686_gnullvm/0.53.0/source/Cargo.toml' },
+], indirect = true }
+library.windows_i686_msvc = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_i686_msvc/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_i686_msvc/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_i686_msvc/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_i686_msvc/0.48.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_i686_msvc/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_i686_msvc/0.48.5/source/Cargo.toml' },
+], indirect = true }
+library.windows_x86_64_gnu = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_x86_64_gnu/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_x86_64_gnu/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_x86_64_gnu/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_x86_64_gnu/0.48.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_x86_64_gnu/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_x86_64_gnu/0.48.5/source/Cargo.toml' },
+], indirect = true }
+library.windows_x86_64_gnullvm = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_x86_64_gnullvm/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_x86_64_gnullvm/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_x86_64_gnullvm/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_x86_64_gnullvm/0.48.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_x86_64_gnullvm/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_x86_64_gnullvm/0.48.5/source/Cargo.toml' },
+], indirect = true }
+library.windows_x86_64_msvc = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_x86_64_msvc/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_x86_64_msvc/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_x86_64_msvc/0.53.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_x86_64_msvc/0.48.5/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/windows_x86_64_msvc/0.52.6/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/windows_x86_64_msvc/0.48.5/source/Cargo.toml' },
+], indirect = true }
+library.wit-bindgen-rt = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/wit-bindgen-rt/0.39.0/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/wit-bindgen-rt/0.39.0/source/Cargo.toml' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://docs.rs/crate/wit-bindgen-rt/0.39.0/source/Cargo.toml' },
 ], indirect = true }
 library.write16 = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/write16/1.0.0/source/Cargo.toml' },
@@ -1303,6 +2072,10 @@ library.x11rb-protocol = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/x11rb-protocol/0.13.1/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/x11rb-protocol/0.13.1/source/Cargo.toml' },
 ], indirect = true }
+library.xmlparser = { license = [
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/xmlparser/0.13.6/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/xmlparser/0.13.6/source/Cargo.toml' },
+], indirect = true }
 library.xxhash-rust = { license = [
     { name = 'BSL-1.0', url = 'https://docs.rs/crate/xxhash-rust/0.8.15/source/Cargo.toml' },
 ], indirect = true }
@@ -1312,21 +2085,11 @@ library.yoke = { license = [
 library.yoke-derive = { license = [
     { name = 'Unicode-3.0', url = 'https://docs.rs/crate/yoke-derive/0.7.5/source/Cargo.toml' },
 ], indirect = true }
-library.zerocopy = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zerocopy/0.7.35/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/zerocopy/0.7.35/source/Cargo.toml' },
-    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/zerocopy/0.7.35/source/Cargo.toml' },
-], indirect = true }
-library.zerocopy-derive = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zerocopy-derive/0.7.35/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/zerocopy-derive/0.7.35/source/Cargo.toml' },
-    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/zerocopy-derive/0.7.35/source/Cargo.toml' },
-], indirect = true }
 library.zerofrom = { license = [
-    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/zerofrom/0.1.5/source/Cargo.toml' },
+    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/zerofrom/0.1.6/source/Cargo.toml' },
 ], indirect = true }
 library.zerofrom-derive = { license = [
-    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/zerofrom-derive/0.1.5/source/Cargo.toml' },
+    { name = 'Unicode-3.0', url = 'https://docs.rs/crate/zerofrom-derive/0.1.6/source/Cargo.toml' },
 ], indirect = true }
 library.zeroize = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/zeroize/1.8.1/source/Cargo.toml' },
@@ -1339,28 +2102,27 @@ library.zerovec-derive = { license = [
     { name = 'Unicode-3.0', url = 'https://docs.rs/crate/zerovec-derive/0.10.3/source/Cargo.toml' },
 ], indirect = true }
 library.zlib-rs = { license = [
-    { name = 'Zlib', url = 'https://docs.rs/crate/zlib-rs/0.4.1/source/Cargo.toml' },
+    { name = 'Zlib', url = 'https://docs.rs/crate/zlib-rs/0.5.0/source/Cargo.toml' },
 ], indirect = true }
 library.zstd = { license = [
-    { name = 'MIT', url = 'https://docs.rs/crate/zstd/0.13.2/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/zstd/0.13.3/source/Cargo.toml' },
 ], indirect = true }
 library.zstd-safe = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zstd-safe/7.2.1/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/zstd-safe/7.2.1/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zstd-safe/7.2.4/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/zstd-safe/7.2.4/source/Cargo.toml' },
 ], indirect = true }
 library.zstd-sys = { license = [
-    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zstd-sys/2.0.13+zstd.1.5.6/source/Cargo.toml' },
-    { name = 'MIT', url = 'https://docs.rs/crate/zstd-sys/2.0.13+zstd.1.5.6/source/Cargo.toml' },
-], indirect = true }
-library.ring = { license = [
-    { name = 'ISC', url = 'https://github.com/briansmith/ring/blob/main/LICENSE' },
-    { name = 'MIT', url = 'https://github.com/briansmith/ring/blob/main/LICENSE' },
-    { name = 'OpenSSL', url = 'https://github.com/briansmith/ring/blob/main/LICENSE' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zstd-sys/2.0.15+zstd.1.5.7/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/zstd-sys/2.0.15+zstd.1.5.7/source/Cargo.toml' },
 ], indirect = true }
 # from rustworkx
 library.fixedbitset = { license = [
     { name = 'MIT', url = 'https://docs.rs/crate/fixedbitset/0.5.7/source/Cargo.toml' },
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/fixedbitset/0.5.7/source/Cargo.toml' },
+], indirect = true }
+library.hermit-abi = { license = [
+    { name = 'MIT', url = 'https://docs.rs/crate/hermit-abi/0.3.9/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/hermit-abi/0.3.9/source/Cargo.toml' },
 ], indirect = true }
 library.ndarray-stats = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/ndarray-stats/0.6.0/source/Cargo.toml' },
@@ -1400,12 +2162,16 @@ library.sprs = { license = [
     { name = 'Apache-2.0', url = 'https://docs.rs/crate/sprs/0.11.2/source/Cargo.toml' },
     { name = 'MIT', url = 'https://docs.rs/crate/sprs/0.11.2/source/Cargo.toml' },
 ], indirect = true }
-
+library.zerocopy-derive = { license = [
+    { name = 'BSD-2-Clause', url = 'https://docs.rs/crate/zerocopy-derive/0.7.35/source/Cargo.toml' },
+    { name = 'MIT', url = 'https://docs.rs/crate/zerocopy-derive/0.7.35/source/Cargo.toml' },
+    { name = 'Apache-2.0', url = 'https://docs.rs/crate/zerocopy-derive/0.7.35/source/Cargo.toml' },
+], indirect = true }
 filename = 'Main.py'
 
 install = '''
 set -e
-AC_CPYTHON_VERSION=3.13.5
+AC_CPYTHON_VERSION=3.13.7
 cd /tmp
 # install dependencies  cf. https://devguide.python.org/getting-started/setup-building/#build-dependencies
 sudo apt-get update
@@ -1429,17 +2195,18 @@ make -j$(nproc)
 sudo make altinstall
 cd ..
 
-echo "absl-py==2.3.0
+set -e
+echo "absl-py==2.3.1
 ac-library-python @ git+https://github.com/not522/ac-library-python@27fdbb71cd0d566bdeb12746db59c9d908c6b5d5
 acl-cpp-python==0.6.2
-bitarray==3.4.2
+bitarray==3.6.1
 cppyy==3.5.0
 cppyy-backend==1.15.3
 cppyy-cling==6.32.8
 CPyCppyy==1.13.0
-Cython==3.1.2
-filelock==3.18.0
-fsspec==2025.5.1
+Cython==3.1.3
+filelock==3.19.1
+fsspec==2025.7.0
 gmpy2==2.2.1
 immutabledict==4.2.1
 Jinja2==3.1.6
@@ -1451,32 +2218,32 @@ more-itertools==10.7.0
 mpmath==1.3.0
 networkx==3.5
 numpy==2.2.6
-ortools==9.13.4784
-pandas==2.3.0
-polars==1.21.0
+ortools==9.14.6206
+pandas==2.3.2
+polars==1.31.0
 protobuf==6.31.1
-PuLP==2.9.0
+PuLP==3.2.2
 pyrsistent==0.20.0
 python-dateutil==2.9.0.post0
 pytz==2025.2
 rustworkx==0.16.0
-scikit-learn==1.7.0
-scipy==1.15.3
+scikit-learn==1.7.1
+scipy==1.16.1
 shapely==2.1.1
 six==1.17.0
 sortedcontainers==2.4.0
-sympy==1.13.1
+sympy==1.14.0
 threadpoolctl==3.6.0
-typing_extensions==4.14.0
+typing_extensions==4.14.1
 tzdata==2025.2
-z3-solver==4.15.1.0" > freeze.txt
+z3-solver==4.15.3.0" > freeze.txt
 
 # upgrade pip and setuptools
 python3.13 -m pip install setuptools pip -U
 
 python3.13 -m pip install -r freeze.txt --no-warn-script-location
 
-python3.13 -m pip install torch==2.6.0+cpu --index-url https://download.pytorch.org/whl/cpu --no-warn-script-location
+python3.13 -m pip install torch==2.8.0+cpu --index-url https://download.pytorch.org/whl/cpu --no-warn-script-location
 
 wget -q -O numba.tar.gz https://files.pythonhosted.org/packages/1c/a0/e21f57604304aa03ebb8e098429222722ad99176a4f979d34af1d1ee80da/numba-0.61.2.tar.gz
 mkdir numba

@@ -1,9 +1,12 @@
 ---
 name: Build latest
+# Disabled: Redundant with build-staged.yml
+# build-staged.yml now handles all image builds for main branch
 "on":
-  push:
-    branches:
-      - main
+  workflow_dispatch:  # Manual trigger only
+  # push:
+  #   branches:
+  #     - main
 
 jobs:
   build:

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: CC0-1.0
 
 language = 'Ruby'
-display = 'Ruby 3.4 (ruby 3.4.4)'
+display = 'Ruby 3.4 (ruby 3.4.5)'
 license = [
     { name = 'Ruby', url = 'https://www.ruby-lang.org/en/about/license.txt' },
 # default gems
@@ -186,7 +186,7 @@ library.fast_trie = { license = [
 ], version = '0.5.1' }
 library.faster_prime = { license = [
     { name = 'MIT', url = 'https://github.com/mame/faster_prime' },
-], version = '1.0.1' }
+], version = '1.0.2' }
 library.ffi = { license = [
     { name = 'BSD-3-Clause', url = 'https://rubygems.org/gems/ffi' },
 ], indirect = true }
@@ -204,7 +204,7 @@ library.lbfgsb = { license = [
 ], indirect = true }
 library.lightgbm = { license = [
     { name = 'MIT', url = 'https://rubygems.org/gems/lightgbm' },
-], version = '0.4.1' }
+], version = '0.4.3' }
 library.mmh3 = { license = [
     { name = 'MIT', url = 'https://rubygems.org/gems/mmh3' },
 ], indirect = true }
@@ -216,16 +216,16 @@ library.numo-narray = { license = [
 ], version = '0.9.2.1' }
 library.numo-openblas = { license = [
     { name = 'BSD-3-Clause', url = 'https://rubygems.org/gems/numo-openblas' },
-], version = '0.5.0' }
+], version = '0.5.1' }
 library.or-tools = { license = [
     { name = 'Apache-2.0', url = 'https://rubygems.org/gems/or-tools' },
-], version = '0.15.0' }
+], version = '0.16.0' }
 library.pairing_heap = { license = [
     { name = 'MIT', url = 'https://rubygems.org/gems/pairing_heap' },
 ], indirect = true }
 library.polars-df = { license = [
     { name = 'MIT', url = 'https://rubygems.org/gems/polars-df' },
-], version = '0.19.0' }
+], version = '0.21.1' }
 library.rbtree = { license = [
     { name = 'MIT', url = 'https://rubygems.org/gems/rbtree' },
 ], version = '0.4.6' }
@@ -303,7 +303,7 @@ library.stream = { license = [
 ], indirect = true }
 library.torch-rb = { license = [
     { name = 'BSD-3-Clause', url = 'https://rubygems.org/gems/torch-rb' },
-], version = '0.20.0' }
+], version = '0.21.0' }
 library.z3 = { license = [
     { name = 'MIT', url = 'https://rubygems.org/gems/z3' },
 ], version = '0.0.20230311' }
@@ -312,11 +312,14 @@ filename = 'Main.rb'
 
 install = '''
 sudo apt-get update
-sudo apt-get install -y autoconf bison patch build-essential rustc libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libgmp-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev libz3-dev libgeos-dev
+sudo apt-get install -y autoconf bison patch build-essential rustc libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libgmp-dev libncurses5-dev libffi-dev libgdbm6 libgdbm-dev libdb-dev uuid-dev libz3-dev libgeos-dev libopenblas0
 
 pushd /tmp
-AC_LIBTORCH_VERSION="2.7.0"
-wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-"$AC_LIBTORCH_VERSION"%2Bcpu.zip
+AC_LIBTORCH_VERSION="2.8.0"
+# NOTE: Using non-CXX11 ABI version (libtorch-shared-with-deps) for compatibility with torch-rb.
+# This is a change from libtorch-cxx11-abi-shared-with-deps used in previous versions.
+# Ensure all dependent gems are compatible with the non-CXX11 ABI version.
+wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-"$AC_LIBTORCH_VERSION"%2Bcpu.zip
 unzip -q libtorch.zip
 pushd libtorch
 sudo cp -dR include /usr/local/
@@ -329,10 +332,7 @@ curl -s https://api.github.com/repos/rbenv/ruby-build/releases/latest | grep -o 
 tar -xf ruby-build.tarball
 PREFIX=/usr/local sudo ./*ruby-build-*/install.sh
 
-wget -q -O gc.patch https://patch-diff.githubusercontent.com/raw/ruby/ruby/pull/12667.patch
-sed -i 's@[ab]/@@g' gc.patch
-
-ruby-build --patch 3.4.4 $HOME/.rubies/ruby < /tmp/gc.patch
+ruby-build 3.4.5 $HOME/.rubies/ruby
 
 popd
 
@@ -348,21 +348,21 @@ ac-library-rb:1.2.0 \
 bit_utils:0.1.2 \
 bitarray:1.3.1 \
 fast_trie:0.5.1 \
-faster_prime:1.0.1 \
+faster_prime:1.0.2 \
 ffi-geos:2.5.0 \
 immutable-ruby:0.2.0 \
-lightgbm:0.4.1 \
+lightgbm:0.4.3 \
 numo-linalg:0.1.7 \
 numo-narray:0.9.2.1 \
-numo-openblas:0.5.0 \
-or-tools:0.15.0 \
-polars-df:0.19.0 \
+numo-openblas:0.5.1 \
+or-tools:0.16.0 \
+polars-df:0.21.1 \
 rbtree:0.4.6 \
 rgl:0.6.6 \
 rumale:1.0.0 \
 sorted_containers:1.1.0 \
 sorted_set:1.0.3 \
-torch-rb:0.20.0 \
+torch-rb:0.21.0 \
 z3:0.0.20230311 \
 
 '''

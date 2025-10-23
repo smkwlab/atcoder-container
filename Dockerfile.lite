@@ -1,96 +1,85 @@
-FROM ubuntu:24.04
+# AtCoder Container - Lite Version
+# Now using multi-stage build for optimized image size (replaces previous single-stage Dockerfile.lite)
+# Stage 1: Build stage with all development tools
+FROM ubuntu:24.04 AS builder
 
-# コンテナ構築用にホームディレクトリ代入
 ARG HOME=/home/runner
 ARG PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-# No asdf needed for lite version
-
 ARG DEBIAN_FRONTEND=noninteractive
 ARG DEBCONF_NONINTERACTIVE_SEEN=true
-ENV TZ=Asia/Tokyo \
-    PATH=$HOME/bin:$PATH
 
-# base system
+ENV TZ=Asia/Tokyo
+
+# Install all build dependencies in one layer
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
             curl \
             git \
             ca-certificates \
             locales \
-            time \
-            tzdata \
-            xdg-utils \
-            g++-13 \
             build-essential \
+            g++-13 \
             wget \
             unzip \
+            # Python build dependencies
+            gdb \
+            lcov \
+            pkg-config \
+            libbz2-dev \
+            libffi-dev \
+            libgdbm-dev \
+            libgdbm-compat-dev \
+            liblzma-dev \
+            libncurses5-dev \
+            libreadline6-dev \
+            libsqlite3-dev \
+            libssl-dev \
+            lzma \
+            lzma-dev \
+            tk-dev \
+            uuid-dev \
+            zlib1g-dev \
+            libgmp-dev \
+            libmpfr-dev \
+            libmpc-dev \
+            # Ruby build dependencies  
+            autoconf \
+            bison \
+            patch \
+            libyaml-dev \
+            libz3-dev \
+            libgeos-dev \
+            # Erlang build dependencies
+            unixodbc-dev \
+            libblas-dev \
+            liblapack-dev \
+            # C++ libraries
+            libeigen3-dev \
+            cmake \
             && \
     localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && \
-    apt-get clean && \
-    apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
+
 ENV LANG="ja_JP.UTF-8" \
     LANGUAGE="ja_JP:ja" \
     LC_ALL="ja_JP.UTF-8" \
     ATCODER=1
 
-# No asdf needed - using direct installation for all languages
-
-# Python, oj
-ARG AC_CPYTHON_VERSION=3.13.5
-
-# Install build dependencies
-RUN apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y wget gnupg software-properties-common && \
-    DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
-   apt-get install -y \
-   build-essential \
-   gdb \
-   lcov \
-   pkg-config \
-   libbz2-dev \
-   libffi-dev \
-   libgdbm-dev \
-   libgdbm-compat-dev \
-   liblzma-dev \
-   libncurses5-dev \
-   libreadline6-dev \
-   libsqlite3-dev \
-   libssl-dev \
-   lzma \
-   lzma-dev \
-   tk-dev \
-   uuid-dev \
-   zlib1g-dev \
-   libgmp-dev \
-   libmpfr-dev \
-   libmpc-dev \
-   $(if [ "$(uname -m)" = "x86_64" ]; then echo "llvm-18"; fi) \
-   git \
-   && rm -rf /var/lib/apt/lists/*
-
-# Build and install Python
+# Build Python from source (PGO optimization for faster CI builds)
+ARG AC_CPYTHON_VERSION=3.13.7
 WORKDIR /tmp
 RUN wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
    tar xf Python-${AC_CPYTHON_VERSION}.tar.xz && \
    cd Python-${AC_CPYTHON_VERSION} && \
-   if [ "$(uname -m)" = "x86_64" ]; then \
-       ln -s /usr/lib/llvm-18/lib/libbolt_rt_instr.a /usr/lib/libbolt_rt_instr.a && \
-       BOLT_FLAGS="--enable-bolt"; \
-   else \
-       BOLT_FLAGS=""; \
-   fi && \
-   ./configure --enable-optimizations --with-lto=full --with-strict-overflow ${BOLT_FLAGS} && \
-   make -j1 && \
-   make altinstall && \
+   ./configure --enable-optimizations --with-strict-overflow --prefix=/opt/python && \
+   make -j$(nproc) && \
+   make install && \
    cd .. && \
    rm -rf Python-${AC_CPYTHON_VERSION} Python-${AC_CPYTHON_VERSION}.tar.xz
 
-# Install essential Python packages (lightweight for competitive programming)
-RUN python3.13 -m pip install setuptools==75.8.0
-
-# Lightweight competitive programming packages only
-RUN python3.13 -m pip install \
+# Install Python packages in build stage
+RUN /opt/python/bin/python3.13 -m pip install setuptools==75.8.0
+RUN /opt/python/bin/python3.13 -m pip install \
     "git+https://github.com/not522/ac-library-python@27fdbb71cd0d566bdeb12746db59c9d908c6b5d5" \
     bitarray==3.4.2 \
     more-itertools==10.7.0 \
@@ -101,75 +90,32 @@ RUN python3.13 -m pip install \
     python-dateutil==2.9.0.post0 \
     pytz==2025.1 \
     typing_extensions==4.12.2
+RUN /opt/python/bin/python3.13 -m pip install online-judge-tools==11.5.1
+RUN /opt/python/bin/python3.13 -m pip cache purge
 
-# Clean up
-RUN python3.13 -m pip cache purge
-
-# Install online-judge-tools
-RUN python3.13 -m pip install online-judge-tools==11.5.1
-
-# erlang (moved before Ruby for optimized build order)
-ARG AC_OTP_VERSION=28.0
-RUN apt-get update && \
-    apt-get install -y \
-        libssl-dev \
-        unixodbc-dev \
-        libblas-dev \
-        liblapack-dev \
-    && rm -rf /var/lib/apt/lists/*
-WORKDIR /tmp
+# Build Erlang from source
+ARG AC_OTP_VERSION=28.0.2
 RUN wget -q -O erlang.tar.gz https://github.com/erlang/otp/releases/download/OTP-${AC_OTP_VERSION}/otp_src_${AC_OTP_VERSION}.tar.gz && \
     mkdir erlang && \
     tar -C erlang --strip-components=1 -xf erlang.tar.gz && \
     cd erlang && \
-    ./configure --without-termcap && \
+    ./configure --without-termcap --prefix=/opt/erlang && \
     make -j4 && \
     make install && \
     cd .. && \
     rm -rf erlang erlang.tar.gz
 
-# Ruby (without LibTorch and torch-rb)
-# Install dependencies
-RUN apt-get update && \
-   DEBIAN_FRONTEND=noninteractive apt-get install -y \
-   autoconf \
-   bison \
-   patch \
-   build-essential \
-# rustc removed - using official Rust installation instead
-   libssl-dev \
-   libyaml-dev \
-   libreadline6-dev \
-   zlib1g-dev \
-   libgmp-dev \
-   libncurses5-dev \
-   libffi-dev \
-   libgdbm6 \
-   libgdbm-dev \
-   libdb-dev \
-   uuid-dev \
-   libz3-dev \
-   libgeos-dev \
-   curl \
-   wget \
-   unzip \
-   && rm -rf /var/lib/apt/lists/*
-
-# Install ruby-build and Ruby with GC patch
+# Build Ruby from source (TOML compliant - no GC patch)
 RUN curl -s https://api.github.com/repos/rbenv/ruby-build/releases/latest | \
    grep -o 'https://[^"]*tarball[^"]*' | \
    xargs curl -o ruby-build.tarball -L && \
    tar -xf ruby-build.tarball && \
    PREFIX=/usr/local ./*ruby-build-*/install.sh && \
-   wget -q -O gc.patch https://patch-diff.githubusercontent.com/raw/ruby/ruby/pull/12667.patch && \
-   sed -i 's@[ab]/@@g' gc.patch && \
-   ruby-build --patch 3.4.4 /root/.rubies/ruby < gc.patch && \
-   rm -rf *ruby-build* ruby-build.tarball gc.patch
+   ruby-build 3.4.5 /opt/ruby && \
+   rm -rf *ruby-build* ruby-build.tarball
 
-# Set Ruby PATH
-ENV PATH=/root/.rubies/ruby/bin:$PATH
-
-# Install lightweight Ruby gems (competitive programming essentials only)
+# Install Ruby gems
+ENV PATH=/opt/ruby/bin:$PATH
 RUN gem install -N \
     ac-library-rb:1.2.0 \
     bit_utils:0.1.2 \
@@ -182,19 +128,137 @@ RUN gem install -N \
     sorted_containers:1.1.0 \
     sorted_set:1.0.3
 
-# or-tools (x86_64 only, lightweight)
-RUN if [ "$(uname -m)" = "x86_64" ]; then \
-    apt-get update && \
-    apt-get install -y cmake && \
-    git clone https://github.com/google/or-tools.git && \
-    cd or-tools && \
-    cmake -S . -B build -DBUILD_DEPS=ON && \
-    cmake --build build --target install && \
-    gem install or-tools -v 0.15.0; \
-    fi
+# Install Rust from official precompiled tarball
+ARG RUST_VERSION=1.87.0
+RUN case "$(uname -m)" in \
+        x86_64) \
+            curl "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" -fO && \
+            tar xf "rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" && \
+            "./rust-${RUST_VERSION}-x86_64-unknown-linux-gnu/install.sh" --prefix=/opt/rust \
+            ;; \
+        aarch64) \
+            curl "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-aarch64-unknown-linux-gnu.tar.gz" -fO && \
+            tar xf "rust-${RUST_VERSION}-aarch64-unknown-linux-gnu.tar.gz" && \
+            "./rust-${RUST_VERSION}-aarch64-unknown-linux-gnu/install.sh" --prefix=/opt/rust \
+            ;; \
+        *) \
+            echo "Unsupported architecture: $(uname -m)" \
+            exit 1 \
+            ;; \
+    esac && \
+    rm -rf rust-*
 
-# nodejs, atcoder-cli (moved after heavy source builds)
-ARG NODE_VERSION=22.16.0
+# Build Rust project with lightweight libraries
+ENV PATH=/opt/rust/bin:$PATH
+WORKDIR /tmp/rust-build
+RUN mkdir -p .cargo src && \
+    echo '[build]' > .cargo/config.toml && \
+    echo 'rustflags = ["--cfg", "atcoder"]' >> .cargo/config.toml
+
+# Copy lightweight Rust configuration
+COPY rust/Cargo-lite.toml Cargo.toml
+COPY rust/Cargo-lite.lock Cargo.lock
+RUN echo 'fn main() {}' > src/main.rs && \
+    cargo build --release && \
+    mkdir -p /opt/rust-project && \
+    cp -r target .cargo Cargo.toml Cargo.lock src /opt/rust-project/
+
+# Download AC Library C++ (header-only)
+RUN wget -q https://github.com/atcoder/ac-library/archive/refs/tags/v1.6.tar.gz -O ac-library.tar.gz && \
+    tar -xzf ac-library.tar.gz && \
+    mkdir -p /opt/cpp-headers/include && \
+    cp -r ac-library-1.6/atcoder /opt/cpp-headers/include/ && \
+    rm -rf ac-library*
+
+# Install Elixir in builder stage
+RUN AC_OTP_MAJOR_VERSION=27 && \
+    wget -q https://github.com/elixir-lang/elixir/releases/download/v1.18.4/elixir-otp-${AC_OTP_MAJOR_VERSION}.zip && \
+    unzip elixir-otp-${AC_OTP_MAJOR_VERSION}.zip 'bin/*' 'lib/*' -d /opt/elixir && \
+    rm elixir-otp-${AC_OTP_MAJOR_VERSION}.zip
+
+# Create Elixir project in builder stage
+WORKDIR /opt/elixir-project
+RUN PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH /opt/elixir/bin/mix local.hex --force && \
+    PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH /opt/elixir/bin/mix local.rebar --force && \
+    PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH /opt/elixir/bin/mix new main && \
+    cd main
+
+COPY elixir/mix-lite.exs /opt/elixir-project/main/mix.exs
+
+WORKDIR /opt/elixir-project/main
+RUN PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH MIX_ENV=prod /opt/elixir/bin/mix deps.get && \
+    PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH MIX_ENV=prod /opt/elixir/bin/mix compile
+
+# Stage 2: Runtime stage with minimal dependencies
+FROM ubuntu:24.04 AS runtime
+
+ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBCONF_NONINTERACTIVE_SEEN=true
+ENV TZ=Asia/Tokyo
+
+# Install runtime dependencies and essential tools
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+            curl \
+            git \
+            ca-certificates \
+            locales \
+            time \
+            tzdata \
+            xdg-utils \
+            wget \
+            unzip \
+            xz-utils \
+            # Runtime libraries only (no -dev packages)
+            libssl3t64 \
+            libreadline8t64 \
+            libsqlite3-0 \
+            libffi8 \
+            libgdbm6t64 \
+            libbz2-1.0 \
+            liblzma5 \
+            libncurses6 \
+            uuid-runtime \
+            zlib1g \
+            libgmp10 \
+            libmpfr6 \
+            libmpc3 \
+            libyaml-0-2 \
+            libz3-4 \
+            libgeos3.12.1t64 \
+            # Eigen3 runtime (header-only, but some runtime libs)
+            libeigen3-dev \
+            # Basic build tools for C++ and Rust compilation
+            build-essential \
+            g++-13 \
+            && \
+    localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && \
+    apt-get clean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
+ENV LANG="ja_JP.UTF-8" \
+    LANGUAGE="ja_JP:ja" \
+    LC_ALL="ja_JP.UTF-8" \
+    ATCODER=1
+
+# Copy built languages from builder stage
+COPY --from=builder /opt/python /usr/local/
+COPY --from=builder /opt/ruby /opt/ruby
+COPY --from=builder /opt/erlang /usr/local/
+COPY --from=builder /opt/rust /usr/local/
+COPY --from=builder /opt/rust-project /judge/
+COPY --from=builder /opt/cpp-headers/include /usr/local/include/
+COPY --from=builder /opt/elixir /usr/local/
+COPY --from=builder /opt/elixir-project /judge/
+
+# Set up paths and library paths
+ENV PATH=/opt/ruby/bin:/usr/local/bin:$PATH \
+    LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH \
+    ERL_ROOTDIR=/usr/local/lib/erlang
+
+# Install Node.js (precompiled - lightweight)
+ARG NODE_VERSION=22.19.0
 RUN case "$(uname -m)" in \
         x86_64) \
             wget -q -O /tmp/node.tar.xz https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz \
@@ -212,13 +276,13 @@ RUN case "$(uname -m)" in \
     npm install -g \
       ac-library-js@0.1.1 \
       data-structure-typed@2.0.4 \
+      immutable@5.1.3 \
       lodash@4.17.21 \
-      mathjs@14.5.2 \
+      mathjs@14.7.0 \
       tstl@3.0.0 \
       atcoder-cli@2.2.0
 
-# Java (moved after heavy source builds)
-# OpenJDKのダウンロードとインストール
+# Install Java (precompiled)
 RUN case "$(uname -m)" in \
         x86_64) \
             curl -L https://download.java.net/java/GA/jdk23.0.1/c28985cbf10d4e648e4004050f8781aa/11/GPL/openjdk-23.0.1_linux-x64_bin.tar.gz | \
@@ -234,84 +298,21 @@ RUN case "$(uname -m)" in \
             ;; \
     esac
 
-# AC Libraryのダウンロード
+# AC Library for Java
 RUN wget -q https://github.com/ocha98/ac-library-java/releases/download/v2.0.0/ac_library23.jar && \
     mv ac_library23.jar ac_library.jar
 
-# 実行スクリプトの作成
+# Java execution script
 COPY java/java.sh /judge/java.sh
 RUN chmod +x /judge/java.sh
 
-# elixir (without machine learning packages)
-# Install Elixir
-# Elixir v1.18.4 precompiled for OTP 27 is binary compatible with OTP 28
-RUN AC_OTP_MAJOR_VERSION=27 && \
-    wget -q https://github.com/elixir-lang/elixir/releases/download/v1.18.4/elixir-otp-${AC_OTP_MAJOR_VERSION}.zip && \
-    unzip elixir-otp-${AC_OTP_MAJOR_VERSION}.zip 'bin/*' 'lib/*' -d /usr/local && \
-    rm elixir-otp-${AC_OTP_MAJOR_VERSION}.zip
+# Elixir is already copied from builder stage
 
-# Create basic Elixir project (without EXLA/Nx)
-WORKDIR /judge
-RUN mix local.hex --force && \
-    mix local.rebar --force && \
-    mix new main && \
-    cd main
-
-# Create basic Elixir config without heavy dependencies
-COPY elixir/mix-lite.exs /judge/main/mix.exs
-
-WORKDIR /judge/main
-RUN MIX_ENV=prod mix deps.get && \
-    MIX_ENV=prod mix compile
-
-# Rust (from TOML install-script)
-ARG RUST_VERSION=1.87.0
-WORKDIR /tmp
-RUN case "$(uname -m)" in \
-        x86_64) \
-            curl "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" -fO && \
-            tar xf "rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" && \
-            "./rust-${RUST_VERSION}-x86_64-unknown-linux-gnu/install.sh" --prefix=/usr/local \
-            ;; \
-        aarch64) \
-            curl "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-aarch64-unknown-linux-gnu.tar.gz" -fO && \
-            tar xf "rust-${RUST_VERSION}-aarch64-unknown-linux-gnu.tar.gz" && \
-            "./rust-${RUST_VERSION}-aarch64-unknown-linux-gnu/install.sh" --prefix=/usr/local \
-            ;; \
-        *) \
-            echo "Unsupported architecture: $(uname -m)" \
-            exit 1 \
-            ;; \
-    esac && \
-    rm -rf rust-*
-
-# Setup Rust project with competitive programming libraries (from TOML)
-WORKDIR /judge
-RUN mkdir -p .cargo src && \
-    echo '[build]' > .cargo/config.toml && \
-    echo 'rustflags = ["--cfg", "atcoder"]' >> .cargo/config.toml
-
-# Copy Rust project files (lightweight version)
-COPY rust/Cargo-lite.toml /judge/Cargo.toml
-COPY rust/Cargo-lite.lock /judge/Cargo.lock
-RUN echo 'fn main() {}' > src/main.rs && \
-    cargo build --release && \
-    rm target/release/main
-
-# C++ libraries (lightweight competitive programming additions)
-RUN apt-get update && \
-    apt-get install -y libeigen3-dev && \
-    rm -rf /var/lib/apt/lists/*
-
-# AC Library C++ (header-only)
-WORKDIR /tmp
-RUN wget -q https://github.com/atcoder/ac-library/archive/refs/tags/v1.6.tar.gz -O ac-library.tar.gz && \
-    tar -xzf ac-library.tar.gz && \
-    cp -r ac-library-1.6/atcoder /usr/local/include/ && \
-    rm -rf ac-library* && \
-    echo 'AC Library C++ 1.6 and Eigen3 3.4.0 installed for competitive programming' > /usr/local/share/cpp-libraries.txt
-
-# C, C++ のバージョン指定
+# C, C++ compiler setup
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90 --slave /usr/bin/g++ g++ /usr/bin/g++-13
 
+# Create info file
+RUN echo 'AtCoder Lite Multistage: GCC 13, AC Library C++ 1.6, Eigen3 3.4.0, optimized for competitive programming' > /usr/local/share/container-info.txt
+
+# Set final working directory
 WORKDIR /root
