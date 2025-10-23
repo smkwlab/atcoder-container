@@ -41,6 +41,7 @@ RUN apt-get update && \
             libgmp-dev \
             libmpfr-dev \
             libmpc-dev \
+            llvm-bolt \
             # Ruby build dependencies  
             autoconf \
             bison \
@@ -64,13 +65,14 @@ ENV LANG="ja_JP.UTF-8" \
     LC_ALL="ja_JP.UTF-8" \
     ATCODER=1
 
-# Build Python from source (PGO optimization for faster CI builds)
+# Build Python from source (Full version with LTO and BOLT optimizations)
 ARG AC_CPYTHON_VERSION=3.13.7
 WORKDIR /tmp
-RUN wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
+RUN ln -s /usr/lib/llvm-18/lib/libbolt_rt_instr.a /usr/lib/libbolt_rt_instr.a && \
+   wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
    tar xf Python-${AC_CPYTHON_VERSION}.tar.xz && \
    cd Python-${AC_CPYTHON_VERSION} && \
-   ./configure --enable-optimizations --with-strict-overflow --prefix=/opt/python && \
+   ./configure --enable-optimizations --with-lto=full --with-strict-overflow --enable-bolt --prefix=/opt/python && \
    make -j$(nproc) && \
    make install && \
    cd .. && \
