@@ -41,6 +41,7 @@ RUN apt-get update && \
             libgmp-dev \
             libmpfr-dev \
             libmpc-dev \
+            llvm-bolt \
             # Ruby build dependencies  
             autoconf \
             bison \
@@ -64,13 +65,14 @@ ENV LANG="ja_JP.UTF-8" \
     LC_ALL="ja_JP.UTF-8" \
     ATCODER=1
 
-# Build Python from source (PGO optimization for faster CI builds)
+# Build Python from source (Full version with LTO and BOLT optimizations)
 ARG AC_CPYTHON_VERSION=3.13.7
 WORKDIR /tmp
-RUN wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
+RUN ln -s /usr/lib/llvm-18/lib/libbolt_rt_instr.a /usr/lib/libbolt_rt_instr.a && \
+   wget -q https://www.python.org/ftp/python/${AC_CPYTHON_VERSION}/Python-${AC_CPYTHON_VERSION}.tar.xz && \
    tar xf Python-${AC_CPYTHON_VERSION}.tar.xz && \
    cd Python-${AC_CPYTHON_VERSION} && \
-   ./configure --enable-optimizations --with-strict-overflow --prefix=/opt/python && \
+   ./configure --enable-optimizations --with-lto=full --with-strict-overflow --enable-bolt --prefix=/opt/python && \
    make -j$(nproc) && \
    make install && \
    cd .. && \
@@ -115,7 +117,7 @@ RUN /opt/python/bin/python3.13 -m pip install \
 
 # Install PyTorch CPU and ortools (Full version)
 RUN /opt/python/bin/python3.13 -m pip install \
-    torch==2.6.0+cpu --index-url https://download.pytorch.org/whl/cpu && \
+    torch==2.8.0+cpu --index-url https://download.pytorch.org/whl/cpu && \
     /opt/python/bin/python3.13 -m pip install ortools==9.14.6206
 
 # Install online-judge-tools
@@ -156,12 +158,6 @@ RUN gem install -N \
     rgl:0.6.6 \
     sorted_containers:1.1.0 \
     sorted_set:1.0.3
-
-# or-tools (x86_64 only, Full version - using precompiled binary gem)
-# The or-tools gem includes precompiled binaries, no source build needed
-RUN if [ "$(uname -m)" = "x86_64" ]; then \
-    gem install or-tools -v 0.16.0; \
-    fi
 
 # Install Rust from official precompiled tarball
 ARG RUST_VERSION=1.87.0
@@ -224,8 +220,9 @@ WORKDIR /opt/elixir-project/main
 RUN PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH MIX_ENV=prod /opt/elixir/bin/mix deps.get && \
     PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH MIX_ENV=prod /opt/elixir/bin/mix compile
 
-# Install LibTorch and torch-rb (Full version - x86_64 only)
-# Create empty directory structure for ARM64 compatibility
+# Install LibTorch (Full version - x86_64 only)
+# Following ruby.toml specification: install to /usr/local for gem install
+# Also copy to /opt/libtorch for Runtime stage
 WORKDIR /tmp
 ARG AC_LIBTORCH_VERSION="2.8.0"
 ENV PATH=/opt/ruby/bin:$PATH
@@ -233,10 +230,30 @@ RUN mkdir -p /opt/libtorch/include /opt/libtorch/lib && \
     if [ "$(uname -m)" = "x86_64" ]; then \
         wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-${AC_LIBTORCH_VERSION}%2Bcpu.zip && \
         unzip -q libtorch.zip && \
+        cp -dR libtorch/include /usr/local/ && \
+        cp -dR libtorch/lib /usr/local/ && \
         cp -dR libtorch/include /opt/libtorch/ && \
         cp -dR libtorch/lib /opt/libtorch/ && \
-        rm -rf libtorch* && \
-        gem install torch-rb -v 0.21.0 -- --with-torch-dir=/opt/libtorch; \
+        echo /usr/local/lib | tee /etc/ld.so.conf.d/libtorch.conf && \
+        ldconfig && \
+        rm -rf libtorch*; \
+    fi
+
+# Install Full version Ruby gems (x86_64 only)
+# Following ruby.toml specification: install all gems together with MAKEFLAGS
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+        export MAKEFLAGS="-j$(nproc)" && \
+        gem install -N \
+            ffi-geos:2.5.0 \
+            lightgbm:0.4.3 \
+            numo-linalg:0.1.7 \
+            numo-narray:0.9.2.1 \
+            numo-openblas:0.5.1 \
+            or-tools:0.16.0 \
+            polars-df:0.21.1 \
+            rumale:1.0.0 \
+            torch-rb:0.21.0 \
+            z3:0.0.20230311; \
     fi
 
 # Stage 2: Runtime stage with minimal dependencies
