@@ -126,7 +126,9 @@ RUN gem install -N \
     rbtree:0.4.6 \
     rgl:0.6.6 \
     sorted_containers:1.1.0 \
-    sorted_set:1.0.3
+    sorted_set:1.0.3 && \
+    # Fix ac-library-rb gemspec bug (upstream issue: malformed require_paths)
+    sed -i 's/lib_helpers\\"/lib_helpers/g' /opt/ruby/lib/ruby/gems/3.4.0/specifications/ac-library-rb-1.2.0.gemspec
 
 # Install Rust from official precompiled tarball
 ARG RUST_VERSION=1.87.0
