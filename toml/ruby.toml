@@ -316,6 +316,9 @@ sudo apt-get install -y autoconf bison patch build-essential rustc libssl-dev li
 
 pushd /tmp
 AC_LIBTORCH_VERSION="2.8.0"
+# NOTE: Using non-CXX11 ABI version (libtorch-shared-with-deps) for compatibility with torch-rb.
+# This is a change from libtorch-cxx11-abi-shared-with-deps used in previous versions.
+# Ensure all dependent gems are compatible with the non-CXX11 ABI version.
 wget -q -O libtorch.zip https://download.pytorch.org/libtorch/cpu/libtorch-shared-with-deps-"$AC_LIBTORCH_VERSION"%2Bcpu.zip
 unzip -q libtorch.zip
 pushd libtorch

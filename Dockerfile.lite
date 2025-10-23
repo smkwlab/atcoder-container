@@ -1,4 +1,5 @@
-# AtCoder Container - Lite Version (Multi-stage build optimized)
+# AtCoder Container - Lite Version
+# Now using multi-stage build for optimized image size (replaces previous single-stage Dockerfile.lite)
 # Stage 1: Build stage with all development tools
 FROM ubuntu:24.04 AS builder
 

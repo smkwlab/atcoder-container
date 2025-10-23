@@ -151,7 +151,7 @@ RUN gem install -N \
     bit_utils:0.1.2 \
     bitarray:1.3.1 \
     fast_trie:0.5.1 \
-    faster_prime:1.0.1 \
+    faster_prime:1.0.2 \
     immutable-ruby:0.2.0 \
     rbtree:0.4.6 \
     rgl:0.6.6 \
