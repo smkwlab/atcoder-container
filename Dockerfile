@@ -256,6 +256,11 @@ RUN mkdir -p /opt/libtorch/include /opt/libtorch/lib && \
         rm -rf libtorch*; \
     fi
 
+# Install Rice 4.6.1 first (or-tools and torch-rb are not compatible with Rice 4.7.0+)
+RUN if [ "$(uname -m)" = "x86_64" ]; then \
+        gem install rice:4.6.1; \
+    fi
+
 # Install Full version Ruby gems (x86_64 only)
 # Following ruby.toml specification: install all gems together with MAKEFLAGS
 RUN if [ "$(uname -m)" = "x86_64" ]; then \
