@@ -76,8 +76,18 @@ jobs:
             PLATFORMS="linux/amd64,linux/arm64"
           fi
 
+          # Auto-detect from commit message (check before PR default to allow override)
+          if [[ "$COMMIT_MESSAGE" == *"[build-all]"* ]]; then
+            BUILD_LITE="true"
+            BUILD_FULL="true"
+            PLATFORMS="linux/amd64,linux/arm64"  # Build both architectures
+          elif [[ "$COMMIT_MESSAGE" == *"[build-full]"* ]]; then
+            BUILD_FULL="true"
+          fi
+
           # For pull requests: build Full version on x86_64 to catch issues early
-          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+          # Only set if not already configured by [build-all] tag
+          if [[ "${{ github.event_name }}" == "pull_request" && "$COMMIT_MESSAGE" != *"[build-all]"* ]]; then
             BUILD_FULL="true"
             PLATFORMS="linux/amd64"  # x86_64 only for faster CI
           fi
@@ -90,7 +100,7 @@ jobs:
                 BUILD_FULL="false"
                 ;;
               "full-only")
-                BUILD_LITE="false" 
+                BUILD_LITE="false"
                 BUILD_FULL="true"
                 ;;
               "all-variants")
@@ -98,21 +108,13 @@ jobs:
                 BUILD_FULL="true"
                 ;;
             esac
-            
+
             if [[ "${{ github.event.inputs.force_build_all }}" == "true" ]]; then
               BUILD_LITE="true"
               BUILD_FULL="true"
             fi
           fi
-          
-          # Auto-detect from commit message
-          if [[ "$COMMIT_MESSAGE" == *"[build-all]"* ]]; then
-            BUILD_LITE="true"
-            BUILD_FULL="true"
-          elif [[ "$COMMIT_MESSAGE" == *"[build-full]"* ]]; then
-            BUILD_FULL="true"
-          fi
-          
+
           # Main branch builds all variants by default
           if [[ "$IS_MAIN" == "true" && "${{ github.event_name }}" == "push" ]]; then
             BUILD_FULL="true"
