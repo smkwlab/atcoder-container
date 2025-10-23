@@ -311,8 +311,25 @@ COPY --from=builder /opt/elixir-project /judge/
 
 # Copy LibTorch (Full version - x86_64 only, but copy empty dir for ARM64)
 COPY --from=builder /opt/libtorch /usr/local/libtorch
-RUN if [ "$(uname -m)" = "x86_64" ] && [ -d /usr/local/libtorch/lib ] && [ -n "$(ls -A /usr/local/libtorch/lib 2>/dev/null)" ]; then \
-        echo /usr/local/libtorch/lib > /etc/ld.so.conf.d/libtorch.conf && ldconfig; \
+
+# Configure LibTorch library path for x86_64 only
+# ARM64 doesn't have LibTorch, so we skip configuration
+RUN ARCH=$(uname -m) && \
+    if [ "$ARCH" = "x86_64" ]; then \
+        LIBTORCH_LIB="/usr/local/libtorch/lib"; \
+        if [ ! -d "$LIBTORCH_LIB" ]; then \
+            echo "ERROR: LibTorch lib directory not found at $LIBTORCH_LIB" >&2; \
+            exit 1; \
+        fi; \
+        if [ -z "$(ls -A "$LIBTORCH_LIB" 2>/dev/null)" ]; then \
+            echo "ERROR: LibTorch lib directory is empty at $LIBTORCH_LIB" >&2; \
+            exit 1; \
+        fi; \
+        echo "$LIBTORCH_LIB" > /etc/ld.so.conf.d/libtorch.conf && \
+        ldconfig && \
+        echo "LibTorch configured successfully for x86_64"; \
+    else \
+        echo "Skipping LibTorch configuration for $ARCH architecture"; \
     fi
 
 # Set up paths and library paths
