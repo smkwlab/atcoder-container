@@ -41,6 +41,8 @@ jobs:
     outputs:
       build_lite: ${{ steps.strategy.outputs.build_lite }}
       build_full: ${{ steps.strategy.outputs.build_full }}
+      build_full_amd64: ${{ steps.strategy.outputs.build_full_amd64 }}
+      build_full_arm64: ${{ steps.strategy.outputs.build_full_arm64 }}
       platforms: ${{ steps.strategy.outputs.platforms }}
       is_main_branch: ${{ steps.strategy.outputs.is_main_branch }}
     steps:
@@ -119,15 +121,29 @@ jobs:
           if [[ "$IS_MAIN" == "true" && "${{ github.event_name }}" == "push" ]]; then
             BUILD_FULL="true"
           fi
-          
+
+          # Determine architecture-specific build flags for Full version
+          BUILD_FULL_AMD64="false"
+          BUILD_FULL_ARM64="false"
+          if [[ "$BUILD_FULL" == "true" ]]; then
+            if [[ "$PLATFORMS" == *"linux/amd64"* ]]; then
+              BUILD_FULL_AMD64="true"
+            fi
+            if [[ "$PLATFORMS" == *"linux/arm64"* ]]; then
+              BUILD_FULL_ARM64="true"
+            fi
+          fi
+
           echo "build_lite=$BUILD_LITE" >> $GITHUB_OUTPUT
-          echo "build_full=$BUILD_FULL" >> $GITHUB_OUTPUT  
+          echo "build_full=$BUILD_FULL" >> $GITHUB_OUTPUT
+          echo "build_full_amd64=$BUILD_FULL_AMD64" >> $GITHUB_OUTPUT
+          echo "build_full_arm64=$BUILD_FULL_ARM64" >> $GITHUB_OUTPUT
           echo "platforms=$PLATFORMS" >> $GITHUB_OUTPUT
           echo "is_main_branch=$IS_MAIN" >> $GITHUB_OUTPUT
-          
+
           echo "📋 Build Strategy:"
           echo "  Lite: $BUILD_LITE"
-          echo "  Full: $BUILD_FULL" 
+          echo "  Full: $BUILD_FULL (amd64: $BUILD_FULL_AMD64, arm64: $BUILD_FULL_ARM64)"
           echo "  Platforms: $PLATFORMS"
           echo "  Main branch: $IS_MAIN"
 
@@ -242,18 +258,31 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Check if this architecture should be built
+        id: check
+        run: |
+          if [[ "${{ matrix.arch }}" == "amd64" && "${{ needs.determine-strategy.outputs.build_full_amd64 }}" != "true" ]]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "⏭️  Skipping amd64 build (not enabled for this run)"
+          elif [[ "${{ matrix.arch }}" == "arm64" && "${{ needs.determine-strategy.outputs.build_full_arm64 }}" != "true" ]]; then
+            echo "skip=true" >> $GITHUB_OUTPUT
+            echo "⏭️  Skipping arm64 build (not enabled for this run)"
+          else
+            echo "skip=false" >> $GITHUB_OUTPUT
+            echo "✅ Building ${{ matrix.arch }}"
+          fi
+
       - name: Get current date
+        if: steps.check.outputs.skip != 'true'
         id: date
         run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
 
       - name: Checkout
+        if: steps.check.outputs.skip != 'true'
         uses: actions/checkout@v4
 
-      - name: Set up QEMU
-        if: matrix.platform == 'linux/arm64' && matrix.runner == 'ubuntu-latest'
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
+        if: steps.check.outputs.skip != 'true'
         uses: docker/setup-buildx-action@v3
         with:
           buildkitd-config-inline: |
@@ -261,6 +290,7 @@ jobs:
               nameservers=["1.1.1.1"]
 
       - name: Login to Container Registry
+        if: steps.check.outputs.skip != 'true'
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -268,6 +298,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata
+        if: steps.check.outputs.skip != 'true'
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -282,6 +313,7 @@ jobs:
             type=raw,value=${{ steps.date.outputs.date }}-${{ matrix.arch }},enable={{is_default_branch}}
 
       - name: Build and push Full version
+        if: steps.check.outputs.skip != 'true'
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -295,7 +327,7 @@ jobs:
 
       - name: Test basic functionality
         # Test on AMD64 for PRs, and both architectures for main branch
-        if: (matrix.platform == 'linux/amd64' && github.event_name == 'pull_request') || (github.ref == 'refs/heads/main' && github.event_name == 'push')
+        if: steps.check.outputs.skip != 'true' && ((matrix.platform == 'linux/amd64' && github.event_name == 'pull_request') || (github.ref == 'refs/heads/main' && github.event_name == 'push'))
         run: |
           IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
           echo "Testing image: $IMAGE_TAG ($(uname -m))"
