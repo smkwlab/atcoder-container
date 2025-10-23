@@ -132,8 +132,10 @@ jobs:
         include:
           - platform: linux/amd64
             runner: ubuntu-latest
+            arch: amd64
           - platform: linux/arm64
             runner: ubuntu-24.04-arm
+            arch: arm64
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
@@ -170,10 +172,10 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=ref,event=branch,suffix=-lite
-            type=ref,event=pr,suffix=-lite
-            type=raw,value=lite-latest,enable={{is_default_branch}}
-            type=raw,value=lite-${{ steps.date.outputs.date }},enable={{is_default_branch}}
+            type=ref,event=branch,suffix=-lite-${{ matrix.arch }}
+            type=ref,event=pr,suffix=-lite-${{ matrix.arch }}
+            type=raw,value=lite-latest-${{ matrix.arch }},enable={{is_default_branch}}
+            type=raw,value=lite-${{ steps.date.outputs.date }}-${{ matrix.arch }},enable={{is_default_branch}}
 
       - name: Build and push Lite version
         uses: docker/build-push-action@v5
@@ -223,8 +225,10 @@ jobs:
         include:
           - platform: linux/amd64
             runner: ubuntu-latest
+            arch: amd64
           - platform: linux/arm64
             runner: ubuntu-24.04-arm
+            arch: arm64
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
@@ -261,13 +265,13 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=ref,event=branch,suffix=-full
-            type=ref,event=pr,suffix=-full
-            type=raw,value=full-latest,enable={{is_default_branch}}
-            type=raw,value=full-${{ steps.date.outputs.date }},enable={{is_default_branch}}
-            type=raw,value=latest,enable={{is_default_branch}}
-            type=raw,value=all,enable={{is_default_branch}}
-            type=raw,value=${{ steps.date.outputs.date }},enable={{is_default_branch}}
+            type=ref,event=branch,suffix=-full-${{ matrix.arch }}
+            type=ref,event=pr,suffix=-full-${{ matrix.arch }}
+            type=raw,value=full-latest-${{ matrix.arch }},enable={{is_default_branch}}
+            type=raw,value=full-${{ steps.date.outputs.date }}-${{ matrix.arch }},enable={{is_default_branch}}
+            type=raw,value=latest-${{ matrix.arch }},enable={{is_default_branch}}
+            type=raw,value=all-${{ matrix.arch }},enable={{is_default_branch}}
+            type=raw,value=${{ steps.date.outputs.date }}-${{ matrix.arch }},enable={{is_default_branch}}
 
       - name: Build and push Full version
         uses: docker/build-push-action@v5
