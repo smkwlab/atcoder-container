@@ -154,9 +154,8 @@ RUN apt-get update && \
         /usr/share/eigen3/cmake/Eigen3Targets.cmake \
         /usr/share/eigen3/cmake/Eigen3Config.cmake \
         "$AC_INSTALL_DIR/cmake" && \
-    CMAKE_PATH="${AC_INSTALL_DIR/'/opt/'/}/include" && \
     sed -i \
-        -e "s/include\/eigen3/${CMAKE_PATH//'/'/'\/'}/g" \
+        -e 's|include/eigen3|atcoder/include|g' \
         "$AC_INSTALL_DIR/cmake/Eigen3Targets.cmake" && \
     apt-get remove -y libeigen3-dev && \
     apt-get clean && \
