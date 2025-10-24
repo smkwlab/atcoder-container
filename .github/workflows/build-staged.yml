@@ -43,6 +43,7 @@ jobs:
       build_full: ${{ steps.strategy.outputs.build_full }}
       build_full_amd64: ${{ steps.strategy.outputs.build_full_amd64 }}
       build_full_arm64: ${{ steps.strategy.outputs.build_full_arm64 }}
+      build_cpp: ${{ steps.strategy.outputs.build_cpp }}
       platforms: ${{ steps.strategy.outputs.platforms }}
       is_main_branch: ${{ steps.strategy.outputs.is_main_branch }}
     steps:
@@ -74,6 +75,7 @@ jobs:
           # Default values
           BUILD_LITE="true"
           BUILD_FULL="false"
+          BUILD_CPP="false"
           PLATFORMS="linux/amd64"
           IS_MAIN="false"
 
@@ -87,9 +89,12 @@ jobs:
           if [[ "$COMMIT_MESSAGE" == *"[build-all]"* ]]; then
             BUILD_LITE="true"
             BUILD_FULL="true"
+            BUILD_CPP="true"
             PLATFORMS="linux/amd64,linux/arm64"  # Build both architectures
           elif [[ "$COMMIT_MESSAGE" == *"[build-full]"* ]]; then
             BUILD_FULL="true"
+          elif [[ "$COMMIT_MESSAGE" == *"[build-cpp]"* ]]; then
+            BUILD_CPP="true"
           fi
 
           # For pull requests: build Full version on x86_64 to catch issues early
@@ -144,6 +149,7 @@ jobs:
             echo "build_full=$BUILD_FULL"
             echo "build_full_amd64=$BUILD_FULL_AMD64"
             echo "build_full_arm64=$BUILD_FULL_ARM64"
+            echo "build_cpp=$BUILD_CPP"
             echo "platforms=$PLATFORMS"
             echo "is_main_branch=$IS_MAIN"
           } >> "$GITHUB_OUTPUT"
@@ -151,6 +157,7 @@ jobs:
           echo "📋 Build Strategy:"
           echo "  Lite: $BUILD_LITE"
           echo "  Full: $BUILD_FULL (amd64: $BUILD_FULL_AMD64, arm64: $BUILD_FULL_ARM64)"
+          echo "  C++: $BUILD_CPP"
           echo "  Platforms: $PLATFORMS"
           echo "  Main branch: $IS_MAIN"
 
@@ -371,9 +378,84 @@ jobs:
 
           echo "✅ All tests passed!"
 
+  # Stage 3.5: Build C++ Specialized Version
+  build-cpp:
+    needs: determine-strategy
+    if: needs.determine-strategy.outputs.build_cpp == 'true'
+    strategy:
+      matrix:
+        include:
+          - platform: linux/amd64
+            runner: ubuntu-24.04
+            arch: amd64
+          - platform: linux/arm64
+            runner: ubuntu-24.04-arm
+            arch: arm64
+    runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "date=$(date +'%Y%m%d')" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        if: matrix.platform == 'linux/arm64' && matrix.runner == 'ubuntu-latest'
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        with:
+          buildkitd-config-inline: |
+            [dns]
+              nameservers=["1.1.1.1"]
+
+      - name: Login to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=raw,value=cpp-${{ steps.date.outputs.date }}-${{ matrix.arch }}
+            type=raw,value=cpp-latest-${{ matrix.arch }},enable=${{ github.ref == 'refs/heads/main' }}
+            type=sha,prefix=cpp-,suffix=-${{ matrix.arch }}
+
+      - name: Build and push C++ version
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./Dockerfile.cpp
+          platforms: ${{ matrix.platform }}
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha,scope=cpp-${{ matrix.arch }}
+          cache-to: type=gha,mode=max,scope=cpp-${{ matrix.arch }}
+
+      - name: Test C++ version
+        if: github.event_name != 'pull_request'
+        run: |
+          IMAGE_TAG="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:cpp-${{ steps.date.outputs.date }}-${{ matrix.arch }}"
+
+          echo "🔍 Testing C++ container..."
+          docker run --rm "$IMAGE_TAG" g++ --version
+          docker run --rm "$IMAGE_TAG" bash -c "echo '#include <atcoder/all>' | g++ -x c++ - -c -o /dev/null"
+          echo "✅ C++ tests passed!"
+
   # Stage 4: Summary and notification
   build-summary:
-    needs: [determine-strategy, build-lite, build-full]
+    needs: [determine-strategy, build-lite, build-full, build-cpp]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -381,9 +463,11 @@ jobs:
         env:
           LITE_BUILD: ${{ needs.determine-strategy.outputs.build_lite }}
           FULL_BUILD: ${{ needs.determine-strategy.outputs.build_full }}
+          CPP_BUILD: ${{ needs.determine-strategy.outputs.build_cpp }}
           PLATFORMS: ${{ needs.determine-strategy.outputs.platforms }}
           LITE_RESULT: ${{ needs.build-lite.result || 'skipped' }}
           FULL_RESULT: ${{ needs.build-full.result || 'skipped' }}
+          CPP_RESULT: ${{ needs.build-cpp.result || 'skipped' }}
         run: |
           {
             echo "## 🚀 Build Summary"
@@ -391,11 +475,13 @@ jobs:
             echo "### 📋 Strategy"
             echo "- **Lite Build**: $LITE_BUILD"
             echo "- **Full Build**: $FULL_BUILD"
+            echo "- **C++ Build**: $CPP_BUILD"
             echo "- **Platforms**: $PLATFORMS"
             echo ""
             echo "### 🎯 Results"
             echo "- **Lite Version**: $LITE_RESULT"
             echo "- **Full Version**: $FULL_RESULT"
+            echo "- **C++ Version**: $CPP_RESULT"
             echo ""
 
             if [[ "$LITE_RESULT" == "success" ]]; then
@@ -404,5 +490,9 @@ jobs:
 
             if [[ "$FULL_RESULT" == "success" ]]; then
               echo "✅ **Full version built successfully** - Complete development environment ready!"
+            fi
+
+            if [[ "$CPP_RESULT" == "success" ]]; then
+              echo "✅ **C++ version built successfully** - Specialized C++ environment ready!"
             fi
           } >> "$GITHUB_STEP_SUMMARY"
