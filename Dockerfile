@@ -439,8 +439,7 @@ RUN apt-get update && \
         php8.4-sqlite3 && \
     echo "opcache.enable_cli = 1
 opcache.jit = tracing
-opcache.jit_buffer_size = 128M
-" | tee -a /etc/php/8.4/cli/conf.d/10-opcache.ini > /dev/null && \
+opcache.jit_buffer_size = 128M" | tee -a /etc/php/8.4/cli/conf.d/10-opcache.ini > /dev/null && \
     apt-get clean && \
     apt-get autoremove -y && \
     rm -rf /var/lib/apt/lists/*
