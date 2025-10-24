@@ -427,11 +427,26 @@ RUN chmod +x /judge/java.sh
 
 # Elixir is already copied from builder stage
 
+# Install PHP 8.4.12 from PPA (Full version only)
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:ondrej/php && \
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        php8.4-cli \
+        php8.4-gmp \
+        php8.4-bcmath \
+        php8.4-sqlite3 && \
+    printf "opcache.enable_cli = 1\nopcache.jit = tracing\nopcache.jit_buffer_size = 128M\n" | tee -a /etc/php/8.4/cli/conf.d/10-opcache.ini > /dev/null && \
+    apt-get clean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
 # C, C++ compiler setup
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90 --slave /usr/bin/g++ g++ /usr/bin/g++-13
 
 # Create info file
-RUN echo 'AtCoder Full Multistage: GCC 13, AC Library C++ 1.6, Eigen3 3.4.0, Boost 1.83, LibTorch 2.8.0, NumPy, SciPy, PyTorch, or-tools' > /usr/local/share/container-info.txt
+RUN echo 'AtCoder Full Multistage: GCC 13, AC Library C++ 1.6, Eigen3 3.4.0, Boost 1.83, LibTorch 2.8.0, NumPy, SciPy, PyTorch, or-tools, PHP 8.4.12 with JIT' > /usr/local/share/container-info.txt
 
 # Set final working directory
 WORKDIR /root
