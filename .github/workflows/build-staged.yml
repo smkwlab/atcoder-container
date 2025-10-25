@@ -411,7 +411,10 @@ jobs:
   # Stage 5: Create multi-architecture manifests
   create-manifests:
     needs: [determine-strategy, build-lite, build-full]
-    if: needs.determine-strategy.outputs.is_main_branch == 'true'
+    if: |
+      always() &&
+      needs.determine-strategy.outputs.is_main_branch == 'true' &&
+      (needs.build-lite.result == 'success' || needs.build-full.result == 'success')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -430,7 +433,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create manifest for lite-latest
-        if: needs.determine-strategy.outputs.build_lite == 'true'
+        if: |
+          needs.determine-strategy.outputs.build_lite == 'true' &&
+          needs.build-lite.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
           docker buildx imagetools create \
@@ -439,7 +444,9 @@ jobs:
             ${IMAGE}:lite-latest-arm64
 
       - name: Create manifest for full-latest
-        if: needs.determine-strategy.outputs.build_full == 'true'
+        if: |
+          needs.determine-strategy.outputs.build_full == 'true' &&
+          needs.build-full.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
           docker buildx imagetools create \
@@ -448,7 +455,9 @@ jobs:
             ${IMAGE}:full-latest-arm64
 
       - name: Create manifest for latest (points to full)
-        if: needs.determine-strategy.outputs.build_full == 'true'
+        if: |
+          needs.determine-strategy.outputs.build_full == 'true' &&
+          needs.build-full.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
           docker buildx imagetools create \
@@ -457,7 +466,9 @@ jobs:
             ${IMAGE}:latest-arm64
 
       - name: Create manifest for all (points to full)
-        if: needs.determine-strategy.outputs.build_full == 'true'
+        if: |
+          needs.determine-strategy.outputs.build_full == 'true' &&
+          needs.build-full.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
           docker buildx imagetools create \
@@ -466,7 +477,9 @@ jobs:
             ${IMAGE}:all-arm64
 
       - name: Create manifest for date tag (points to full)
-        if: needs.determine-strategy.outputs.build_full == 'true'
+        if: |
+          needs.determine-strategy.outputs.build_full == 'true' &&
+          needs.build-full.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
           docker buildx imagetools create \
@@ -475,7 +488,9 @@ jobs:
             ${IMAGE}:${{ steps.date.outputs.today }}-arm64
 
       - name: Create manifest for language update version lite
-        if: needs.determine-strategy.outputs.build_lite == 'true'
+        if: |
+          needs.determine-strategy.outputs.build_lite == 'true' &&
+          needs.build-lite.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
           docker buildx imagetools create \
@@ -484,7 +499,9 @@ jobs:
             ${IMAGE}:lite-latest-arm64
 
       - name: Create manifest for language update version full
-        if: needs.determine-strategy.outputs.build_full == 'true'
+        if: |
+          needs.determine-strategy.outputs.build_full == 'true' &&
+          needs.build-full.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
           docker buildx imagetools create \
@@ -493,7 +510,9 @@ jobs:
             ${IMAGE}:full-latest-arm64
 
       - name: Create manifest for language update version (points to full)
-        if: needs.determine-strategy.outputs.build_full == 'true'
+        if: |
+          needs.determine-strategy.outputs.build_full == 'true' &&
+          needs.build-full.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
           docker buildx imagetools create \
