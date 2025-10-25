@@ -33,6 +33,7 @@ concurrency:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository_owner }}/atcoder-container
+  LANGUAGE_UPDATE_VERSION: "202510update"
 
 jobs:
   # Stage 1: Determine build strategy
@@ -472,3 +473,30 @@ jobs:
             -t ${IMAGE}:${{ steps.date.outputs.today }} \
             ${IMAGE}:${{ steps.date.outputs.today }}-amd64 \
             ${IMAGE}:${{ steps.date.outputs.today }}-arm64
+
+      - name: Create manifest for language update version lite
+        if: needs.determine-strategy.outputs.build_lite == 'true'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }}-lite \
+            ${IMAGE}:lite-latest-amd64 \
+            ${IMAGE}:lite-latest-arm64
+
+      - name: Create manifest for language update version full
+        if: needs.determine-strategy.outputs.build_full == 'true'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }}-full \
+            ${IMAGE}:full-latest-amd64 \
+            ${IMAGE}:full-latest-arm64
+
+      - name: Create manifest for language update version (points to full)
+        if: needs.determine-strategy.outputs.build_full == 'true'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }} \
+            ${IMAGE}:latest-amd64 \
+            ${IMAGE}:latest-arm64
