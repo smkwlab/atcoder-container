@@ -406,3 +406,69 @@ jobs:
               echo "✅ **Full version built successfully** - Complete development environment ready!"
             fi
           } >> "$GITHUB_STEP_SUMMARY"
+
+  # Stage 5: Create multi-architecture manifests
+  create-manifests:
+    needs: [determine-strategy, build-lite, build-full]
+    if: needs.determine-strategy.outputs.is_main_branch == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Get current date
+        id: date
+        run: echo "today=$(date +'%Y%m%d')" >> "$GITHUB_OUTPUT"
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@9780b0c442fbb1117ed29e0efdff1e18412f7567
+        # v3.3.0
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create manifest for lite-latest
+        if: needs.determine-strategy.outputs.build_lite == 'true'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:lite-latest \
+            ${IMAGE}:lite-latest-amd64 \
+            ${IMAGE}:lite-latest-arm64
+
+      - name: Create manifest for full-latest
+        if: needs.determine-strategy.outputs.build_full == 'true'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:full-latest \
+            ${IMAGE}:full-latest-amd64 \
+            ${IMAGE}:full-latest-arm64
+
+      - name: Create manifest for latest (points to full)
+        if: needs.determine-strategy.outputs.build_full == 'true'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:latest \
+            ${IMAGE}:latest-amd64 \
+            ${IMAGE}:latest-arm64
+
+      - name: Create manifest for all (points to full)
+        if: needs.determine-strategy.outputs.build_full == 'true'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:all \
+            ${IMAGE}:all-amd64 \
+            ${IMAGE}:all-arm64
+
+      - name: Create manifest for date tag (points to full)
+        if: needs.determine-strategy.outputs.build_full == 'true'
+        run: |
+          IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          docker buildx imagetools create \
+            -t ${IMAGE}:${{ steps.date.outputs.today }} \
+            ${IMAGE}:${{ steps.date.outputs.today }}-amd64 \
+            ${IMAGE}:${{ steps.date.outputs.today }}-arm64
