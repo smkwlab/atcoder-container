@@ -236,7 +236,7 @@ COPY elixir/config.exs /opt/elixir-project/main/config/config.exs
 WORKDIR /opt/elixir-project/main
 RUN PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH MIX_ENV=prod /opt/elixir/bin/mix deps.get && \
     PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH MIX_ENV=prod /opt/elixir/bin/mix release && \
-    rm _build/prod/rel/main/bin/main
+    rm -f _build/prod/rel/main/bin/main
 
 # Install LibTorch (Full version - x86_64 only)
 # Following ruby.toml specification: install to /usr/local for gem install
