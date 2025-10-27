@@ -350,6 +350,7 @@ COPY --from=builder /opt/rust-project /judge/
 COPY --from=builder /opt/cpp-headers/include /usr/local/include/
 COPY --from=builder /opt/elixir /usr/local/
 COPY --from=builder /opt/elixir-project /judge/
+COPY --from=builder /home/runner/.mix /root/.mix
 
 # Copy LibTorch (Full version - x86_64 only, but copy empty dir for ARM64)
 COPY --from=builder /opt/libtorch /usr/local/libtorch
