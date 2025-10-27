@@ -226,6 +226,7 @@ RUN AC_OTP_MAJOR_VERSION=27 && \
 WORKDIR /opt/elixir-project
 RUN PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH /opt/elixir/bin/mix local.hex --force && \
     PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH /opt/elixir/bin/mix local.rebar --force && \
+    ls -la /root/.mix && \
     PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH /opt/elixir/bin/mix new main && \
     cd main
 
