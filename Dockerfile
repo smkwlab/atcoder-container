@@ -226,7 +226,7 @@ RUN AC_OTP_MAJOR_VERSION=27 && \
 WORKDIR /opt/elixir-project
 RUN PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH /opt/elixir/bin/mix local.hex --force && \
     PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH /opt/elixir/bin/mix local.rebar --force && \
-    ls -la /root/.mix && \
+    ls -la /home/runner/.mix && \
     PATH=/opt/erlang/bin:/opt/elixir/bin:$PATH /opt/elixir/bin/mix new main && \
     cd main
 
@@ -351,7 +351,7 @@ COPY --from=builder /opt/rust-project /judge/
 COPY --from=builder /opt/cpp-headers/include /usr/local/include/
 COPY --from=builder /opt/elixir /usr/local/
 COPY --from=builder /opt/elixir-project /judge/
-COPY --from=builder /root/.mix /root/.mix
+COPY --from=builder /home/runner/.mix /root/.mix
 
 # Copy LibTorch (Full version - x86_64 only, but copy empty dir for ARM64)
 COPY --from=builder /opt/libtorch /usr/local/libtorch
