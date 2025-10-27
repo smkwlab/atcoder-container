@@ -253,6 +253,7 @@ COPY --from=builder /opt/rust-project /judge/
 COPY --from=builder /opt/cpp-headers/include /usr/local/include/
 COPY --from=builder /opt/elixir /usr/local/
 COPY --from=builder /opt/elixir-project /judge/
+COPY --from=builder /root/.mix /root/.mix
 
 # Set up paths and library paths
 ENV PATH=/opt/ruby/bin:/usr/local/bin:$PATH \
