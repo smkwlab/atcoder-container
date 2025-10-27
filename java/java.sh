@@ -4,4 +4,5 @@ if [ "$1" -gt 1024 ]; then
 else
     stack_size="$1"
 fi
-java -Xss"$stack_size"M -DONLINE_JUDGE=true -cp ac_library.jar: Main
+work_dir="${2:-/judge}"
+java -Xss"$stack_size"M -DONLINE_JUDGE=true -cp "$work_dir"/ac_library.jar:"$work_dir": Main
