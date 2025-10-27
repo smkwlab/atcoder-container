@@ -434,6 +434,10 @@ RUN wget -q https://github.com/ocha98/ac-library-java/releases/download/v2.0.0/a
 COPY java/java.sh /judge/java.sh
 RUN chmod +x /judge/java.sh
 
+# C++ compile script
+COPY cpp/cpp.sh /judge/cpp.sh
+RUN chmod +x /judge/cpp.sh
+
 # Elixir is already copied from builder stage
 
 # Install PHP 8.4.12 from PPA (Full version only)
