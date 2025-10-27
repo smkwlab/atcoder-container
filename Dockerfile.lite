@@ -21,6 +21,7 @@ RUN apt-get update && \
             g++-13 \
             wget \
             unzip \
+            jq \
             # Python build dependencies
             gdb \
             lcov \
@@ -307,7 +308,7 @@ RUN case "$(uname -m)" in \
 
 # AC Library for Java
 RUN wget -q https://github.com/ocha98/ac-library-java/releases/download/v2.0.0/ac_library23.jar && \
-    mv ac_library23.jar ac_library.jar
+    mv ac_library23.jar /judge/ac_library.jar
 
 # Java execution script
 COPY java/java.sh /judge/java.sh
