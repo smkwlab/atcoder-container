@@ -228,26 +228,23 @@ jobs:
           IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
           echo "Testing image: $IMAGE_TAG ($(uname -m))"
 
-          # echo "🔍 Testing Python..."
-          # docker run --rm "$IMAGE_TAG" python3.13 --version
+          echo "🔍 Testing Python..."
+          docker run --rm "$IMAGE_TAG" python3.13 --version
 
-          # echo "🔍 Testing Ruby..."
-          # docker run --rm "$IMAGE_TAG" ruby --version
+          echo "🔍 Testing Ruby..."
+          docker run --rm "$IMAGE_TAG" ruby --version
 
-          # echo "🔍 Testing Rust..."
-          # docker run --rm "$IMAGE_TAG" rustc --version
+          echo "🔍 Testing Rust..."
+          docker run --rm "$IMAGE_TAG" rustc --version
 
-          # echo "🔍 Testing Node.js..."
-          # docker run --rm "$IMAGE_TAG" node --version
+          echo "🔍 Testing Node.js..."
+          docker run --rm "$IMAGE_TAG" node --version
 
-          # echo "🔍 Testing Java..."
-          # docker run --rm "$IMAGE_TAG" java --version
+          echo "🔍 Testing Java..."
+          docker run --rm "$IMAGE_TAG" java --version
 
-          # echo "🔍 Testing C++..."
-          # docker run --rm "$IMAGE_TAG" g++ --version
-
-          echo "🔍 Testing Elixir..."
-          docker run --rm "$IMAGE_TAG" elixir --version
+          echo "🔍 Testing C++..."
+          docker run --rm "$IMAGE_TAG" g++ --version
 
           echo "✅ All basic tests passed!"
 
@@ -359,38 +356,35 @@ jobs:
           IMAGE_TAG=$(echo "${{ steps.meta.outputs.tags }}" | head -n1)
           echo "Testing image: $IMAGE_TAG ($(uname -m))"
 
-          # echo "🔍 Testing Python..."
-          # docker run --rm "$IMAGE_TAG" python3.13 --version
+          echo "🔍 Testing Python..."
+          docker run --rm "$IMAGE_TAG" python3.13 --version
 
-          # echo "🔍 Testing Ruby..."
-          # docker run --rm "$IMAGE_TAG" ruby --version
+          echo "🔍 Testing Ruby..."
+          docker run --rm "$IMAGE_TAG" ruby --version
 
-          # echo "🔍 Testing Rust..."
-          # docker run --rm "$IMAGE_TAG" rustc --version
+          echo "🔍 Testing Rust..."
+          docker run --rm "$IMAGE_TAG" rustc --version
 
-          # echo "🔍 Testing Node.js..."
-          # docker run --rm "$IMAGE_TAG" node --version
+          echo "🔍 Testing Node.js..."
+          docker run --rm "$IMAGE_TAG" node --version
 
-          # echo "🔍 Testing Java..."
-          # docker run --rm "$IMAGE_TAG" java --version
+          echo "🔍 Testing Java..."
+          docker run --rm "$IMAGE_TAG" java --version
 
-          # echo "🔍 Testing C++..."
-          # docker run --rm "$IMAGE_TAG" g++ --version
+          echo "🔍 Testing C++..."
+          docker run --rm "$IMAGE_TAG" g++ --version
 
-          echo "🔍 Testing Elixir..."
-          docker run --rm "$IMAGE_TAG" elixir --version
+          echo "🔍 Testing scientific libraries..."
+          docker run --rm "$IMAGE_TAG" python3.13 -c "import numpy; print('NumPy', numpy.__version__)"
+          docker run --rm "$IMAGE_TAG" python3.13 -c "import scipy; print('SciPy', scipy.__version__)"
+          docker run --rm "$IMAGE_TAG" python3.13 -c "import pandas; print('Pandas', pandas.__version__)"
+          docker run --rm "$IMAGE_TAG" python3.13 -c "import sklearn; print('scikit-learn', sklearn.__version__)"
 
-          # echo "🔍 Testing scientific libraries..."
-          # docker run --rm "$IMAGE_TAG" python3.13 -c "import numpy; print('NumPy', numpy.__version__)"
-          # docker run --rm "$IMAGE_TAG" python3.13 -c "import scipy; print('SciPy', scipy.__version__)"
-          # docker run --rm "$IMAGE_TAG" python3.13 -c "import pandas; print('Pandas', pandas.__version__)"
-          # docker run --rm "$IMAGE_TAG" python3.13 -c "import sklearn; print('scikit-learn', sklearn.__version__)"
-
-          # # Only test numba on x86_64 (not available on ARM64)
-          # if [ "${{ matrix.platform }}" = "linux/amd64" ]; then
-          #   echo "🔍 Testing Numba (x86_64 only)..."
-          #   docker run --rm "$IMAGE_TAG" python3.13 -c "import numba; print('Numba', numba.__version__)"
-          # fi
+          # Only test numba on x86_64 (not available on ARM64)
+          if [ "${{ matrix.platform }}" = "linux/amd64" ]; then
+            echo "🔍 Testing Numba (x86_64 only)..."
+            docker run --rm "$IMAGE_TAG" python3.13 -c "import numba; print('Numba', numba.__version__)"
+          fi
 
           echo "✅ All tests passed!"
 
