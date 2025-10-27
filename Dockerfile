@@ -345,7 +345,7 @@ ENV LANG="ja_JP.UTF-8" \
 COPY --from=builder /opt/python /usr/local/
 
 # Fix oj command shebang to point to the correct Python location
-RUN sed -i '1s|#!/opt/python/bin/python3.13|#!/usr/bin/env python3.13|' /usr/local/bin/oj
+RUN sed -i '1s|#!/opt/python/bin/python[0-9.]*|#!/usr/bin/env python3|' /usr/local/bin/oj
 
 COPY --from=builder /opt/ruby /opt/ruby
 COPY --from=builder /opt/erlang /usr/local/
