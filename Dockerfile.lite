@@ -212,6 +212,7 @@ RUN apt-get update && \
             wget \
             unzip \
             xz-utils \
+            jq \
             # Runtime libraries only (no -dev packages)
             libssl3t64 \
             libreadline8t64 \
