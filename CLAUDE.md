@@ -8,18 +8,21 @@ This is a Docker container image specifically designed for AtCoder competitive p
 
 ## Container Variants
 
-This repository provides multiple container variants optimized for different use cases:
+This repository provides multiple container variants optimized for different use cases. Both versions use multi-stage builds for optimized image size and security.
 
 - **Full Version** (`Dockerfile`): Complete environment with all languages and libraries
-  - Size: ~8-10GB
-  - Includes: All languages, scientific libraries (NumPy, SciPy, PyTorch), OR-Tools, Boost, etc.
-  - Best for: Complete competitive programming environment
+  - Size: ~6-7GB
+  - Includes: **All 9 languages** (Python, Node.js, Java, Ruby, Erlang, Elixir, Rust, C++, PHP)
+  - Scientific libraries: NumPy, SciPy, PyTorch, pandas, scikit-learn
+  - Optimization: or-tools
+  - C++ libraries: Boost 1.83, LibTorch 2.8.0
+  - Best for: Complete competitive programming environment with ML libraries
 
 - **Lite Version** (`Dockerfile.lite`): Lightweight, optimized for CI/CD
-  - Size: ~3.86GB
-  - Includes: Core languages with essential libraries
-  - Architecture: Multi-stage build (builder + runtime)
-  - Best for: CI pipelines, quick testing
+  - Size: ~3.4GB
+  - Includes: **8 core languages** (no PHP)
+  - Core competitive programming libraries only (no ML/scientific libraries)
+  - Best for: CI pipelines, quick testing, dev containers
 
 ## Build Commands
 
@@ -47,21 +50,28 @@ The container includes the following languages (versions as of January 2025):
 - **Elixir** 1.18.4 (using OTP 27 binary for OTP 28 compatibility)
 - **Rust** 1.87.0
 - **C++** GCC 13 (g++-13) on Ubuntu 24.04
+- **PHP** 8.4.12 (with JIT compiler, full version only)
 
 ### Lite Version (Dockerfile.lite)
-- Same languages and versions as Full version
+- Same language versions as Full version (except no PHP)
 - Ruby without GC patch (standard build)
-- Optimized multi-stage build for smaller image size
+- **No PHP**
+- **No scientific computing libraries** (NumPy, SciPy, PyTorch, pandas, scikit-learn)
+- **No optimization libraries** (or-tools)
+- **No advanced C++ libraries** (Boost, LibTorch)
 
 **Note**: All version information is defined in `toml/*.toml` configuration files, which serve as the single source of truth for language versions.
 
 ## Key Architecture Decisions
 
 ### Build Strategy
-- **Full Version**: Single-stage build with all dependencies
-- **Lite Version**: Multi-stage build (builder + runtime stages) for optimized size
-  - Builder stage: Compiles languages from source
-  - Runtime stage: Only includes runtime dependencies and built artifacts
+**Both versions use multi-stage builds** for optimized image size and security:
+- Builder stage: Compiles languages from source with all development dependencies
+- Runtime stage: Only includes runtime dependencies and built artifacts
+
+**Differences**:
+- Full version: Includes ML libraries (NumPy, SciPy, PyTorch), optimization libraries (or-tools), advanced C++ libraries (Boost, LibTorch)
+- Lite version: Core competitive programming libraries only
 
 ### Language Installation Methods
 - **Python**: Built from source with PGO (Profile-Guided Optimization) and optimization flags
@@ -79,8 +89,15 @@ The container includes the following languages (versions as of January 2025):
 - **Java**: ac-library-java v2.0.0 (ac_library.jar)
 - **Ruby**: ac-library-rb, various gems for algorithms
 - **JavaScript**: ac-library-js, data-structure-typed, mathjs
-- **C++**: AC Library 1.6, Boost 1.88.0, Eigen3 3.4.0 (full version)
+- **C++**: AC Library 1.6, Boost 1.83, Eigen3 3.4.0 (full version)
 - **All languages**: online-judge-tools (oj) and atcoder-cli
+
+### Essential Tools
+- **jq** v1.7: JSON processor - required for makefile task URL parsing
+- **online-judge-tools (oj)**: Test case download and automated submission
+- **atcoder-cli (acc)**: Contest setup and management
+- **git**, **curl**, **wget**: Version control and HTTP clients
+- **build-essential**: Compilation tools (gcc, g++, make)
 
 ### Special Configurations
 - **Java execution**: Uses `/judge/java.sh` wrapper to set stack size dynamically
@@ -103,6 +120,26 @@ When updating language versions or adding dependencies:
 - `java/java.sh`: Java execution wrapper script
 - `elixir/`: Elixir project files (mix.exs, config.exs, main.ex)
 - `rust/Cargo-lite.toml`: Rust dependencies for lite version
+
+## Version Verification
+
+To verify that language versions in this documentation match the actual configuration:
+
+```bash
+# Check versions in Dockerfile
+grep -E "AC_CPYTHON_VERSION|NODE_VERSION|AC_OTP_VERSION|RUST_VERSION" Dockerfile
+grep -E "ruby-build|openjdk|elixir|php" Dockerfile
+
+# Check versions in Dockerfile.lite
+grep -E "AC_CPYTHON_VERSION|NODE_VERSION|AC_OTP_VERSION|RUST_VERSION" Dockerfile.lite
+grep -E "ruby-build|openjdk|elixir" Dockerfile.lite
+
+# Verify PHP is only in Full version
+grep -i "php" Dockerfile        # Should show PHP 8.4.12
+grep -i "php" Dockerfile.lite   # Should return nothing
+```
+
+**Note**: The single source of truth for versions is in `Dockerfile` and `Dockerfile.lite`. This documentation should be updated whenever language versions are changed.
 
 ## Important Notes
 
