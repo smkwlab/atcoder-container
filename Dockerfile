@@ -134,8 +134,9 @@ RUN /opt/python/bin/python3.13 -m pip install \
     torch==2.8.0+cpu --index-url https://download.pytorch.org/whl/cpu && \
     /opt/python/bin/python3.13 -m pip install ortools==9.14.6206
 
-# Install online-judge-tools
+# Install online-judge-tools and aclogin
 RUN /opt/python/bin/python3.13 -m pip install online-judge-tools==11.5.1
+RUN /opt/python/bin/python3.13 -m pip install aclogin
 RUN /opt/python/bin/python3.13 -m pip cache purge
 
 # Build Erlang from source
