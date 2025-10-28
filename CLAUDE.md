@@ -11,19 +11,17 @@ This is a Docker container image specifically designed for AtCoder competitive p
 This repository provides multiple container variants optimized for different use cases. **Both versions use multi-stage builds** for optimized image size and security.
 
 - **Full Version** (`Dockerfile`): Complete environment with all languages and libraries
-  - Size: ~6-7GB (optimized with multi-stage build)
+  - Size: ~6-7GB
   - Includes: **All 9 languages** (Python, Node.js, Java, Ruby, Erlang, Elixir, Rust, C++, PHP)
   - Scientific libraries: NumPy, SciPy, PyTorch, pandas, scikit-learn
   - Optimization: or-tools
   - C++ libraries: Boost 1.83, LibTorch 2.8.0
-  - Architecture: Multi-stage build (builder + runtime stages)
   - Best for: Complete competitive programming environment with ML libraries
 
 - **Lite Version** (`Dockerfile.lite`): Lightweight, optimized for CI/CD
-  - Size: ~3.4GB (optimized with multi-stage build)
+  - Size: ~3.4GB
   - Includes: **8 core languages** (no PHP)
   - Core competitive programming libraries only (no ML/scientific libraries)
-  - Architecture: Multi-stage build (builder + runtime stages)
   - Best for: CI pipelines, quick testing, dev containers
 
 ## Build Commands
@@ -61,21 +59,19 @@ The container includes the following languages (versions as of January 2025):
 - **No scientific computing libraries** (NumPy, SciPy, PyTorch, pandas, scikit-learn)
 - **No optimization libraries** (or-tools)
 - **No advanced C++ libraries** (Boost, LibTorch)
-- Optimized multi-stage build for smaller image size
 
 **Note**: All version information is defined in `toml/*.toml` configuration files, which serve as the single source of truth for language versions.
 
 ## Key Architecture Decisions
 
 ### Build Strategy
-- **Full Version**: Multi-stage build (builder + runtime stages) for optimized size
-  - Builder stage: Compiles languages from source
-  - Runtime stage: Only includes runtime dependencies and built artifacts
-- **Lite Version**: Multi-stage build (builder + runtime stages) for optimized size
-  - Builder stage: Compiles languages from source
-  - Runtime stage: Only includes runtime dependencies and built artifacts
+**Both versions use multi-stage builds** for optimized image size and security:
+- Builder stage: Compiles languages from source with all development dependencies
+- Runtime stage: Only includes runtime dependencies and built artifacts
 
-**Note**: Both versions were converted to multi-stage builds for better security and smaller image sizes (commit 54dafe1, 2025-10-22)
+**Differences**:
+- Full version: Includes ML libraries (NumPy, SciPy, PyTorch), optimization libraries (or-tools), advanced C++ libraries (Boost, LibTorch)
+- Lite version: Core competitive programming libraries only
 
 ### Language Installation Methods
 - **Python**: Built from source with PGO (Profile-Guided Optimization) and optimization flags
