@@ -340,7 +340,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Create info file
-RUN echo 'AtCoder Lite Multistage: GCC 13, AC Library C++ 1.6, Eigen3 3.4.0, PHP 8.4.12 with JIT, optimized for competitive programming' > /usr/local/share/container-info.txt
+RUN echo 'AtCoder Lite 2025: Py3.13.7 Node22.19 Java23.0.1 Ruby3.4.5 Erlang28.0.2 Elixir1.18.4 Rust1.87 C++GCC13 PHP8.4.12+JIT | C++: ACLib Eigen' > /usr/local/share/container-info.txt
 
 # Set final working directory
 WORKDIR /root
