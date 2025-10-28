@@ -509,10 +509,16 @@ jobs:
           needs.build-lite.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          echo "🔍 Creating manifest: ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }}-lite"
+          echo "📦 Source images:"
+          docker buildx imagetools inspect ${IMAGE}:lite-latest-amd64 | head -10
+          docker buildx imagetools inspect ${IMAGE}:lite-latest-arm64 | head -10
           docker buildx imagetools create \
             -t ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }}-lite \
             ${IMAGE}:lite-latest-amd64 \
             ${IMAGE}:lite-latest-arm64
+          echo "✅ Verifying created manifest:"
+          docker buildx imagetools inspect ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }}-lite | head -10
 
       - name: Create manifest for language update version full
         if: |
@@ -520,10 +526,16 @@ jobs:
           needs.build-full.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          echo "🔍 Creating manifest: ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }}-full"
+          echo "📦 Source images:"
+          docker buildx imagetools inspect ${IMAGE}:full-latest-amd64 | head -10
+          docker buildx imagetools inspect ${IMAGE}:full-latest-arm64 | head -10
           docker buildx imagetools create \
             -t ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }}-full \
             ${IMAGE}:full-latest-amd64 \
             ${IMAGE}:full-latest-arm64
+          echo "✅ Verifying created manifest:"
+          docker buildx imagetools inspect ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }}-full | head -10
 
       - name: Create manifest for language update version (points to full)
         if: |
@@ -531,7 +543,13 @@ jobs:
           needs.build-full.result == 'success'
         run: |
           IMAGE=ghcr.io/${{ github.repository_owner }}/atcoder-container
+          echo "🔍 Creating manifest: ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }}"
+          echo "📦 Source images:"
+          docker buildx imagetools inspect ${IMAGE}:latest-amd64 | head -10
+          docker buildx imagetools inspect ${IMAGE}:latest-arm64 | head -10
           docker buildx imagetools create \
             -t ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }} \
             ${IMAGE}:latest-amd64 \
             ${IMAGE}:latest-arm64
+          echo "✅ Verifying created manifest:"
+          docker buildx imagetools inspect ${IMAGE}:${{ env.LANGUAGE_UPDATE_VERSION }} | head -10
