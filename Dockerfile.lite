@@ -324,8 +324,23 @@ RUN chmod +x /judge/cpp.sh
 # C, C++ compiler setup
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90 --slave /usr/bin/g++ g++ /usr/bin/g++-13
 
+# Install PHP 8.4.12 from PPA (Lite version)
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:ondrej/php && \
+    apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+        php8.4-cli \
+        php8.4-gmp \
+        php8.4-bcmath \
+        php8.4-sqlite3 && \
+    printf "opcache.enable_cli = 1\nopcache.jit = tracing\nopcache.jit_buffer_size = 128M\n" | tee -a /etc/php/8.4/cli/conf.d/10-opcache.ini > /dev/null && \
+    apt-get clean && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
 # Create info file
-RUN echo 'AtCoder Lite Multistage: GCC 13, AC Library C++ 1.6, Eigen3 3.4.0, optimized for competitive programming' > /usr/local/share/container-info.txt
+RUN echo 'AtCoder Lite 2025: Py3.13.7 Node22.19 Java23.0.1 Ruby3.4.5 Erlang28.0.2 Elixir1.18.4 Rust1.87 C++GCC13 PHP8.4.12+JIT | C++: ACLib Eigen' > /usr/local/share/container-info.txt
 
 # Set final working directory
 WORKDIR /root

@@ -460,7 +460,7 @@ RUN apt-get update && \
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90 --slave /usr/bin/g++ g++ /usr/bin/g++-13
 
 # Create info file
-RUN echo 'AtCoder Full Multistage: GCC 13, AC Library C++ 1.6, Eigen3 3.4.0, Boost 1.83, LibTorch 2.8.0, NumPy, SciPy, PyTorch, or-tools, PHP 8.4.12 with JIT' > /usr/local/share/container-info.txt
+RUN echo 'AtCoder Full 2025: Py3.13.7 Node22.19 Java23.0.1 Ruby3.4.5 Erlang28.0.2 Elixir1.18.4 Rust1.87 C++GCC13 PHP8.4.12+JIT | ML: NumPy SciPy PyTorch pandas | C++: ACLib Boost1.83 Eigen LibTorch | or-tools' > /usr/local/share/container-info.txt
 
 # Set final working directory
 WORKDIR /root
