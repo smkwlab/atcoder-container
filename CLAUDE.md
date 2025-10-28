@@ -19,8 +19,8 @@ This repository provides multiple container variants optimized for different use
   - Best for: Complete competitive programming environment with ML libraries
 
 - **Lite Version** (`Dockerfile.lite`): Lightweight, optimized for CI/CD
-  - Size: ~3.4GB
-  - Includes: **8 core languages** (no PHP)
+  - Size: ~3.5-3.6GB
+  - Includes: **All 9 languages** (Python, Node.js, Java, Ruby, Erlang, Elixir, Rust, C++, PHP)
   - Core competitive programming libraries only (no ML/scientific libraries)
   - Best for: CI pipelines, quick testing, dev containers
 
@@ -45,17 +45,15 @@ The container includes the following languages (versions as of January 2025):
 - **Python** 3.13.7 (with LTO and BOLT optimizations on x86_64)
 - **Node.js** 22.19.0
 - **Java** OpenJDK 23.0.1
-- **Ruby** 3.4.5 (with GC patch on full version)
+- **Ruby** 3.4.5
 - **Erlang/OTP** 28.0.2
 - **Elixir** 1.18.4 (using OTP 27 binary for OTP 28 compatibility)
 - **Rust** 1.87.0
 - **C++** GCC 13 (g++-13) on Ubuntu 24.04
-- **PHP** 8.4.12 (with JIT compiler, full version only)
+- **PHP** 8.4.12 (with JIT compiler)
 
 ### Lite Version (Dockerfile.lite)
-- Same language versions as Full version (except no PHP)
-- Ruby without GC patch (standard build)
-- **No PHP**
+- Same language versions as Full version
 - **No scientific computing libraries** (NumPy, SciPy, PyTorch, pandas, scikit-learn)
 - **No optimization libraries** (or-tools)
 - **No advanced C++ libraries** (Boost, LibTorch)
@@ -77,9 +75,7 @@ The container includes the following languages (versions as of January 2025):
 - **Python**: Built from source with PGO (Profile-Guided Optimization) and optimization flags
 - **Node.js**: Precompiled binary installation from nodejs.org
 - **Java**: OpenJDK precompiled binary from java.net
-- **Ruby**: Built using ruby-build
-  - Full version: With GC patch for optimization
-  - Lite version: Standard build without patches
+- **Ruby**: Built using ruby-build (standard build, no GC patch)
 - **Erlang/Elixir**: Built from source
 - **Rust**: Installed from official precompiled tarball (not asdf)
 - **C++**: System package (g++-13 from Ubuntu 24.04 repositories)
@@ -132,11 +128,11 @@ grep -E "ruby-build|openjdk|elixir|php" Dockerfile
 
 # Check versions in Dockerfile.lite
 grep -E "AC_CPYTHON_VERSION|NODE_VERSION|AC_OTP_VERSION|RUST_VERSION" Dockerfile.lite
-grep -E "ruby-build|openjdk|elixir" Dockerfile.lite
+grep -E "ruby-build|openjdk|elixir|php" Dockerfile.lite
 
-# Verify PHP is only in Full version
+# Verify PHP is in both versions
 grep -i "php" Dockerfile        # Should show PHP 8.4.12
-grep -i "php" Dockerfile.lite   # Should return nothing
+grep -i "php" Dockerfile.lite   # Should show PHP 8.4.12
 ```
 
 **Note**: The single source of truth for versions is in `Dockerfile` and `Dockerfile.lite`. This documentation should be updated whenever language versions are changed.
