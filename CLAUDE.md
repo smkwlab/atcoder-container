@@ -8,7 +8,7 @@ This is a Docker container image specifically designed for AtCoder competitive p
 
 ## Container Variants
 
-This repository provides multiple container variants optimized for different use cases. **Both versions use multi-stage builds** for optimized image size and security.
+This repository provides multiple container variants optimized for different use cases. Both versions use multi-stage builds for optimized image size and security.
 
 - **Full Version** (`Dockerfile`): Complete environment with all languages and libraries
   - Size: ~6-7GB
@@ -89,7 +89,7 @@ The container includes the following languages (versions as of January 2025):
 - **Java**: ac-library-java v2.0.0 (ac_library.jar)
 - **Ruby**: ac-library-rb, various gems for algorithms
 - **JavaScript**: ac-library-js, data-structure-typed, mathjs
-- **C++**: AC Library 1.6, Boost 1.88.0, Eigen3 3.4.0 (full version)
+- **C++**: AC Library 1.6, Boost 1.83, Eigen3 3.4.0 (full version)
 - **All languages**: online-judge-tools (oj) and atcoder-cli
 
 ### Essential Tools
