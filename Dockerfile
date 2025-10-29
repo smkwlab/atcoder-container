@@ -136,7 +136,8 @@ RUN /opt/python/bin/python3.13 -m pip install \
 
 # Install online-judge-tools and aclogin
 RUN /opt/python/bin/python3.13 -m pip install online-judge-tools==11.5.1
-RUN /opt/python/bin/python3.13 -m pip install aclogin
+RUN /opt/python/bin/python3.13 -m pip install aclogin && \
+    sed -i '1s|^#!/opt/python/bin/python3.13|#!/usr/bin/env python3|' /opt/python/bin/aclogin
 RUN /opt/python/bin/python3.13 -m pip cache purge
 
 # Build Erlang from source
