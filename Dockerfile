@@ -360,6 +360,9 @@ COPY --from=builder /opt/elixir /usr/local/
 COPY --from=builder /opt/elixir-project /judge/
 COPY --from=builder /home/runner/.mix /root/.mix
 
+# Remove Elixir template main.ex to avoid module conflict with user's Main.ex
+RUN rm -f /judge/main/lib/main.ex
+
 # Copy LibTorch (Full version - x86_64 only, but copy empty dir for ARM64)
 COPY --from=builder /opt/libtorch /usr/local/libtorch
 
