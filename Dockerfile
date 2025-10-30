@@ -444,6 +444,10 @@ RUN chmod +x /judge/java.sh
 COPY cpp/cpp.sh /judge/cpp.sh
 RUN chmod +x /judge/cpp.sh
 
+# Node.js execution script
+COPY js/node.sh /judge/node.sh
+RUN chmod +x /judge/node.sh
+
 # Elixir is already copied from builder stage
 
 # Install PHP 8.4.12 from PPA (Full version only)
