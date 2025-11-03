@@ -74,7 +74,7 @@ jobs:
 
           # Detect changed files for auto-skip detection
           if [[ "$EVENT_NAME" == "pull_request" ]]; then
-            CHANGED_FILES=$(git diff --name-only HEAD^2 HEAD 2>/dev/null || git diff --name-only HEAD^ HEAD)
+            CHANGED_FILES=$(git diff --name-only HEAD^2 HEAD 2>/dev/null || git diff --name-only HEAD^ HEAD 2>/dev/null || echo "")
           else
             CHANGED_FILES=$(git diff --name-only HEAD^ HEAD 2>/dev/null || echo "")
           fi
