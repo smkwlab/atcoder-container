@@ -126,10 +126,10 @@ jobs:
             PLATFORMS="linux/amd64,linux/arm64"  # Build both architectures
           elif [[ "$COMMIT_MESSAGE" == *"[build-full]"* ]]; then
             BUILD_FULL="true"
-          elif [[ "$COMMIT_MESSAGE" == *"[build]"* ]]; then
+          elif [[ "$COMMIT_MESSAGE" == *"[build-lite]"* ]]; then
             BUILD_LITE="true"
-            BUILD_FULL="true"
-            PLATFORMS="linux/amd64,linux/arm64"  # Build both architectures for [build] tag
+            BUILD_FULL="false"
+            PLATFORMS="linux/amd64,linux/arm64"  # Build both architectures for lite version
           elif [[ "$DOCS_ONLY" == "true" ]]; then
             BUILD_LITE="false"
             BUILD_FULL="false"
