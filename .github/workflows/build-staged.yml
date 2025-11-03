@@ -71,7 +71,38 @@ jobs:
             COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           fi
           echo "Commit message: $COMMIT_MESSAGE"
-          
+
+          # Detect changed files for auto-skip detection
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            CHANGED_FILES=$(git diff --name-only HEAD^2 HEAD 2>/dev/null || git diff --name-only HEAD^ HEAD)
+          else
+            CHANGED_FILES=$(git diff --name-only HEAD^ HEAD 2>/dev/null || echo "")
+          fi
+          echo "Changed files:"
+          echo "$CHANGED_FILES"
+
+          # Check if only documentation/non-build files changed
+          DOCS_ONLY="true"
+          while IFS= read -r file; do
+            # Skip empty lines
+            [[ -z "$file" ]] && continue
+
+            # Files that don't require build
+            if [[ "$file" =~ \.(md|txt)$ ]] || \
+               [[ "$file" == "LICENSE" ]] || \
+               [[ "$file" == ".gitignore" ]] || \
+               [[ "$file" =~ ^\.github/workflows/.*\.yml$ ]]; then
+              continue
+            fi
+
+            # Any other file requires build
+            DOCS_ONLY="false"
+            echo "Build required due to: $file"
+            break
+          done <<< "$CHANGED_FILES"
+
+          echo "Documentation-only change: $DOCS_ONLY"
+
           # Default values
           BUILD_LITE="true"
           BUILD_FULL="false"
@@ -84,18 +115,30 @@ jobs:
             PLATFORMS="linux/amd64,linux/arm64"
           fi
 
-          # Auto-detect from commit message (check before PR default to allow override)
-          if [[ "$COMMIT_MESSAGE" == *"[build-all]"* ]]; then
+          # Auto-detect from commit message and changed files
+          # Priority: commit message tags > file detection
+          if [[ "$COMMIT_MESSAGE" == *"[skip-build]"* ]]; then
+            BUILD_LITE="false"
+            BUILD_FULL="false"
+            echo "Build skipped due to [skip-build] tag"
+          elif [[ "$COMMIT_MESSAGE" == *"[build-all]"* ]]; then
             BUILD_LITE="true"
             BUILD_FULL="true"
             PLATFORMS="linux/amd64,linux/arm64"  # Build both architectures
           elif [[ "$COMMIT_MESSAGE" == *"[build-full]"* ]]; then
             BUILD_FULL="true"
+          elif [[ "$COMMIT_MESSAGE" == *"[build]"* ]]; then
+            BUILD_LITE="true"
+            BUILD_FULL="true"
+          elif [[ "$DOCS_ONLY" == "true" ]]; then
+            BUILD_LITE="false"
+            BUILD_FULL="false"
+            echo "Build skipped: only documentation files changed"
           fi
 
           # For pull requests: build Full version on x86_64 to catch issues early
-          # Only set if not already configured by [build-all] or [build-full] tag
-          if [[ "$EVENT_NAME" == "pull_request" && "$COMMIT_MESSAGE" != *"[build-all]"* && "$BUILD_FULL" != "true" ]]; then
+          # Skip if docs-only or explicitly skipped
+          if [[ "$EVENT_NAME" == "pull_request" && "$DOCS_ONLY" != "true" && "$COMMIT_MESSAGE" != *"[skip-build]"* && "$COMMIT_MESSAGE" != *"[build-all]"* && "$BUILD_FULL" != "true" ]]; then
             BUILD_FULL="true"
             PLATFORMS="linux/amd64"  # x86_64 only for faster CI
           fi
