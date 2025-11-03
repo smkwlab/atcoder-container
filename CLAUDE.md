@@ -77,7 +77,7 @@ You can explicitly control build behavior using commit message tags. Tags take p
 
 ### Default Behavior
 
-- **Pull Requests**: Automatically build Full version on x86_64 to catch issues early
+- **Pull Requests**: Automatically build Full version on linux/amd64 to catch issues early
 - **Main branch commits**: Follow automatic detection or tag-based control
 - **Manual workflow dispatch**: Choose build variant via GitHub Actions UI
 
