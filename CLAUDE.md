@@ -37,6 +37,73 @@ docker build -t atcoder-container:lite -f Dockerfile.lite .
 docker build -t atcoder-container:2025 .
 ```
 
+## CI/CD Workflow and Auto-Skip Build Feature
+
+The repository uses GitHub Actions workflow (`.github/workflows/build-staged.yml`) with intelligent build skipping to save time and resources.
+
+### Automatic Build Skipping
+
+The workflow automatically detects when only documentation files are changed and skips the build:
+
+**Files that trigger auto-skip:**
+- `*.md`, `*.txt` (documentation files)
+- `LICENSE`, `.gitignore`
+
+**When builds are always triggered:**
+- Any Dockerfile changes
+- Source code changes (Python, Java, Ruby, etc.)
+- Build script changes
+- toml configuration changes
+
+### Commit Message Tags (Manual Override)
+
+You can explicitly control build behavior using commit message tags. Tags take priority over automatic detection:
+
+- **`[skip-build]`**: Force skip all builds
+  - Use for: Documentation-only changes, README updates
+  - Example: `git commit -m "Update README [skip-build]"`
+
+- **`[build-lite]`**: Build only Lite version (both architectures)
+  - Use for: Changes affecting only lite version
+  - Builds: `atcoder-lite:2025` for linux/amd64 and linux/arm64
+
+- **`[build-full]`**: Build only Full version
+  - Use for: Changes to ML libraries or full-only features
+  - Builds: `atcoder-full:2025` for linux/amd64 (default platform)
+
+- **`[build-all]`**: Build both versions (both architectures)
+  - Use for: Core changes affecting both versions
+  - Builds: Both `atcoder-lite:2025` and `atcoder-full:2025` for linux/amd64 and linux/arm64
+
+### Default Behavior
+
+- **Pull Requests**: Automatically build Full version on x86_64 to catch issues early
+- **Main branch commits**: Follow automatic detection or tag-based control
+- **Manual workflow dispatch**: Choose build variant via GitHub Actions UI
+
+### Examples
+
+```bash
+# Documentation update - auto-skips build
+git commit -m "Update installation instructions in README.md"
+
+# Force build even for docs
+git commit -m "Update README with new feature [build-all]"
+
+# Skip build explicitly
+git commit -m "Fix typo in comments [skip-build]"
+
+# Build only lite version
+git commit -m "Update competitive programming libraries [build-lite]"
+```
+
+### Benefits
+
+- **Time savings**: README updates complete in seconds instead of 1-2 hours
+- **Resource efficiency**: Reduces unnecessary CI/CD usage
+- **Flexibility**: Manual override available when needed
+- **Safety**: PRs still validate with Full version build by default
+
 ## Supported Languages and Versions
 
 The container includes the following languages (versions as of January 2025):
