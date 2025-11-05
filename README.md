@@ -38,7 +38,7 @@
 | ライブラリ | ライト版 | フル版 |
 |------------|----------|--------|
 | 基本科学計算 (NumPy, SciPy等) | ✅ | ✅ |
-| AC Library (各言語) | ✅ | ✅ |
+| AC Library | ✅ | ✅ |
 | online-judge-tools | ✅ | ✅ |
 | atcoder-cli | ✅ | ✅ |
 | PyTorch | ❌ | ✅ |
@@ -46,6 +46,16 @@
 | torch-rb (Ruby) | ❌ | ✅ |
 | scikit-learn | ❌ | ✅ |
 | EXLA/Nx (Elixir) | ❌ | ✅ |
+
+### AC Library サポート状況
+
+AtCoder公式の[AC Library](https://atcoder.github.io/ac-library/)を以下の言語で利用可能：
+
+- **C++**: [AC Library 1.6](https://github.com/atcoder/ac-library)
+- **Python**: [ac-library-python](https://github.com/not522/ac-library-python)
+- **Java**: [ac-library-java 2.0.0](https://github.com/ocha98/ac-library-java)
+- **Ruby**: [ac-library-rb 1.2.0](https://github.com/universato/ac-library-rb)
+- **JavaScript**: [ac-library-js 0.1.1](https://github.com/pepsin92/ac-library-js)
 
 ## ビルド方法
 
