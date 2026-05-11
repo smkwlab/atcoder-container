@@ -73,8 +73,12 @@ jobs:
           echo "Commit message: $COMMIT_MESSAGE"
 
           # Detect changed files for auto-skip detection
+          # For pull_request events, GitHub Actions checks out a synthetic merge commit
+          # where HEAD^1 is the base (main) and HEAD^2 is the PR head. The PR's own
+          # changes are the diff from HEAD^1 to HEAD^2, NOT from HEAD^2 to HEAD
+          # (the latter only reflects changes that landed on base after the PR branched).
           if [[ "$EVENT_NAME" == "pull_request" ]]; then
-            CHANGED_FILES=$(git diff --name-only HEAD^2 HEAD 2>/dev/null || git diff --name-only HEAD^ HEAD 2>/dev/null || echo "")
+            CHANGED_FILES=$(git diff --name-only HEAD^1 HEAD^2 2>/dev/null || git diff --name-only HEAD^ HEAD 2>/dev/null || echo "")
           else
             CHANGED_FILES=$(git diff --name-only HEAD^ HEAD 2>/dev/null || echo "")
           fi
