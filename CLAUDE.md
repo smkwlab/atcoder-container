@@ -106,16 +106,16 @@ git commit -m "Update competitive programming libraries [build-lite]"
 
 ## Supported Languages and Versions
 
-The container includes the following languages (versions as of January 2025):
+The container includes the following languages (`toml/*.toml` is the single source of truth; the Dockerfiles are kept in sync with it):
 
 ### Full Version (Dockerfile)
 - **Python** 3.13.7 (with LTO and BOLT optimizations on x86_64)
 - **Node.js** 22.19.0
-- **Java** OpenJDK 23.0.1
+- **Java** OpenJDK 24.0.2
 - **Ruby** 3.4.5
 - **Erlang/OTP** 28.0.2
 - **Elixir** 1.18.4 (using OTP 27 binary for OTP 28 compatibility)
-- **Rust** 1.87.0
+- **Rust** 1.89.0
 - **C++** GCC 13 (g++-13) on Ubuntu 24.04
 - **PHP** 8.4.12 (with JIT compiler)
 

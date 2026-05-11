@@ -103,12 +103,12 @@ jobs:
             ⚡ **Build Type**: Lite version (competitive programming focused)
             
             ### 🔍 Verified Components
-            - ✅ Python 3.13.5
-            - ✅ Ruby 3.4.4  
-            - ✅ Rust 1.87.0
-            - ✅ Node.js 22.16.0
-            - ✅ Java 23.0.1
-            - ✅ GCC 13.3.0
+            - ✅ Python 3.13.7
+            - ✅ Ruby 3.4.5
+            - ✅ Rust 1.89.0
+            - ✅ Node.js 22.19.0
+            - ✅ Java 24.0.2
+            - ✅ GCC 13
             
             🎯 **Ready for competitive programming!**
             
