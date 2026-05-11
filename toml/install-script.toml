@@ -54,10 +54,10 @@ language = 'Rust'
 #       'C++23 (Clang 18.1.8)'
 #       'Java24 (OpenJDK 24.0.1)'
 #       'Python3 (CPython 3.13.3)'
-display = 'Rust (rustc 1.87.0)'
+display = 'Rust (rustc 1.89.0)'
 # 1.87.0: Released on: 15 May, 2025 https://releases.rs/docs/1.87.0/
-# 1.88.0: Will be stable on: 26 June, 2025 https://releases.rs/docs/1.88.0/
-# 1.89.0: Will be stable on: 7 August, 2025 https://releases.rs/docs/1.89.0/
+# 1.88.0: Released on: 26 June, 2025 https://releases.rs/docs/1.88.0/
+# 1.89.0: Released on: 7 August, 2025 https://releases.rs/docs/1.89.0/
 
 # キー: license
 # 型:   配列
@@ -99,11 +99,11 @@ display = 'Rust (rustc 1.87.0)'
 #       コンパイラ、インタプリタの実装のライセンスを記述してください
 #       デュアルライセンスなど、ライセンスが複数ある場合はすべて記述してください
 license = [
-    { name = 'Apache-2.0', url = 'https://github.com/rust-lang/rust/blob/1.87.0/COPYRIGHT' },
-    { name = 'MIT', url = 'https://github.com/rust-lang/rust/blob/1.87.0/COPYRIGHT' },
-    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://github.com/rust-lang/rust/blob/1.87.0/COPYRIGHT' },
-    { name = 'Apache-2.0', url = 'https://github.com/rust-lang/rust/blob/1.87.0/LICENSE-APACHE' },
-    { name = 'MIT', url = 'https://github.com/rust-lang/rust/blob/1.87.0/LICENSE-MIT' },
+    { name = 'Apache-2.0', url = 'https://github.com/rust-lang/rust/blob/1.89.0/COPYRIGHT' },
+    { name = 'MIT', url = 'https://github.com/rust-lang/rust/blob/1.89.0/COPYRIGHT' },
+    { name = 'Apache-2.0', exception = 'LLVM-exception', url = 'https://github.com/rust-lang/rust/blob/1.89.0/COPYRIGHT' },
+    { name = 'Apache-2.0', url = 'https://github.com/rust-lang/rust/blob/1.89.0/LICENSE-APACHE' },
+    { name = 'MIT', url = 'https://github.com/rust-lang/rust/blob/1.89.0/LICENSE-MIT' },
 ]
 
 # キー: library
@@ -1679,8 +1679,8 @@ set -e
 sudo apt-get update
 sudo apt-get install -y --no-install-recommends build-essential ca-certificates curl
 
-rust_version=1.87.0
-rust_channel=1.87.0
+rust_version=1.89.0
+rust_channel=1.89.0
 
 # https://forge.rust-lang.org/infra/other-installation-methods.html#standalone-installers
 curl "https://static.rust-lang.org/dist/rust-$rust_channel-x86_64-unknown-linux-gnu.tar.gz" -fO --output-dir /tmp

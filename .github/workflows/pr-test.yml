@@ -105,9 +105,9 @@ jobs:
             ### 🔍 Verified Components
             - ✅ Python 3.13.5
             - ✅ Ruby 3.4.4  
-            - ✅ Rust 1.87.0
+            - ✅ Rust 1.89.0
             - ✅ Node.js 22.16.0
-            - ✅ Java 23.0.1
+            - ✅ Java 24.0.2
             - ✅ GCC 13.3.0
             
             🎯 **Ready for competitive programming!**

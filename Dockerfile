@@ -178,7 +178,7 @@ RUN gem install -N \
     sed -i 's/lib_helpers\\"/lib_helpers/g' "$(gem environment gemdir)/specifications/ac-library-rb-1.2.0.gemspec"
 
 # Install Rust from official precompiled tarball
-ARG RUST_VERSION=1.87.0
+ARG RUST_VERSION=1.89.0
 RUN case "$(uname -m)" in \
         x86_64) \
             curl "https://static.rust-lang.org/dist/rust-${RUST_VERSION}-x86_64-unknown-linux-gnu.tar.gz" -fO && \
@@ -419,11 +419,11 @@ RUN case "$(uname -m)" in \
 # Install Java (precompiled)
 RUN case "$(uname -m)" in \
         x86_64) \
-            curl -L https://download.java.net/java/GA/jdk23.0.1/c28985cbf10d4e648e4004050f8781aa/11/GPL/openjdk-23.0.1_linux-x64_bin.tar.gz | \
+            curl -L https://download.java.net/java/GA/jdk24.0.2/fdc5d0102fe0414db21410ad5834341f/12/GPL/openjdk-24.0.2_linux-x64_bin.tar.gz | \
             tar zx -C /usr/local --strip-components 1 \
             ;; \
         aarch64) \
-            curl -L https://download.java.net/java/GA/jdk23.0.1/c28985cbf10d4e648e4004050f8781aa/11/GPL/openjdk-23.0.1_linux-aarch64_bin.tar.gz | \
+            curl -L https://download.java.net/java/GA/jdk24.0.2/fdc5d0102fe0414db21410ad5834341f/12/GPL/openjdk-24.0.2_linux-aarch64_bin.tar.gz | \
             tar zx -C /usr/local --strip-components 1 \
             ;; \
         *) \
@@ -469,7 +469,7 @@ RUN apt-get update && \
 RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-13 90 --slave /usr/bin/g++ g++ /usr/bin/g++-13
 
 # Create info file
-RUN echo 'AtCoder Full 2025: Py3.13.7 Node22.19 Java23.0.1 Ruby3.4.5 Erlang28.0.2 Elixir1.18.4 Rust1.87 C++GCC13 PHP8.4.12+JIT | ML: NumPy SciPy PyTorch pandas | C++: ACLib Boost1.83 Eigen LibTorch | or-tools' > /usr/local/share/container-info.txt && \
+RUN echo 'AtCoder Full 2025: Py3.13.7 Node22.19 Java24.0.2 Ruby3.4.5 Erlang28.0.2 Elixir1.18.4 Rust1.89 C++GCC13 PHP8.4.12+JIT | ML: NumPy SciPy PyTorch pandas | C++: ACLib Boost1.83 Eigen LibTorch | or-tools' > /usr/local/share/container-info.txt && \
     echo "Built: $(date -u +"%Y-%m-%dT%H:%M:%SZ")" >> /usr/local/share/container-info.txt
 
 # Set final working directory

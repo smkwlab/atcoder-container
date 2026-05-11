@@ -24,13 +24,13 @@
 
 両イメージとも以下の言語に対応しています：
 
-- **Java** (JDK 23.0.1)
+- **Java** (JDK 24.0.2)
 - **Ruby** (3.4.4 with GC patch)
 - **Elixir** (1.18.4)
 - **Python3** (3.13.5 with LTO/BOLT optimizations)
 - **JavaScript** (Node.js 22.16.0)
 - **C++** (g++ 12.3.0, C++23 support)
-- **Rust** (1.70.0)
+- **Rust** (1.89.0)
 - **Erlang** (28.0)
 
 ## 主要な違い
