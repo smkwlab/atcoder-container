@@ -299,11 +299,11 @@ RUN case "$(uname -m)" in \
 # Install Java (precompiled)
 RUN case "$(uname -m)" in \
         x86_64) \
-            curl -L https://download.java.net/java/GA/jdk24.0.2/fdc5d0102fe0414db21410ad5834341f/12/GPL/openjdk-24.0.2_linux-x64_bin.tar.gz | \
+            curl -fL https://download.java.net/java/GA/jdk24.0.2/fdc5d0102fe0414db21410ad5834341f/12/GPL/openjdk-24.0.2_linux-x64_bin.tar.gz | \
             tar zx -C /usr/local --strip-components 1 \
             ;; \
         aarch64) \
-            curl -L https://download.java.net/java/GA/jdk24.0.2/fdc5d0102fe0414db21410ad5834341f/12/GPL/openjdk-24.0.2_linux-aarch64_bin.tar.gz | \
+            curl -fL https://download.java.net/java/GA/jdk24.0.2/fdc5d0102fe0414db21410ad5834341f/12/GPL/openjdk-24.0.2_linux-aarch64_bin.tar.gz | \
             tar zx -C /usr/local --strip-components 1 \
             ;; \
         *) \
