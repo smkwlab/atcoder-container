@@ -106,7 +106,7 @@ git commit -m "Update competitive programming libraries [build-lite]"
 
 ## Supported Languages and Versions
 
-The container includes the following languages (versions as of January 2025):
+The container includes the following languages (see `toml/*.toml` and the Dockerfiles for authoritative versions):
 
 ### Full Version (Dockerfile)
 - **Python** 3.13.7 (with LTO and BOLT optimizations on x86_64)

@@ -52,7 +52,7 @@ language = 'Rust'
 #       具体的には現状の提出画面における表示を参考にしてください
 # 例:   'C++23 (GCC 15.1)'
 #       'C++23 (Clang 18.1.8)'
-#       'Java24 (OpenJDK 24.0.1)'
+#       'Java24 (OpenJDK 24.0.2)'
 #       'Python3 (CPython 3.13.3)'
 display = 'Rust (rustc 1.89.0)'
 # 1.87.0: Released on: 15 May, 2025 https://releases.rs/docs/1.87.0/
