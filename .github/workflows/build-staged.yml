@@ -97,10 +97,22 @@ jobs:
             # Skip empty lines
             [[ -z "$file" ]] && continue
 
-            # Files that don't require build
+            # Files that don't require build.
+            #
+            # Building is the default: anything not listed here counts as a
+            # build input, so adding a source file never needs this list
+            # touched. Only add a path after checking that neither Dockerfile
+            # reads it -- a wrong entry here skips a build that was needed,
+            # and nothing reports that.
+            #
+            # .github/renovate.json is here because a Renovate configuration
+            # change rebuilt and republished all four images for a file the
+            # images do not contain (#83).
             if [[ "$file" =~ \.(md|txt)$ ]] || \
                [[ "$file" == "LICENSE" ]] || \
-               [[ "$file" == ".gitignore" ]]; then
+               [[ "$file" == ".gitignore" ]] || \
+               [[ "$file" == ".gitattributes" ]] || \
+               [[ "$file" == ".github/renovate.json" ]]; then
               continue
             fi
 
