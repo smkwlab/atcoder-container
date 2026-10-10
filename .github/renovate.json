@@ -1,0 +1,13 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>smkwlab/.github#v1"],
+  "description": [
+    "Cargo.lock holds transitive crates that bumping Cargo.toml never rewrites, so advisories in them accumulate unseen -- rand sat on two of them with patches available. Nothing in the shared presets turns lock file maintenance on for cargo (npm and mix have their own), so it is named here.",
+    "A whole day, not a window inside one. A schedule does not start a run, it tells a run already under way whether it may act, and Mend schedules a repository's jobs a few hours apart -- stretching overnight. A narrow window can fall between two of them: ise-report-template went months with its refresh listed as awaiting schedule and not one pull request created (smkwlab/.github#213). Saturday keeps it clear of the latex window (friday and saturday) and the elixir one (sunday and monday), so the organisation's pull requests do not all arrive at once.",
+    "Every crate in Cargo.toml is pinned with '=', so Renovate will offer updates for them individually. If a pin exists to match the judge's toolchain rather than to be current, narrow it here rather than turning the manager off."
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["on saturday"]
+  }
+}
