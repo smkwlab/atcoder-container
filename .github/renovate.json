@@ -1,0 +1,26 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>smkwlab/.github#v1"],
+  "description": [
+    "Lock file refreshes only. The point is the transitive crates in Cargo.lock -- rand is sitting on two advisories with patches available -- and bumping Cargo.toml never rewrites that part of the tree.",
+    "Version updates stay off because a pull request here is expensive in a way it is not elsewhere. build-staged.yml runs on pull_request with no path filter, takes 30 to 80 minutes across four jobs, and publishes a pr-NN-{full,lite}-{arch} tag to ghcr.io on every run -- the registry carries pr-29, pr-31, pr-32 and so on. Against 39 declared crates, 4 Dockerfile FROM lines and 29 workflow uses, onboarding the lot would mean about seventy pull requests, each with its own builds and registry writes. The onboarding pull request was declined in 2026-04 (#77) and this is why.",
+    "enabledManagers keeps dockerfile and github-actions out from the start, so only cargo is read at all.",
+    "The two packageRules are ordered deliberately: cargo is switched off, then lockFileMaintenance is switched back on. Renovate applies the rules in order and the last match wins, so reversing them would take the lock refresh out with everything else. Whether disabling a manager reaches lock file maintenance on its own is an implementation detail, and this does not rely on the answer.",
+    "No auto-merge. Merging to main runs build-staged.yml again, which publishes latest-{arch} and the dated tags -- so a merge here is a release. Principle 6 of the ecosystem's dependency policy keeps publishing a human action, which means a person merges this."
+  ],
+  "enabledManagers": ["cargo"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["on saturday"]
+  },
+  "packageRules": [
+    {
+      "matchManagers": ["cargo"],
+      "enabled": false
+    },
+    {
+      "matchUpdateTypes": ["lockFileMaintenance"],
+      "enabled": true
+    }
+  ]
+}
