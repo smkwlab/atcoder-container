@@ -188,8 +188,21 @@ jobs:
             fi
           fi
 
-          # Main branch builds all variants by default
-          if [[ "$IS_MAIN" == "true" && "$EVENT_NAME" == "push" ]]; then
+          # Main branch builds all variants by default.
+          #
+          # Guarded by the same two conditions as the pull request rule
+          # above, because this used to override them. A docs-only push to
+          # main set BUILD_LITE=false and BUILD_FULL=false, and then had
+          # BUILD_FULL put back to true here -- so the Full image was built
+          # and published for a change it does not contain. Seen on the
+          # merge of #83: build-lite skipped, build-full ran. [skip-build]
+          # was overridden the same way.
+          #
+          # "all variants" is about which variants a main build covers, not
+          # about whether main builds at all.
+          if [[ "$IS_MAIN" == "true" && "$EVENT_NAME" == "push" \
+                && "$DOCS_ONLY" != "true" \
+                && "$COMMIT_MESSAGE" != *"[skip-build]"* ]]; then
             BUILD_FULL="true"
           fi
 
