@@ -72,6 +72,25 @@ jobs:
           fi
           echo "Commit message: $COMMIT_MESSAGE"
 
+          # 制御タグは「行として単独で書かれたもの」だけを見る。
+          #
+          # 以前は本文のどこかに現れれば効いていたため、タグについて書くと
+          # そのコミット自身が制御された。履歴にある 11 件はすべて説明や報告
+          # での言及で、制御として置かれた例は一度も無い。直近では
+          # 「[skip-build] が main では無効だった」と書いた修正コミットが、
+          # まさにその字面で自分のビルドを飛ばした。
+          #
+          # 本文を見るのは squash merge で元コミットの本文が畳まれるため。
+          # subject だけに限ると、ブランチ側で付けたタグが main の push で
+          # 効かなくなる。
+          # 行頭・行末の空白は落としてから比べる。インデントして書く人も
+          # いるし、行末の空白は目に見えないので、効かない理由が読み取れない。
+          has_tag() {
+              printf '%s\n' "$COMMIT_MESSAGE" \
+                  | sed 's/^[[:space:]]*//; s/[[:space:]]*$//' \
+                  | grep -qxF "$1"
+          }
+
           # Detect changed files for auto-skip detection.
           # For pull_request events, GitHub Actions checks out a synthetic merge
           # commit where HEAD^1 is the base (main) and HEAD^2 is the PR head.
@@ -138,17 +157,17 @@ jobs:
 
           # Auto-detect from commit message and changed files
           # Priority: commit message tags > file detection
-          if [[ "$COMMIT_MESSAGE" == *"[skip-build]"* ]]; then
+          if has_tag "[skip-build]"; then
             BUILD_LITE="false"
             BUILD_FULL="false"
             echo "Build skipped due to [skip-build] tag"
-          elif [[ "$COMMIT_MESSAGE" == *"[build-all]"* ]]; then
+          elif has_tag "[build-all]"; then
             BUILD_LITE="true"
             BUILD_FULL="true"
             PLATFORMS="linux/amd64,linux/arm64"  # Build both architectures
-          elif [[ "$COMMIT_MESSAGE" == *"[build-full]"* ]]; then
+          elif has_tag "[build-full]"; then
             BUILD_FULL="true"
-          elif [[ "$COMMIT_MESSAGE" == *"[build-lite]"* ]]; then
+          elif has_tag "[build-lite]"; then
             BUILD_LITE="true"
             BUILD_FULL="false"
             PLATFORMS="linux/amd64,linux/arm64"  # Build both architectures for lite version
@@ -160,7 +179,8 @@ jobs:
 
           # For pull requests: build Full version on x86_64 to catch issues early
           # Skip if docs-only or explicitly skipped
-          if [[ "$EVENT_NAME" == "pull_request" && "$DOCS_ONLY" != "true" && "$COMMIT_MESSAGE" != *"[skip-build]"* && "$COMMIT_MESSAGE" != *"[build-all]"* && "$COMMIT_MESSAGE" != *"[build-full]"* && "$BUILD_FULL" != "true" ]]; then
+          if [[ "$EVENT_NAME" == "pull_request" && "$DOCS_ONLY" != "true" && "$BUILD_FULL" != "true" ]] \
+             && ! has_tag "[skip-build]" && ! has_tag "[build-all]" && ! has_tag "[build-full]"; then
             BUILD_FULL="true"
             PLATFORMS="linux/amd64"  # x86_64 only for faster CI
           fi
@@ -188,8 +208,21 @@ jobs:
             fi
           fi
 
-          # Main branch builds all variants by default
-          if [[ "$IS_MAIN" == "true" && "$EVENT_NAME" == "push" ]]; then
+          # Main branch builds all variants by default.
+          #
+          # Guarded by the same two conditions as the pull request rule
+          # above, because this used to override them. A docs-only push to
+          # main set BUILD_LITE=false and BUILD_FULL=false, and then had
+          # BUILD_FULL put back to true here -- so the Full image was built
+          # and published for a change it does not contain. Seen on the
+          # merge of #83: build-lite skipped, build-full ran. [skip-build]
+          # was overridden the same way.
+          #
+          # "all variants" is about which variants a main build covers, not
+          # about whether main builds at all.
+          if [[ "$IS_MAIN" == "true" && "$EVENT_NAME" == "push" \
+                && "$DOCS_ONLY" != "true" \
+                ]] && ! has_tag "[skip-build]"; then
             BUILD_FULL="true"
           fi
 
